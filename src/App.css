@@ -1,33 +1,53 @@
+:root {
+  --header-footer-height: 30px;
+}
+
+#root,
+.App,
+html {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  height: calc(100% - var(--header-footer-height));
+}
+
 .App {
   text-align: center;
 }
 
 .App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
+  height: 5vmin;
   pointer-events: none;
 }
 
 .App-header {
   background-color: #282c34;
-  min-height: 100vh;
+  height: var(--header-footer-height);
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  align-items: start;
+  justify-content: left;
   font-size: calc(10px + 2vmin);
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.HeaderInfo {
+  vertical-align: top;
+  float: left;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.HeaderInfo .AppName {
+  display: inline-block;
+  vertical-align: top;
+}
+
+.BodyContainer {
+  min-height: 100%;
+  margin-bottom: calc(0 - var(--header-footer-height));
+}
+
+.Footer {
+  height: var(--header-footer-height);
 }
