@@ -1,5 +1,5 @@
 import React from "react";
-import Balance from "./Components/Balance/Balance.js";
+import Balance from "./components/Balance/Balance.js";
 import logo from "./logo.svg";
 import "./App.css";
 

@@ -1,29 +1,40 @@
 import React from "react";
 import "./Balance.css";
+import { connect } from "react-redux";
+import * as actionCreators from "../../actions/balanceActions.js";
 
-const walletsBallance = () => {
-  return [
-    { Name: "Main", Value: 100 },
-    { Name: "Main1", Value: 200 },
-    { Name: "Main2", Value: 600 },
-    { Name: "Main3", Value: 400 }
-  ];
-};
+class Balance extends React.Component {
+  setBalance = balance => {
+    this.setState({ Balance: balance });
+  };
 
-const Balance = () => {
-  const wallets = walletsBallance();
-  return (
-    <div className="Balance">
-      <div>Wallets:</div>
-      <div className="WalletsList">
-        {wallets.map(wallet => (
-          <div>
-            {wallet.Name}: <span>{wallet.Value}</span>
-          </div>
-        ))}
+  componentDidMount() {
+    this.props.loadWaletsBalance(this.setBalance);
+  }
+
+  render() {
+    const wallets = this.state.Balance ? this.props.Balance : [];
+    console.log("balance", this.props.Balance);
+    return (
+      <div className="Balance">
+        <div>Wallets:</div>
+        <div className="WalletsList">
+          {wallets.map(wallet => (
+            <div>
+              {wallet.Name}: <span>{wallet.Value}</span>
+            </div>
+          ))}
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
+}
+
+const mapStateToProps = state => {
+  return state;
 };
 
-export default Balance;
+export default connect(
+  mapStateToProps,
+  actionCreators
+)(Balance);
