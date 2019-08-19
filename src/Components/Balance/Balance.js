@@ -1,20 +1,15 @@
 import React from "react";
 import "./Balance.css";
 import { connect } from "react-redux";
-import * as actionCreators from "../../actions/balanceActions.js";
+import { loadWaletsBalance } from "../../actions/balanceActions.js";
 
 class Balance extends React.Component {
-  setBalance = balance => {
-    this.setState({ Balance: balance });
-  };
-
   componentDidMount() {
-    this.props.loadWaletsBalance(this.setBalance);
+    this.props.dispatch(loadWaletsBalance());
   }
 
   render() {
-    const wallets = this.state.Balance ? this.props.Balance : [];
-    console.log("balance", this.props.Balance);
+    const wallets = this.props.balance;
     return (
       <div className="Balance">
         <div>Wallets:</div>
@@ -30,11 +25,10 @@ class Balance extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
-  return state;
-};
+const mapStateToProps = state => ({
+  balance: state.items.balance,
+  loading: state.loading,
+  error: state.error
+});
 
-export default connect(
-  mapStateToProps,
-  actionCreators
-)(Balance);
+export default connect(mapStateToProps)(Balance);
