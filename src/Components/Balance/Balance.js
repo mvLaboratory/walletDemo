@@ -9,14 +9,14 @@ class Balance extends React.Component {
   }
 
   render() {
-    const wallets = this.props.balance;
+    const wallets = this.props.balance || [];
     return (
       <div className="Balance">
         <div>Wallets:</div>
         <div className="WalletsList">
           {wallets.map(wallet => (
             <div>
-              {wallet.Name}: <span>{wallet.Value}</span>
+              {wallet.name}: <span>{wallet.value}</span>
             </div>
           ))}
         </div>
@@ -25,10 +25,13 @@ class Balance extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
-  balance: state.items.balance,
-  loading: state.loading,
-  error: state.error
-});
+const mapStateToProps = function(state) {
+  console.log("state", state);
+  return {
+    balance: state.items,
+    loading: state.loading,
+    error: state.error
+  };
+};
 
 export default connect(mapStateToProps)(Balance);

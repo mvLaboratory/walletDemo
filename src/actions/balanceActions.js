@@ -4,7 +4,7 @@ export function loadWaletsBalance() {
   return dispatch => {
     dispatch(loadWaletsBalanceBegin());
     return axios
-      .get("http://www.personalwallet.com/api/balance")
+      .get("http://localhost:3001/balance")
       .then(response => {
         return response.data;
       })

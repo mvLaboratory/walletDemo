@@ -4,17 +4,15 @@ import {
   LOAD_WALETS_BALANCE_FAILURE
 } from "../actions/balanceActions";
 
-const defaultState = {
-  balance: [
-    { Name: "default walet1", Value: 100 },
-    { Name: "default walet2", Value: 200 },
-    { Name: "default walet3", Value: 300 },
-    { Name: "default walet4", Value: 400 }
-  ]
-};
+const defaultBalance = [
+  { name: "default walet1", value: 100 },
+  { name: "default walet2", value: 200 },
+  { name: "default walet3", value: 300 },
+  { name: "default walet4", value: 400 }
+];
 
 const initialState = {
-  items: defaultState,
+  items: defaultBalance,
   loading: false,
   error: null
 };
@@ -33,7 +31,6 @@ export default function balanceReducer(state = initialState, action) {
     case LOAD_WALETS_BALANCE_SUCCESS:
       // All done: set loading "false".
       // Also, replace the items with the ones from the server
-      debugger;
       return {
         ...state,
         loading: false,
