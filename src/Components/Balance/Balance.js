@@ -1,7 +1,7 @@
 import React from "react";
 import "./Balance.css";
 import { connect } from "react-redux";
-import { loadWaletsBalance } from "../../actions/balanceActions.js";
+import { loadWaletsBalance, addWalet } from "../../actions/waletActions.js";
 
 class Balance extends React.Component {
   componentDidMount() {

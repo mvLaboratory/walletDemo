@@ -1,8 +1,29 @@
 {
   "balance": [
-    { "id": 1, "name": "api walet1", "value": 100 },
-    { "id": 2, "name": "api walet2", "value": 200 },
-    { "id": 3, "name": "api walet3", "value": 300 },
-    { "id": 4, "name": "api walet4", "value": 400 }
+    {
+      "id": 1,
+      "name": "api walet1",
+      "value": 100
+    },
+    {
+      "id": 2,
+      "name": "api walet2",
+      "value": 200
+    },
+    {
+      "id": 3,
+      "name": "api walet3",
+      "value": 300
+    },
+    {
+      "id": 4,
+      "name": "api walet4",
+      "value": 400
+    },
+    {
+      "id": 5,
+      "name": "api walet5",
+      "value": 500
+    }
   ]
 }

@@ -1,8 +1,11 @@
 import {
   LOAD_WALETS_BALANCE_BEGIN,
   LOAD_WALETS_BALANCE_SUCCESS,
-  LOAD_WALETS_BALANCE_FAILURE
-} from "../actions/balanceActions";
+  LOAD_WALETS_BALANCE_FAILURE,
+  ADD_WALETS_BEGIN,
+  ADD_WALETS_SUCCESS,
+  ADD_WALETS_FAILURE
+} from "../actions/waletActions";
 
 const defaultBalance = [
   { name: "default walet1", value: 100 },
@@ -17,7 +20,7 @@ const initialState = {
   error: null
 };
 
-export default function balanceReducer(state = initialState, action) {
+export default function waletReducer(state = initialState, action) {
   switch (action.type) {
     case LOAD_WALETS_BALANCE_BEGIN:
       // Mark the state as "loading" so we can show a spinner or something
@@ -45,6 +48,27 @@ export default function balanceReducer(state = initialState, action) {
       // This is all up to you and your app though:
       // maybe you want to keep the items around!
       // Do whatever seems right for your use case.
+      return {
+        ...state,
+        loading: false,
+        error: action.payload.error,
+        items: []
+      };
+
+    case ADD_WALETS_BEGIN:
+      return {
+        ...state,
+        loading: true,
+        error: null
+      };
+
+    case ADD_WALETS_SUCCESS:
+      return {
+        ...state,
+        loading: false
+      };
+
+    case ADD_WALETS_FAILURE:
       return {
         ...state,
         loading: false,
