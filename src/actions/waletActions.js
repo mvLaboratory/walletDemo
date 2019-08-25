@@ -16,11 +16,14 @@ export function loadWaletsBalance() {
   };
 }
 
-export function addWalet() {
+export function addWalet(waletName, initBalance) {
   return dispatch => {
     dispatch(addWaletBegin());
     return axios
-      .post("http://localhost:3001/balance")
+      .post("http://localhost:3001/balance", {
+        name: waletName,
+        value: initBalance
+      })
       .then(response => {
         dispatch(addWaletSuccess());
         return response.data;
