@@ -1,5 +1,7 @@
 import React from "react";
-import Balance from "./components/Balance/Balance.js";
+
+import Balance from "./Components/Balance/Balance.js";
+import Footer from "./Components/Layouts/Footer.js";
 import logo from "./logo.svg";
 import "./App.css";
 
@@ -9,7 +11,7 @@ function App() {
       <header className="App-header">
         <div className="HeaderInfo">
           <img src={logo} className="App-logo" alt="logo" />
-          <span className="AppName">Personal Wallet</span>
+          <span className="AppName">Personal Wallet!</span>
         </div>
       </header>
       <body>
@@ -17,7 +19,7 @@ function App() {
           <Balance />
         </div>
       </body>
-      <footer className="Footer">2019 wallet</footer>
+      <Footer />
     </div>
   );
 }
