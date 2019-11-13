@@ -1,8 +1,7 @@
 import React from "react";
 
 import Balance from "./Components/Balance/Balance.js";
-import Footer from "./Components/Layouts/Footer.js";
-import Header from "./Components/Layouts/Header.js";
+import {Footer, Header} from "./Components/Layouts";
 
 import logo from "./logo.svg";
 import "./App.css";
