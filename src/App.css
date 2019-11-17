@@ -1,14 +1,39 @@
+:root {
+  --header-height: 64px;
+  --footer-height: 56px;
+  --footer-margin: 25px;
+  --body-height: calc(100% - var(--header-height) - var(--footer-height));
+  --bodycontent-height: calc(100% - var(--footer-margin));
+}
+
 #root,
-.App,
-html {
+html,
+body,
+.App {
   height: 100%;
   margin: 0;
 }
 
-.App-logo {
-  height: 10px;
+header {
+  height: var(--header-height);
 }
 
-.MuiIcon-colorPrimary {
-  color: black;
+.MuiBottomNavigation-root {
+  height: var(--footer-height);
+}
+
+.BodyContainer {
+  height: var(--body-height);
+}
+
+.MuiTableRow-hover {
+  cursor: pointer;
+}
+
+.BodyContainer .MuiGrid-container {
+  height: var(--bodycontent-height);
+}
+
+.BodyContainer .MuiPaper-root {
+  height: var(--bodycontent-height);
 }

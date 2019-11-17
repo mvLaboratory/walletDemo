@@ -1,10 +1,9 @@
 import React from "react";
-import "./Balance.css";
 import { connect } from "react-redux";
 import { loadWaletsBalance, addWalet } from "../../actions/waletActions.js";
 import { Grid, Paper, Table, TableBody, TableCell, TableHead, TableRow} from '@material-ui/core'
 
-class Balance extends React.Component {
+class BalanceSummary extends React.Component {
   state = { newWaletName: "" };
 
   componentDidMount() {
@@ -23,7 +22,7 @@ class Balance extends React.Component {
         padding: 20,
         marginTop: 10,
         marginBottom: 10,
-        height: 500,
+        //height: 400,
         overflowY: 'auto'
       }
     }
@@ -47,7 +46,7 @@ class Balance extends React.Component {
                   </TableHead>
                   <TableBody>
                     {wallets.map(wallet => (
-                      <TableRow>
+                      <TableRow hover>
                         <TableCell>{wallet.name}</TableCell>
                         <TableCell>{wallet.value}</TableCell>
                       </TableRow>
@@ -89,4 +88,4 @@ const mapStateToProps = function(state) {
   };
 };
 
-export default connect(mapStateToProps)(Balance);
+export default connect(mapStateToProps)(BalanceSummary);
