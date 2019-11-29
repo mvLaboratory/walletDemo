@@ -1,6 +1,6 @@
 import React from "react";
 
-import BalanceSummary from "./Components/Balance/BalanceSummary.js";
+import BalancePage from "./Components/Balance/BalancePage.js";
 import {Footer, Header} from "./Components/Layouts";
 
 import "./App.css";
@@ -10,7 +10,7 @@ function App() {
     <div className="App">
       <Header />
       <div className="BodyContainer">
-        <BalanceSummary />
+        <BalancePage />
       </div>
       <Footer />
     </div>

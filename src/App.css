@@ -37,3 +37,7 @@ header {
 .BodyContainer .MuiPaper-root {
   height: var(--bodycontent-height);
 }
+
+.MuiTableHead-root .MuiTableCell-head {
+  font-weight: 700;
+}
