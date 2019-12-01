@@ -1,9 +1,8 @@
 :root {
   --header-height: 64px;
   --footer-height: 56px;
-  --footer-margin: 25px;
   --body-height: calc(100% - var(--header-height) - var(--footer-height));
-  --bodycontent-height: calc(100% - var(--footer-margin));
+  --bodycontent-height: calc(100% - var(--footer-height));
 }
 
 #root,
