@@ -7,12 +7,7 @@ import {
   ADD_WALETS_FAILURE
 } from "../actions/waletActions";
 
-const defaultBalance = [
-  { name: "default walet1", value: 100 },
-  { name: "default walet2", value: 200 },
-  { name: "default walet3", value: 300 },
-  { name: "default walet4", value: 400 }
-];
+const defaultBalance = [];
 
 const initialState = {
   items: defaultBalance,

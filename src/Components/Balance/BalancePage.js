@@ -8,12 +8,26 @@ import { loadWaletsBalance } from "../../actions/waletActions.js";
 import { Grid } from '@material-ui/core'
 
 class BalancePage extends React.Component {
+  constructor(props){
+    super(props);
+    this.state = {activeWallet: null};
+  }
+
   componentDidMount() {
     this.props.dispatch(loadWaletsBalance());
   }
+  
+  componentDidUpdate() {
+    const { balance } = this.props;
+    if (!this.state.activeWallet && balance && balance.length > 0) {
+      this.setState({activeWallet: balance[0]})
+    }
+  }
 
-  handleWalletSelect(walletId) {
-    alert('selected' + walletId);
+  handleWalletSelect = (walletId) => {
+    const { balance } = this.props;
+    var activeWallet = balance.find(x => x.id === walletId);
+    this.setState({activeWallet: activeWallet})
   }
 
   // handleSubmit = async event => {
@@ -32,6 +46,7 @@ class BalancePage extends React.Component {
       }
     }
     const { balance } = this.props;
+    const {activeWallet} = this.state;
     
     return (     
       <Grid container>
@@ -39,28 +54,23 @@ class BalancePage extends React.Component {
           <WalletsList 
             styles={styles} 
             selectWalletHandler={this.handleWalletSelect}
+            selectedWallet={activeWallet}
             wallets={balance}
           />
         </Grid>
         <Grid item sm>
-          <WalletInfo  styles={styles}/>
+          <WalletInfo  
+            styles={styles}
+            activeWallet={activeWallet}
+          />
         </Grid>
       </Grid>    
     );
   }
 }
 
-const formatBalanceViewModel = function(balance) {
-  //balance.map(bal => {isSelected: false, {...bal}});
-  const balanceViewModel = balance.map(bal => {let nobj = {isSelected: false, ...bal}; return nobj;});
-  debugger;
-  console.log(balanceViewModel);
-  return balanceViewModel;
-}
-
 const mapStateToProps = function(state) {
    return {
-     balanceVM: formatBalanceViewModel(state.items),
      balance: state.items,
      loading: state.loading,
      error: state.error

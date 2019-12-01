@@ -3,7 +3,7 @@ import { Paper, Table, TableBody, TableCell, TableHead, TableRow} from '@materia
 
 class WalletsList extends React.Component {
   render() {
-    const { styles, selectWalletHandler, wallets } = this.props;
+    const { styles, selectWalletHandler, wallets, selectedWallet } = this.props;
     return (
       <Paper style={styles.Paper}>
           <div className="Balance">
@@ -19,7 +19,11 @@ class WalletsList extends React.Component {
                 </TableHead>
                 <TableBody>
                     {wallets.map(wallet => (
-                      <TableRow key={wallet.id} hover onClick={() => {selectWalletHandler(wallet.id);}}>
+                      <TableRow 
+                        key={wallet.id} 
+                        hover onClick={() => {selectWalletHandler(wallet.id);}}
+                        selected={selectedWallet && selectedWallet.id === wallet.id}
+                      >
                         <TableCell size="small">{wallet.id}</TableCell>
                         <TableCell>test{wallet.name}</TableCell>
                         <TableCell align="right">{wallet.value}</TableCell>

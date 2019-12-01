@@ -14,16 +14,16 @@ class WalletInfo extends React.Component {
 
   renderEmptyWalletWarning() {
     return(       
-      <div><h3>Please select wallet wrom the list</h3></div>
+      <div><h3>Please add some wallet to the list</h3></div>
     ); 
   }
 
   render() {
-    const { styles, wallet  } = this.props;  
+    const { styles, activeWallet } = this.props;  
     return (     
       <Paper style={styles.Paper}>
         <h1>Wallet Edit:</h1>
-        {wallet ? this.renderWalletInfo(wallet) : this.renderEmptyWalletWarning()}
+        {activeWallet ? this.renderWalletInfo(activeWallet) : this.renderEmptyWalletWarning()}
         <form onSubmit={this.handleSubmit}>
           <input
             type="text"
