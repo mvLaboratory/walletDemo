@@ -20,14 +20,26 @@ class BalancePage extends React.Component {
   componentDidUpdate() {
     const { balance } = this.props;
     if (!this.state.activeWallet && balance && balance.length > 0) {
-      this.setState({activeWallet: balance[0]})
+      this.handleWalletSelect(balance[0].id);
     }
   }
 
   handleWalletSelect = (walletId) => {
     const { balance } = this.props;
-    var activeWallet = balance.find(x => x.id === walletId);
-    this.setState({activeWallet: activeWallet})
+    var selectedWallet = balance.find(x => x.id === walletId);
+    this.setState({activeWallet: Object.assign({}, selectedWallet)});
+  }
+
+  handleWalletNameChange = (walletName) => {
+    const { activeWallet } = this.state;
+    activeWallet.name = walletName;
+    this.setState({activeWallet: activeWallet
+    });
+  }
+
+  saveWalletHandler = () => {
+    const { activeWallet } = this.state; 
+    alert(activeWallet.name);
   }
 
   // handleSubmit = async event => {
@@ -62,6 +74,8 @@ class BalancePage extends React.Component {
           <WalletInfo  
             styles={styles}
             activeWallet={activeWallet}
+            saveHandler={this.saveWalletHandler}
+            handleWalletNameChange={this.handleWalletNameChange}
           />
         </Grid>
       </Grid>    
