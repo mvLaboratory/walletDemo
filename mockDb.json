@@ -3,12 +3,12 @@
     {
       "id": 1,
       "name": "api walet1",
-      "value": 100
+      "value": "105"
     },
     {
-      "id": 2,
       "name": "api walet2",
-      "value": 200
+      "value": "203",
+      "id": 2
     },
     {
       "id": 3,
@@ -18,7 +18,7 @@
     {
       "id": 4,
       "name": "api walet4",
-      "value": 400
+      "value": "401"
     },
     {
       "id": 5,

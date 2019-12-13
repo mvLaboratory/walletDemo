@@ -22,3 +22,4 @@ mockDb.json
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+mockDb.json
