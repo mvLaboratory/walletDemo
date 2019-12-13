@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import WalletsList from "./WalletsList.js"
 import WalletInfo from "./WalletInfo.js"
 import { loadWaletsBalance } from "../../actions/waletActions.js";
-//import { addWalet } from "../../actions/waletActions.js";
+import { saveWallet } from "../../actions/waletActions.js";
 
 import { Grid } from '@material-ui/core'
 
@@ -30,16 +30,22 @@ class BalancePage extends React.Component {
     this.setState({activeWallet: Object.assign({}, selectedWallet)});
   }
 
-  handleWalletNameChange = (walletName) => {
+  handleActiveWalletNameChange = (walletName) => {
     const { activeWallet } = this.state;
     activeWallet.name = walletName;
-    this.setState({activeWallet: activeWallet
-    });
+    this.setState({activeWallet: activeWallet });
+  }
+
+  handleActiveWalletBalanceChange = (walletBalance) => {
+    const { activeWallet } = this.state;
+    activeWallet.value = walletBalance;
+    this.setState({activeWallet: activeWallet });
   }
 
   saveWalletHandler = () => {
     const { activeWallet } = this.state; 
-    alert(activeWallet.name);
+    this.props.dispatch(saveWallet(activeWallet));
+    //alert(activeWallet.name + ':' + activeWallet.value);
   }
 
   // handleSubmit = async event => {
@@ -75,7 +81,8 @@ class BalancePage extends React.Component {
             styles={styles}
             activeWallet={activeWallet}
             saveHandler={this.saveWalletHandler}
-            handleWalletNameChange={this.handleWalletNameChange}
+            handleWalletNameChange={this.handleActiveWalletNameChange}
+            handleWalletBalanceChange={this.handleActiveWalletBalanceChange}
           />
         </Grid>
       </Grid>    
