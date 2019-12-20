@@ -3,43 +3,44 @@
     {
       "id": 1,
       "name": "api walet1",
-      "value": "105"
+      "remainders": [
+        {
+          "currency": "2",
+          "value": "100"
+        },
+        {
+          "currency": "1",
+          "value": "300"
+        }
+      ]
     },
     {
+      "id": 2,
       "name": "api walet2",
-      "value": "203",
-      "id": 2
+      "remainders": [
+        {
+          "currency": 3,
+          "value": "200"
+        }
+      ]
+    }
+  ],
+
+  "currency": [
+    {
+      "id": 1,
+      "name": "UAH",
+      "symb": "₴"
+    },
+    {
+      "id": 2,
+      "name": "USD",
+      "symb": "$"
     },
     {
       "id": 3,
-      "name": "api walet3",
-      "value": 300
-    },
-    {
-      "id": 4,
-      "name": "api walet4",
-      "value": "401"
-    },
-    {
-      "id": 5,
-      "name": "api walet5",
-      "value": 500
-    },
-    {
-      "id": 6,
-      "name": "api walet6",
-      "value": 501
-    },
-    {
-      "id": 7,
-      "name": "api walet7",
-      "value": 508
-    },
-    {
-      "Id": 17,
-      "name": "api walet7",
-      "value": 508,
-      "id": 8
+      "name": "EUR",
+      "symb": "€"
     }
   ]
 }

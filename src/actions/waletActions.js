@@ -16,6 +16,22 @@ export function loadWaletsBalance() {
   };
 }
 
+export function loadCurrency() {
+  return dispatch => {
+    dispatch(loadCurrencyBegin());
+    return axios
+      .get("http://localhost:30001/currency")
+      .then(response => {
+        return response.data;
+      })
+      .then(responseData => {
+        dispatch(loadCurrencySuccess(responseData));
+        return responseData;
+      })
+      .catch(error => dispatch(loadCurrencyFailure(error)));
+  };
+}
+
 export function saveWallet(wallet) {
   return dispatch => {
     dispatch(saveWalletBegin());
@@ -59,6 +75,10 @@ export const SAVE_WALLET_BEGIN = "SAVE_WALLET_BEGIN";
 export const SAVE_WALLET_SUCCESS = "SAVE_WALLET_SUCCESS";
 export const SAVE_WALLET_FAILURE = "SAVE_WALLET_FAILURE";
 
+export const LOAD_CURRENCY_BEGIN = "LOAD_CURRENCY_BEGIN";
+export const LOAD_CURRENCY_SUCCESS = "LOAD_CURRENCY_SUCCESS";
+export const LOAD_CURRENCY_FAILURE = "LOAD_CURRENCY_FAILURE";
+
 export const ADD_WALETS_BEGIN = "ADD_WALETS_BEGIN";
 export const ADD_WALETS_SUCCESS = "ADD_WALETS_SUCCESS";
 export const ADD_WALETS_FAILURE = "ADD_WALETS_FAILURE";
@@ -91,6 +111,23 @@ export const saveWalletFailure = error => ({
   type: SAVE_WALLET_FAILURE,
   payload: { error }
 });
+
+
+
+export const loadCurrencyBegin = () => ({
+  type: LOAD_CURRENCY_BEGIN
+});
+
+export const loadCurrencySuccess = (currency) => ({
+  type: LOAD_CURRENCY_SUCCESS,
+  payload: {currency}
+});
+
+export const loadCurrencyFailure = error => ({
+  type: LOAD_CURRENCY_FAILURE,
+  payload: { error }
+});
+
 
 
 export const addWaletBegin = () => ({

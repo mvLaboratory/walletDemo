@@ -2,8 +2,8 @@ import React from "react";
 import { connect } from "react-redux";
 import WalletsList from "./WalletsList.js"
 import WalletInfo from "./WalletInfo.js"
-import { loadWaletsBalance } from "../../actions/waletActions.js";
 import { saveWallet } from "../../actions/waletActions.js";
+import { loadWaletsBalance, loadCurrency } from "../../actions/waletActions.js";
 
 import { Grid } from '@material-ui/core'
 
@@ -14,6 +14,7 @@ class BalancePage extends React.Component {
   }
 
   componentDidMount() {
+    this.props.dispatch(loadCurrency());
     this.props.dispatch(loadWaletsBalance());
   }
   
@@ -45,14 +46,7 @@ class BalancePage extends React.Component {
   saveWalletHandler = () => {
     const { activeWallet } = this.state; 
     this.props.dispatch(saveWallet(activeWallet));
-    //alert(activeWallet.name + ':' + activeWallet.value);
   }
-
-  // handleSubmit = async event => {
-  //   event.preventDefault();
-  //   addWalet(this.state.newWaletName, 0);
-  //   this.setState({ newWaletName: "" });
-  // };
 
   render() {
     const styles = {
@@ -63,8 +57,8 @@ class BalancePage extends React.Component {
         overflowY: 'auto'
       }
     }
-    const { balance } = this.props;
-    const {activeWallet} = this.state;
+    const { balance, currency } = this.props;
+    const { activeWallet } = this.state;
     
     return (     
       <Grid container>
@@ -74,6 +68,7 @@ class BalancePage extends React.Component {
             selectWalletHandler={this.handleWalletSelect}
             selectedWallet={activeWallet}
             wallets={balance}
+            currencyList={currency}
           />
         </Grid>
         <Grid item sm>
@@ -93,6 +88,7 @@ class BalancePage extends React.Component {
 const mapStateToProps = function(state) {
    return {
      balance: state.items,
+     currency: state.currency,
      loading: state.loading,
      error: state.error
    };

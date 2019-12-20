@@ -5,6 +5,9 @@ import {
   SAVE_WALLET_BEGIN,
   SAVE_WALLET_SUCCESS,
   SAVE_WALLET_FAILURE,
+  LOAD_CURRENCY_BEGIN,
+  LOAD_CURRENCY_SUCCESS,
+  LOAD_CURRENCY_FAILURE,
   ADD_WALETS_BEGIN,
   ADD_WALETS_SUCCESS,
   ADD_WALETS_FAILURE
@@ -14,7 +17,9 @@ const defaultBalance = [];
 
 const initialState = {
   items: defaultBalance,
+  currency: [],
   loading: false,
+  currencyLoading: false,
   saveWalletLoading: false,
   saveWalletResult: false,
   error: null
@@ -55,27 +60,49 @@ export default function waletReducer(state = initialState, action) {
         items: []
       };
 
-      case SAVE_WALLET_BEGIN:
-        return {
-          ...state,
-          saveWalletLoading: true,
-          error: null
-        };
+    case SAVE_WALLET_BEGIN:
+      return {
+        ...state,
+        saveWalletLoading: true,
+        error: null
+      };
+
+    case SAVE_WALLET_SUCCESS:
+      return {
+        ...state,
+        saveWalletLoading: false,
+        saveWalletResult: action.payload.balance
+      };
+
+    case SAVE_WALLET_FAILURE:
+      return {
+        ...state,
+        saveWalletLoading: false,
+        error: action.payload.error,
+        items: []
+      };
+
+    case LOAD_CURRENCY_BEGIN:
+      return {
+        ...state,
+        currencyLoading: true,
+        error: null
+      };
+
+    case LOAD_CURRENCY_SUCCESS:
+      return {
+        ...state,
+        currencyLoading: false,
+        currency: action.payload.currency
+      };
   
-      case SAVE_WALLET_SUCCESS:
-        return {
-          ...state,
-          saveWalletLoading: false,
-          saveWalletResult: action.payload.balance
-        };
-  
-      case SAVE_WALLET_FAILURE:
-        return {
-          ...state,
-          saveWalletLoading: false,
-          error: action.payload.error,
-          items: []
-        };
+    case LOAD_CURRENCY_FAILURE:
+      return {
+        ...state,
+        currencyLoading: false,
+        error: action.payload.error,
+        items: []
+      };
 
 
     case ADD_WALETS_BEGIN:
