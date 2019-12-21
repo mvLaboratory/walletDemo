@@ -11,7 +11,7 @@ import SaveIcon from '@material-ui/icons/Save';
 
 function WalletInfo( {styles, activeWallet, currencyList, handleWalletNameChange, handleWalletBalanceChange, saveHandler }) {
   const walletName = activeWallet ? activeWallet.name : '';
-  const walletBalance = activeWallet ? activeWallet.value : 0;
+  //const walletBalance = activeWallet ? activeWallet.value : 0;
 
   const useStyles = makeStyles(theme => ({
     root: {
@@ -37,6 +37,11 @@ function WalletInfo( {styles, activeWallet, currencyList, handleWalletNameChange
     ); 
   }
 
+  const getWalletBalance = (currencyId) => {
+    var balance = activeWallet.remainders.find(x => x.currency == currencyId) || { value: 0 };
+    return balance.value;
+  }
+
   const renderWalletInfo = () => {
     return(       
       <div>
@@ -51,8 +56,8 @@ function WalletInfo( {styles, activeWallet, currencyList, handleWalletNameChange
             {currencyList.map(currency => (            
               <Input
                 id="standard-adornment-amount"
-                value={walletBalance}  
-                onChange={event => handleWalletBalanceChange(event.target.value)}
+                value={getWalletBalance(currency.id)}  
+                onChange={event => handleWalletBalanceChange(currency.id, event.target.value)}
                 startAdornment={<InputAdornment position="start">{currency.symb}</InputAdornment>}
               />))
             }

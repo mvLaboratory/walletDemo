@@ -5,12 +5,16 @@
       "name": "api walet1",
       "remainders": [
         {
-          "currency": "2",
-          "value": "100"
+          "currency": 2,
+          "value": "0"
         },
         {
-          "currency": "1",
-          "value": "300"
+          "currency": 1,
+          "value": "305"
+        },
+        {
+          "currency": 3,
+          "value": "1"
         }
       ]
     },
@@ -20,12 +24,15 @@
       "remainders": [
         {
           "currency": 3,
-          "value": "200"
+          "value": 200
+        },
+        {
+          "currency": 1,
+          "value": "1"
         }
       ]
     }
   ],
-
   "currency": [
     {
       "id": 1,

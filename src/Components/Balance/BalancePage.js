@@ -37,9 +37,18 @@ class BalancePage extends React.Component {
     this.setState({activeWallet: activeWallet });
   }
 
-  handleActiveWalletBalanceChange = (walletBalance) => {
+  handleActiveWalletBalanceChange = (currencyId, walletBalance) => {
     const { activeWallet } = this.state;
-    activeWallet.value = walletBalance;
+    if (!activeWallet) return;
+
+    var balance = activeWallet.remainders.find(x => x.currency == currencyId);
+    if (balance) {
+      balance.value = walletBalance;
+    }
+    else {
+      activeWallet.remainders.push({"currency": currencyId, "value": walletBalance});
+    }
+    //activeWallet.value = walletBalance;
     this.setState({activeWallet: activeWallet });
   }
 
