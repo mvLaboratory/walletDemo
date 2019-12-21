@@ -3,11 +3,6 @@ import { Paper, Table, TableBody, TableCell, TableHead, TableRow} from '@materia
 
 class WalletsList extends React.Component {
   getCurrencyReminder(currency, wallet) {
-        // wallet.remainders.map(remainder => 
-                        // <TableCell align="center">{remainder.value}</TableCell>)
-                        // currencyList.map(currency => 
-                        //   <TableCell align="center">{wallet.remainders.find(x => x.currency === currency.id).value || 0}</TableCell>)
-                        debugger;
     var reminder = wallet.remainders.find(x => x.currency == currency.id) || {value: 0}             
     return reminder.value;
   }

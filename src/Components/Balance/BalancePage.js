@@ -75,6 +75,7 @@ class BalancePage extends React.Component {
           <WalletInfo  
             styles={styles}
             activeWallet={activeWallet}
+            currencyList={currency}
             saveHandler={this.saveWalletHandler}
             handleWalletNameChange={this.handleActiveWalletNameChange}
             handleWalletBalanceChange={this.handleActiveWalletBalanceChange}

@@ -1,4 +1,6 @@
 import React from "react";
+import clsx from 'clsx';
+import { makeStyles } from '@material-ui/core/styles';
 import { Paper} from '@material-ui/core'
 import Button from '@material-ui/core/Button';
 import Input from '@material-ui/core/Input';
@@ -7,9 +9,27 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import FormControl from '@material-ui/core/FormControl';
 import SaveIcon from '@material-ui/icons/Save';
 
-function WalletInfo( {styles, activeWallet, handleWalletNameChange, handleWalletBalanceChange, saveHandler }) {
+function WalletInfo( {styles, activeWallet, currencyList, handleWalletNameChange, handleWalletBalanceChange, saveHandler }) {
   const walletName = activeWallet ? activeWallet.name : '';
   const walletBalance = activeWallet ? activeWallet.value : 0;
+
+  const useStyles = makeStyles(theme => ({
+    root: {
+      display: 'flex',
+      flexWrap: 'wrap',
+    },
+    margin: {
+      margin: theme.spacing(1),
+    },
+    withoutLabel: {
+      marginTop: theme.spacing(3),
+      marginBottom: theme.spacing(2)
+    },
+    textField: {
+      width: 200,
+    },
+  }));
+  const classes = useStyles();
 
   const renderEmptyWalletWarning = () => {
     return(       
@@ -20,20 +40,22 @@ function WalletInfo( {styles, activeWallet, handleWalletNameChange, handleWallet
   const renderWalletInfo = () => {
     return(       
       <div>
-        <FormControl fullWidth >
+        <FormControl fullWidth className={clsx(classes.margin)}>
           <InputLabel>Name</InputLabel>
           <Input value={walletName}  
             onChange={event => handleWalletNameChange(event.target.value)}
           />
         </FormControl> 
-        <FormControl fullWidth >
-          <InputLabel htmlFor="standard-adornment-amount">Amount</InputLabel>
-            <Input
-              id="standard-adornment-amount"
-              value={walletBalance}  
-              onChange={event => handleWalletBalanceChange(event.target.value)}
-              startAdornment={<InputAdornment position="start">$</InputAdornment>}
-            />
+        <FormControl fullWidth className={clsx(classes.margin, classes.withoutLabel, classes.textField)}>
+          <InputLabel htmlFor="standard-adornment-amount">Amount</InputLabel> 
+            {currencyList.map(currency => (            
+              <Input
+                id="standard-adornment-amount"
+                value={walletBalance}  
+                onChange={event => handleWalletBalanceChange(event.target.value)}
+                startAdornment={<InputAdornment position="start">{currency.symb}</InputAdornment>}
+              />))
+            }
         </FormControl> 
       </div>
     ); 
@@ -44,6 +66,7 @@ function WalletInfo( {styles, activeWallet, handleWalletNameChange, handleWallet
       <h1>Wallet Edit:</h1>
       {activeWallet ? renderWalletInfo() : renderEmptyWalletWarning()}
         <Button
+          className={clsx(classes.margin)}
           variant="contained"
           color="primary"
           size="large"
