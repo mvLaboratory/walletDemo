@@ -3,12 +3,12 @@ import { Paper, Table, TableBody, TableCell, TableHead, TableRow} from '@materia
 
 class WalletsList extends React.Component {
   getCurrencyReminder(currency, wallet) {
-    var reminder = wallet.remainders.find(x => x.currency == currency.id) || {value: 0}             
+    var reminder = wallet.remainders.find(x => x.currency === currency.id) || {value: 0}             
     return reminder.value;
   }
 
   render() {
-    const { styles, selectWalletHandler, wallets, currencyList, selectedWallet } = this.props;
+    const { styles, selectWalletHandler, wallets, currencyList, selectedWalletId } = this.props;
     return (
       <Paper style={styles.Paper}>
           <div className="Balance">
@@ -23,7 +23,7 @@ class WalletsList extends React.Component {
                   </TableRow>
                   <TableRow>
                     {currencyList.map(currency => (
-                      <TableCell align="center">{currency.name}</TableCell>
+                      <TableCell key={"currencyTableHead"+currency.id} align="center">{currency.name}</TableCell>
                     ))}
                   </TableRow>
                 </TableHead>
@@ -32,17 +32,14 @@ class WalletsList extends React.Component {
                     <TableRow 
                       key={wallet.id} 
                       hover onClick={() => {selectWalletHandler(wallet.id);}}
-                      selected={selectedWallet && selectedWallet.id === wallet.id}
+                      selected={selectedWalletId === wallet.id}
                     >
                       <TableCell align="center" size="small">{wallet.id}</TableCell>
                       <TableCell align="left">{wallet.name}</TableCell>
                       { 
-                        // wallet.remainders.map(remainder => 
-                        // <TableCell align="center">{remainder.value}</TableCell>)
                         currencyList.map(currency => 
-                          <TableCell align="center">{this.getCurrencyReminder(currency, wallet)}</TableCell>)
-                      }
-                      
+                          <TableCell key={"currencyTableRow"+currency.id} align="center">{this.getCurrencyReminder(currency, wallet)}</TableCell>)
+                      }                     
                     </TableRow>
                   ))}
                   </TableBody>

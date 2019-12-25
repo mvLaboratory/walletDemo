@@ -25,8 +25,12 @@ function WalletInfo( {styles, activeWallet, currencyList, handleWalletNameChange
       marginTop: theme.spacing(3),
       marginBottom: theme.spacing(2)
     },
+    withlabel: {
+      marginTop: theme.spacing(1),
+      marginBottom: theme.spacing(2)
+    },
     textField: {
-      width: 200,
+      width: 175,
     },
   }));
   const classes = useStyles();
@@ -38,7 +42,7 @@ function WalletInfo( {styles, activeWallet, currencyList, handleWalletNameChange
   }
 
   const getWalletBalance = (currencyId) => {
-    var balance = activeWallet.remainders.find(x => x.currency == currencyId) || { value: 0 };
+    var balance = activeWallet.remainders.find(x => x.currency === currencyId) || { value: 0 };
     return balance.value;
   }
 
@@ -51,17 +55,20 @@ function WalletInfo( {styles, activeWallet, currencyList, handleWalletNameChange
             onChange={event => handleWalletNameChange(event.target.value)}
           />
         </FormControl> 
-        <FormControl fullWidth className={clsx(classes.margin, classes.withoutLabel, classes.textField)}>
-          <InputLabel htmlFor="standard-adornment-amount">Amount</InputLabel> 
-            {currencyList.map(currency => (            
+        <InputLabel className={clsx(classes.margin)} htmlFor="standard-adornment-amount">Amount</InputLabel>  
+        {currencyList.map(currency => (    
+        <FormControl fullWidth key={"amountFormControl" + currency.id} className={clsx(classes.margin, classes.withlabel, classes.textField)}>
+          
               <Input
-                id="standard-adornment-amount"
+                id={"standard-adornment-amount" + currency.id}
+                key={"amountInput" + currency.id}
                 value={getWalletBalance(currency.id)}  
                 onChange={event => handleWalletBalanceChange(currency.id, event.target.value)}
                 startAdornment={<InputAdornment position="start">{currency.symb}</InputAdornment>}
-              />))
-            }
-        </FormControl> 
+              />
+          </FormControl> 
+        ))
+      }
       </div>
     ); 
   }

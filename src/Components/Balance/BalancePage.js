@@ -27,8 +27,9 @@ class BalancePage extends React.Component {
 
   handleWalletSelect = (walletId) => {
     const { balance } = this.props;
-    var selectedWallet = balance.find(x => x.id === walletId);
-    this.setState({activeWallet: Object.assign({}, selectedWallet)});
+    const selectedWallet = balance.find(x => x.id === walletId);
+    const walletCopy = JSON.parse(JSON.stringify(selectedWallet));
+    this.setState({activeWallet: walletCopy});
   }
 
   handleActiveWalletNameChange = (walletName) => {
@@ -41,15 +42,15 @@ class BalancePage extends React.Component {
     const { activeWallet } = this.state;
     if (!activeWallet) return;
 
-    var balance = activeWallet.remainders.find(x => x.currency == currencyId);
-    if (balance) {
-      balance.value = walletBalance;
+    let activeWalletReminder = activeWallet.remainders.find(x => x.currency === currencyId);
+    if (activeWalletReminder) {
+      activeWalletReminder.value = walletBalance;
     }
     else {
       activeWallet.remainders.push({"currency": currencyId, "value": walletBalance});
     }
-    //activeWallet.value = walletBalance;
-    this.setState({activeWallet: activeWallet });
+    this.setState({ activeWallet: activeWallet });
+    //this.setState({activeWallet: Object.assign({}, activeWallet)});
   }
 
   saveWalletHandler = () => {
@@ -75,7 +76,7 @@ class BalancePage extends React.Component {
           <WalletsList 
             styles={styles} 
             selectWalletHandler={this.handleWalletSelect}
-            selectedWallet={activeWallet}
+            selectedWalletId={activeWallet ? activeWallet.id : 0}
             wallets={balance}
             currencyList={currency}
           />
