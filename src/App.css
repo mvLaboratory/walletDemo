@@ -2,7 +2,7 @@
   --header-height: 64px;
   --footer-height: 56px;
   --body-height: calc(100% - var(--header-height) - var(--footer-height));
-  --bodycontent-height: calc(100% - var(--footer-height));
+  --bodycontent-height: calc(100% - (var(--footer-height) / 2));
 }
 
 #root,

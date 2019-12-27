@@ -58,6 +58,11 @@ class BalancePage extends React.Component {
     this.props.dispatch(saveWallet(activeWallet));
   }
 
+  addWalletHandler = (walletName) => {
+    const wallet = {'name': walletName}
+    this.props.dispatch(saveWallet(wallet));
+  }
+
   render() {
     const styles = {
       Paper: {
@@ -79,6 +84,7 @@ class BalancePage extends React.Component {
             selectedWalletId={activeWallet ? activeWallet.id : 0}
             wallets={balance}
             currencyList={currency}
+            addWalletHandler={this.addWalletHandler}
           />
         </Grid>
         <Grid item sm>

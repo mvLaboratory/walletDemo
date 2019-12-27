@@ -58,7 +58,6 @@ function WalletInfo( {styles, activeWallet, currencyList, handleWalletNameChange
         <InputLabel className={clsx(classes.margin)} htmlFor="standard-adornment-amount">Amount</InputLabel>  
         {currencyList.map(currency => (    
         <FormControl fullWidth key={"amountFormControl" + currency.id} className={clsx(classes.margin, classes.withlabel, classes.textField)}>
-          
               <Input
                 id={"standard-adornment-amount" + currency.id}
                 key={"amountInput" + currency.id}
