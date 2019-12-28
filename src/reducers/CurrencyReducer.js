@@ -4,8 +4,6 @@ import {
   LOAD_CURRENCY_FAILURE
 } from "../actions/CurrencyActions";
 
-const defaultBalance = [];
-
 const initialState = {
   currency: [],
   currencyLoading: false,
