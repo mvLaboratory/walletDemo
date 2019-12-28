@@ -2,8 +2,9 @@ import React from "react";
 import { connect } from "react-redux";
 import WalletsList from "./WalletsList.js"
 import WalletInfo from "./WalletInfo.js"
-import { saveWallet } from "../../actions/waletActions.js";
-import { loadWaletsBalance, loadCurrency } from "../../actions/waletActions.js";
+import { addWallet, saveWallet, loadWaletsBalance } from "../../actions/BalanceActions.js";
+import { loadCurrency } from "../../actions/CurrencyActions.js";
+
 
 import { Grid } from '@material-ui/core'
 
@@ -50,7 +51,6 @@ class BalancePage extends React.Component {
       activeWallet.remainders.push({"currency": currencyId, "value": walletBalance});
     }
     this.setState({ activeWallet: activeWallet });
-    //this.setState({activeWallet: Object.assign({}, activeWallet)});
   }
 
   saveWalletHandler = () => {
@@ -59,8 +59,8 @@ class BalancePage extends React.Component {
   }
 
   addWalletHandler = (walletName) => {
-    const wallet = {'name': walletName}
-    this.props.dispatch(saveWallet(wallet));
+    const wallet = {'name': walletName, remainders: []}
+    this.props.dispatch(addWallet(wallet));
   }
 
   render() {
@@ -104,10 +104,10 @@ class BalancePage extends React.Component {
 
 const mapStateToProps = function(state) {
    return {
-     balance: state.items,
-     currency: state.currency,
-     loading: state.loading,
-     error: state.error
+     balance: state.BalanceReducer.items,
+     currency: state.CurrencyReducer.currency,
+     loading: state.BalanceReducer.loading,
+     error: state.BalanceReducer.error
    };
 };
 

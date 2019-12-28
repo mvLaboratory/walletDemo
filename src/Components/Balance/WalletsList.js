@@ -3,11 +3,10 @@ import NewWalletDialog from "./NewWalletDialog.js"
 import { Paper, Table, TableBody, TableCell, TableHead, TableRow} from '@material-ui/core'
 
 class WalletsList extends React.Component {
-  constructor(props){
-    super(props);
-  }
-
   getCurrencyReminder(currency, wallet) {
+    if (!currency || !wallet || !wallet.remainders)
+      return 0;
+      
     var reminder = wallet.remainders.find(x => x.currency === currency.id) || {value: 0}             
     return reminder.value;
   }

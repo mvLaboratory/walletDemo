@@ -32,9 +32,29 @@
         },
         {
           "currency": 2,
-          "value": "0"
+          "value": "1"
         }
       ]
+    },
+    {
+      "name": "test$1",
+      "remainders": [
+        {
+          "currency": 2,
+          "value": "5"
+        }
+      ],
+      "id": 3
+    },
+    {
+      "name": "test#6",
+      "remainders": [],
+      "id": 4
+    },
+    {
+      "name": "test#7",
+      "remainders": [],
+      "id": 5
     }
   ],
   "currency": [

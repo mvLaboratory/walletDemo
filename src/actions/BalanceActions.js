@@ -16,22 +16,6 @@ export function loadWaletsBalance() {
   };
 }
 
-export function loadCurrency() {
-  return dispatch => {
-    dispatch(loadCurrencyBegin());
-    return axios
-      .get("http://localhost:30001/currency")
-      .then(response => {
-        return response.data;
-      })
-      .then(responseData => {
-        dispatch(loadCurrencySuccess(responseData));
-        return responseData;
-      })
-      .catch(error => dispatch(loadCurrencyFailure(error)));
-  };
-}
-
 export function saveWallet(wallet) {
   return dispatch => {
     dispatch(saveWalletBegin());
@@ -51,19 +35,19 @@ export function saveWallet(wallet) {
   };
 }
 
-export function addWalet(waletName, initBalance) {
+export function addWallet(wallet) {
   return dispatch => {
-    dispatch(addWaletBegin());
+    dispatch(addWalletBegin());
     return axios
-      .post("http://localhost:3001/balance", {
-        name: waletName,
-        value: initBalance
-      })
+      .post("http://localhost:30001/balance", wallet)
       .then(response => {
-        dispatch(addWaletSuccess());
+        dispatch(addWalletSuccess());
         return response.data;
       })
-      .catch(error => dispatch(addWaletFailure(error)));
+      .then(() => {
+        dispatch(loadWaletsBalance())
+      })
+      .catch(error => dispatch(addWalletFailure(error)));
   };
 }
 
@@ -79,9 +63,9 @@ export const LOAD_CURRENCY_BEGIN = "LOAD_CURRENCY_BEGIN";
 export const LOAD_CURRENCY_SUCCESS = "LOAD_CURRENCY_SUCCESS";
 export const LOAD_CURRENCY_FAILURE = "LOAD_CURRENCY_FAILURE";
 
-export const ADD_WALETS_BEGIN = "ADD_WALETS_BEGIN";
-export const ADD_WALETS_SUCCESS = "ADD_WALETS_SUCCESS";
-export const ADD_WALETS_FAILURE = "ADD_WALETS_FAILURE";
+export const ADD_WALLETS_BEGIN = "ADD_WALLETS_BEGIN";
+export const ADD_WALLETS_SUCCESS = "ADD_WALLETS_SUCCESS";
+export const ADD_WALLETS_FAILURE = "ADD_WALLETS_FAILURE";
 
 export const loadWaletsBalanceBegin = () => ({
   type: LOAD_WALETS_BALANCE_BEGIN
@@ -113,33 +97,16 @@ export const saveWalletFailure = error => ({
 });
 
 
-
-export const loadCurrencyBegin = () => ({
-  type: LOAD_CURRENCY_BEGIN
+export const addWalletBegin = () => ({
+  type: ADD_WALLETS_BEGIN
 });
 
-export const loadCurrencySuccess = (currency) => ({
-  type: LOAD_CURRENCY_SUCCESS,
-  payload: {currency}
+export const addWalletSuccess = addResult => ({
+  type: ADD_WALLETS_SUCCESS,
+  payload: { addResult }
 });
 
-export const loadCurrencyFailure = error => ({
-  type: LOAD_CURRENCY_FAILURE,
-  payload: { error }
-});
-
-
-
-export const addWaletBegin = () => ({
-  type: ADD_WALETS_BEGIN
-});
-
-export const addWaletSuccess = () => ({
-  type: ADD_WALETS_SUCCESS,
-  payload: {}
-});
-
-export const addWaletFailure = error => ({
-  type: ADD_WALETS_FAILURE,
+export const addWalletFailure = error => ({
+  type: ADD_WALLETS_FAILURE,
   payload: { error }
 });

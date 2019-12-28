@@ -33,6 +33,7 @@ export default function NewWalletDialog({ addWalletHandler }) {
 
   const handleClickOpen = () => {
     setOpen(true);
+    setwalletName("");
   };
 
   const handleClose = () => {

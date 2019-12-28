@@ -3,11 +3,11 @@ import ReactDOM from "react-dom";
 import { createStore, applyMiddleware } from "redux";
 import { Provider } from "react-redux";
 import thunk from "redux-thunk";
-import balanceReducer from "./reducers/waletReducer.js";
+import reducer from "./reducers/index.js";
 import "./index.css";
 import App from "./App";
 
-let store = createStore(balanceReducer, applyMiddleware(thunk));
+let store = createStore(reducer, applyMiddleware(thunk));
 
 ReactDOM.render(
   <Provider store={store}>

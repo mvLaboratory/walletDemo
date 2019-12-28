@@ -42,6 +42,8 @@ function WalletInfo( {styles, activeWallet, currencyList, handleWalletNameChange
   }
 
   const getWalletBalance = (currencyId) => {
+    if (!currencyId || !activeWallet || !activeWallet.remainders)
+    return 0;
     var balance = activeWallet.remainders.find(x => x.currency === currencyId) || { value: 0 };
     return balance.value;
   }
