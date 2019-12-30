@@ -56,7 +56,7 @@ export default function NewWalletDialog({ addWalletHandler }) {
       </Button>
       <Dialog
       fullWidth={true}
-      maxWidth={"sm"}
+      maxWidth={"xs"}
       open={open}
       onClose={handleClose}
       aria-labelledby="addWallet-dialog-title"
