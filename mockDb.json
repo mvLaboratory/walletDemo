@@ -66,21 +66,68 @@
       "id": 5
     }
   ],
+  "balanceSummary": {
+    "currencyBalance" : [
+      {
+        "currency": 1,
+        "value": 100
+      },
+      {
+        "currency": 2,
+        "value": 200
+      },
+      {
+        "currency": 3,
+        "value": 300
+      }
+    ],
+    "mainCurrencyBalance": [
+      {
+        "rootCurrency": 1,
+        "value": 100
+      },
+      {
+        "rootCurrency": 2,
+        "value": 5000
+      },
+      {
+        "rootCurrency": 3,
+        "value": 8000
+      }
+    ],
+    "consolidatedBalance": [
+      {
+        "rootCurrency": 1,
+        "value": 13100
+      },
+      {
+        "rootCurrency": 2,
+        "value": 600
+      },
+      {
+        "rootCurrency": 3,
+        "value": 500
+      }
+    ]
+  },
   "currency": [
     {
       "id": 1,
       "name": "UAH",
-      "symb": "₴"
+      "symb": "₴",
+      "isMain": true
     },
     {
       "id": 2,
       "name": "USD",
-      "symb": "$"
+      "symb": "$",
+      "isMain": false
     },
     {
       "id": 3,
       "name": "EUR",
-      "symb": "€"
+      "symb": "€",
+      "isMain": false
     }
   ]
 }
