@@ -50,6 +50,13 @@ class WalletsList extends React.Component {
                       </TableRow>
                     ))}
                     </TableBody>
+                    <TableRow>
+                        <TableCell align="right"> Total: </TableCell>
+                        <TableCell>100</TableCell>
+                        <TableCell>100</TableCell>
+                        <TableCell>100</TableCell>
+
+                    </TableRow>
                 </Table>
               </div>
             </div>

@@ -4,9 +4,7 @@ import WalletsList from "./WalletsList.js"
 import WalletInfo from "./WalletInfo.js"
 import { addWallet, saveWallet, loadWaletsBalance } from "../../actions/BalanceActions.js";
 import { loadCurrency } from "../../actions/CurrencyActions.js";
-
-
-import { Grid } from '@material-ui/core'
+import { Grid } from '@material-ui/core';
 
 class BalancePage extends React.Component {
   constructor(props){
