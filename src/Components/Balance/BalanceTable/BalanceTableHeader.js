@@ -4,20 +4,32 @@ import { TableCell, TableHead, TableRow} from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles';
 
 function BalanceTableHeader( {currencyList} ) {
+  const useStyles = makeStyles(theme => ({
+    tableHeader: {
+      backgroundColor: '#3f51b5',
+      color: '#ffffff',
+      fontWeight: 900,
+      padding: 0
+    }
+  }));
+  const classes = useStyles();
+
   const currencyCollumns = () => {
     if (!currencyList) return (<div/>);
     return(
       currencyList.map(currency => (
-      <TableCell key={"currencyTableHead"+currency.id} align="center">{currency.name}</TableCell>
+      <TableCell key={"currencyTableHead"+currency.id} align="center" className={clsx(classes.tableHeader)}>
+        {currency.name}
+      </TableCell>
     )));
   }
 
   return(
     <TableHead>
       <TableRow>
-        <TableCell align="center" size="small" rowSpan={2}>#</TableCell>
-        <TableCell align="center" rowSpan={2}>Wallet</TableCell>
-        <TableCell align="center" colSpan={3}>Balance</TableCell>
+        <TableCell align="center" size="small" rowSpan={2} className={clsx(classes.tableHeader)}>#</TableCell>
+        <TableCell align="center" rowSpan={2} className={clsx(classes.tableHeader)}>Wallet</TableCell>
+        <TableCell align="center" colSpan={3} className={clsx(classes.tableHeader)}>Balance</TableCell>
       </TableRow>
       <TableRow>{ currencyCollumns() }</TableRow>
     </TableHead>

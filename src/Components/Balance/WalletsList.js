@@ -2,7 +2,7 @@ import React from "react";
 import NewWalletDialog from "./NewWalletDialog.js"
 import BalanceTableHeader from "./BalanceTable/BalanceTableHeader.js"
 import BalanceTableSummary from "./BalanceTable/BalanceTableSummary.js"
-import { Paper, Table, TableBody, TableCell, TableHead, TableRow} from '@material-ui/core'
+import { Paper, Table, TableBody, TableCell, TableRow} from '@material-ui/core'
 
 class WalletsList extends React.Component {
   getCurrencyReminder(currency, wallet) {
@@ -14,45 +14,38 @@ class WalletsList extends React.Component {
   }
 
   render() {
-    const { styles, selectWalletHandler, wallets, currencyList, selectedWalletId, addWalletHandler } = this.props;
+    const { styles, selectWalletHandler, wallets, balanceSummary, currencyList, selectedWalletId, addWalletHandler } = this.props;
+    console.log("Wallets List balanceSummary", balanceSummary);
     return (
-      <>
-        <Paper style={styles.Paper}>
-            <div className="Balance">
-              <div><span>Wallets:</span>
-                <NewWalletDialog addWalletHandler={addWalletHandler}/>
-              </div>
-              <div className="WalletsList">
-                <Table aria-label="a dense table">
-                  <BalanceTableHeader currencyList = {currencyList}></BalanceTableHeader>
-                  <TableBody>
-                    {wallets.map(wallet => (
-                      <TableRow 
-                        key={wallet.id} 
-                        hover onClick={() => {selectWalletHandler(wallet.id);}}
-                        selected={selectedWalletId === wallet.id}
-                      >
-                        <TableCell align="center" size="small">{wallet.id}</TableCell>
-                        <TableCell align="left">{wallet.name}</TableCell>
-                        { 
-                          currencyList.map(currency => 
-                            <TableCell key={"currencyTableRow"+currency.id} align="center">{this.getCurrencyReminder(currency, wallet)}</TableCell>)
-                        }                     
-                      </TableRow>
-                    ))}
-                    {/* <TableRow>
-                      <TableCell align="right" colSpan={2}>Total:</TableCell>
-                      <TableCell align="center">100</TableCell>
-                      <TableCell align="center">100</TableCell>
-                      <TableCell align="center">100</TableCell>
-                    </TableRow> */}
-                    <BalanceTableSummary/>
-                  </TableBody>
-                </Table>
-              </div>
+      <Paper style={styles.Paper}>
+          <div className="Balance">
+            <div><span>Wallets:</span>
+              <NewWalletDialog addWalletHandler={addWalletHandler}/>
             </div>
-        </Paper>
-      </>
+            <div className="WalletsList">
+              <Table aria-label="a dense table">
+                <BalanceTableHeader currencyList = {currencyList}></BalanceTableHeader>
+                <TableBody>
+                  {wallets.map(wallet => (
+                    <TableRow 
+                      key={wallet.id} 
+                      hover onClick={() => {selectWalletHandler(wallet.id);}}
+                      selected={selectedWalletId === wallet.id}
+                    >
+                      <TableCell align="center" size="small">{wallet.id}</TableCell>
+                      <TableCell align="left">{wallet.name}</TableCell>
+                      { 
+                        currencyList.map(currency => 
+                          <TableCell key={"currencyTableRow"+currency.id} align="center">{this.getCurrencyReminder(currency, wallet)}</TableCell>)
+                      }                     
+                    </TableRow>
+                  ))}
+                  <BalanceTableSummary currencyList = {currencyList} balanceSummary = { balanceSummary }/>
+                </TableBody>
+              </Table>
+            </div>
+          </div>
+      </Paper>
     );
   }
 }

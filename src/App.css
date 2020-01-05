@@ -1,8 +1,10 @@
 :root {
-  --header-height: 64px;
+  /* --header-height: 64px;
   --footer-height: 56px;
-  --body-height: calc(100% - var(--header-height) - var(--footer-height));
-  --bodycontent-height: calc(100% - (var(--footer-height) / 2));
+  --body-height: 100%;
+  --bodycontent-height: 100%; */
+  /* calc(100% - var(--header-height) - var(--footer-height)); */
+  /* calc(100% - (var(--footer-height) / 2)); */
 }
 
 #root,
@@ -13,7 +15,7 @@ body,
   margin: 0;
 }
 
-header {
+/* header {
   height: var(--header-height);
 }
 
@@ -40,4 +42,4 @@ header {
 .MuiTableHead-root .MuiTableCell-head {
   font-weight: 700;
   padding: 0%;
-}
+} */

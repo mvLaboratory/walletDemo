@@ -2,6 +2,9 @@ import {
   LOAD_WALETS_BALANCE_BEGIN,
   LOAD_WALETS_BALANCE_SUCCESS,
   LOAD_WALETS_BALANCE_FAILURE,
+  LOAD_BALANCE_SUMMARY_BEGIN,
+  LOAD_BALANCE_SUMMARY_SUCCESS,
+  LOAD_BALANCE_SUMMARY_FAILURE,
   SAVE_WALLET_BEGIN,
   SAVE_WALLET_SUCCESS,
   SAVE_WALLET_FAILURE,
@@ -14,8 +17,10 @@ const defaultBalance = [];
 
 const initialState = {
   items: defaultBalance,
+  balanceSummary: {},
   loading: false,
   saveWalletLoading: false,
+  balanceSummaryLoading: false,
   saveWalletResult: false,
   addWalletResult: false,
   error: null
@@ -43,6 +48,28 @@ export default function BalanceReducer(state = initialState, action) {
         loading: false,
         error: action.payload.error,
         items: []
+      };
+
+    case LOAD_BALANCE_SUMMARY_BEGIN:
+      return {
+        ...state,
+        balanceSummaryLoading: true,
+        error: null
+      };
+
+    case LOAD_BALANCE_SUMMARY_SUCCESS:
+      return {
+        ...state,
+        balanceSummaryLoading: false,
+        balanceSummary: action.payload.balanceSummary
+      };
+
+    case LOAD_BALANCE_SUMMARY_FAILURE:
+      return {
+        ...state,
+        balanceSummaryLoading: false,
+        error: action.payload.error,
+        balanceSummary: {}
       };
 
     case SAVE_WALLET_BEGIN:
