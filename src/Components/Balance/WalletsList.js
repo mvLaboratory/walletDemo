@@ -1,5 +1,7 @@
 import React from "react";
 import NewWalletDialog from "./NewWalletDialog.js"
+import BalanceTableHeader from "./BalanceTable/BalanceTableHeader.js"
+import BalanceTableSummary from "./BalanceTable/BalanceTableSummary.js"
 import { Paper, Table, TableBody, TableCell, TableHead, TableRow} from '@material-ui/core'
 
 class WalletsList extends React.Component {
@@ -22,18 +24,7 @@ class WalletsList extends React.Component {
               </div>
               <div className="WalletsList">
                 <Table aria-label="a dense table">
-                  <TableHead>
-                    <TableRow>
-                      <TableCell align="center" size="small" rowSpan={2}>#</TableCell>
-                      <TableCell align="center" rowSpan={2}>Wallet</TableCell>
-                      <TableCell align="center" colSpan={3}>Balance</TableCell>
-                    </TableRow>
-                    <TableRow>
-                      {currencyList.map(currency => (
-                        <TableCell key={"currencyTableHead"+currency.id} align="center">{currency.name}</TableCell>
-                      ))}
-                    </TableRow>
-                  </TableHead>
+                  <BalanceTableHeader currencyList = {currencyList}></BalanceTableHeader>
                   <TableBody>
                     {wallets.map(wallet => (
                       <TableRow 
@@ -49,14 +40,14 @@ class WalletsList extends React.Component {
                         }                     
                       </TableRow>
                     ))}
-                    </TableBody>
-                    <TableRow>
-                        <TableCell align="right"> Total: </TableCell>
-                        <TableCell>100</TableCell>
-                        <TableCell>100</TableCell>
-                        <TableCell>100</TableCell>
-
-                    </TableRow>
+                    {/* <TableRow>
+                      <TableCell align="right" colSpan={2}>Total:</TableCell>
+                      <TableCell align="center">100</TableCell>
+                      <TableCell align="center">100</TableCell>
+                      <TableCell align="center">100</TableCell>
+                    </TableRow> */}
+                    <BalanceTableSummary/>
+                  </TableBody>
                 </Table>
               </div>
             </div>
