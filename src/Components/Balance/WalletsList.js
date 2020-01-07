@@ -2,6 +2,7 @@ import React from "react";
 import NewWalletDialog from "./NewWalletDialog.js"
 import BalanceTableHeader from "./BalanceTable/BalanceTableHeader.js"
 import BalanceTableSummary from "./BalanceTable/BalanceTableSummary.js"
+import { makeStyles } from '@material-ui/core/styles';
 import { Paper, Table, TableBody, TableCell, TableRow} from '@material-ui/core'
 
 class WalletsList extends React.Component {

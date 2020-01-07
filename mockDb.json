@@ -83,10 +83,6 @@
     ],
     "mainCurrencyBalance": [
       {
-        "rootCurrency": 1,
-        "value": 100
-      },
-      {
         "rootCurrency": 2,
         "value": 5000
       },
