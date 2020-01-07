@@ -15,7 +15,6 @@ class WalletsList extends React.Component {
 
   render() {
     const { styles, selectWalletHandler, wallets, balanceSummary, currencyList, selectedWalletId, addWalletHandler } = this.props;
-    console.log("Wallets List balanceSummary", balanceSummary);
     return (
       <Paper style={styles.Paper}>
           <div className="Balance">

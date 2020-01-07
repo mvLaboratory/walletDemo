@@ -2,6 +2,7 @@ import React from "react";
 import clsx from 'clsx';
 import { TableCell, TableRow} from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles';
+import { getCurrencyValue, getCurrencyInfo } from "./../../../shared/utils"
 
 function BalanceTableSummary( {currencyList, balanceSummary} ) {
   const useStyles = makeStyles(theme => ({
@@ -14,7 +15,7 @@ function BalanceTableSummary( {currencyList, balanceSummary} ) {
   }));
   const classes = useStyles();
 
-  const BalanceTableCell = (text, align = "center", colSpan = 1, rowSpan = 1) => {
+  const renderBalanceTableCell = (text, align = "center", colSpan = 1, rowSpan = 1) => {
     return(
       <TableCell
         align={align}
@@ -26,48 +27,51 @@ function BalanceTableSummary( {currencyList, balanceSummary} ) {
     );
   }
 
-  const renderCurrencyTotalCollumns = () => {
-    if (!currencyList) return (<div/>);
-    console.log("Table Summary", balanceSummary);
+  const renderCurrencyTotalCollumns = (currencyCollection) => {
+    if (!currencyList) {
+      return (<div/>);
+    }
     return(
       currencyList.map(currency => (
-        BalanceTableCell(currency.value)
+        renderBalanceTableCell(getCurrencyValue(currencyCollection, currency))
     )));
+  }
+
+  const renderMainCurrencySummary = () => {
+    if (!balanceSummary || !balanceSummary.mainCurrencyBalance) 
+      return <></>
+
+    return(
+      <>
+        {balanceSummary.mainCurrencyBalance.map((data, index) => 
+          renderMainCurrencySummaryRow(data, index === 0)
+        )}
+      </>
+    );
+  }
+
+  const renderMainCurrencySummaryRow = (rowData, shouldRenderTitle) => {
+    return (
+      <TableRow>
+        { shouldRenderTitle && renderBalanceTableCell("Main currency total", "center", 1, 3) }
+        { renderBalanceTableCell(getCurrencyInfo(rowData.rootCurrency, currencyList).name, "right") }
+        {currencyList.map(currency => 
+          renderBalanceTableCell(currency.isMain ? rowData.value : "")
+        )}
+      </TableRow>
+    )
   }
 
   return(
     <>
       <TableRow>
-        { BalanceTableCell("Total", "center", 2) }
-        { renderCurrencyTotalCollumns() }
-        {/* { BalanceTableCell("100") }
-        { BalanceTableCell("100") }
-        { BalanceTableCell("100") } */}
+        { renderBalanceTableCell("Total", "center", 2) }
+        { renderCurrencyTotalCollumns(balanceSummary.currencyBalance || []) }
       </TableRow>
-      <TableRow className={clsx(classes.tableSummaty)}>
-        { BalanceTableCell("Main currency total", "center", 1, 3) }
-        { BalanceTableCell("UAH", "right") }
-        { BalanceTableCell("") }
-        { BalanceTableCell("100") }
-        { BalanceTableCell("") }
-      </TableRow>
-      <TableRow className={clsx(classes.tableSummaty)}>
-        { BalanceTableCell("USD", "right") }
-        { BalanceTableCell("") }
-        { BalanceTableCell("100") }
-        { BalanceTableCell("") }
-      </TableRow>
-      <TableRow className={clsx(classes.tableSummaty)}>
-        { BalanceTableCell("EUR", "right") }
-        { BalanceTableCell("") }
-        { BalanceTableCell("100") }
-        { BalanceTableCell("") }
-      </TableRow>
+      {renderMainCurrencySummary()}
       <TableRow>
-        { BalanceTableCell("Consolidated balance", "center", 2) }
-        { BalanceTableCell("100") }
-        { BalanceTableCell("100") }
-        { BalanceTableCell("100") }
+        { renderBalanceTableCell("Consolidated balance", "center", 2) }
+        { renderCurrencyTotalCollumns(balanceSummary.consolidatedBalance || []) }
       </TableRow>
     </>
   );

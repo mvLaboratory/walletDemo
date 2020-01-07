@@ -73,8 +73,6 @@ class BalancePage extends React.Component {
     }
     const { balance, balanceSummary, currency } = this.props;
     const { activeWallet } = this.state;
-    //debugger;
-    console.log("balanceSummary", balanceSummary);
 
     return (     
       <Grid container>

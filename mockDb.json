@@ -69,12 +69,12 @@
   "balanceSummary": {
     "currencyBalance" : [
       {
-        "currency": 1,
+        "currency": 2,
         "value": 100
       },
       {
-        "currency": 2,
-        "value": 200
+        "currency": 1,
+        "value": 230
       },
       {
         "currency": 3,
@@ -97,15 +97,15 @@
     ],
     "consolidatedBalance": [
       {
-        "rootCurrency": 1,
+        "currency": 1,
         "value": 13100
       },
       {
-        "rootCurrency": 2,
+        "currency": 2,
         "value": 600
       },
       {
-        "rootCurrency": 3,
+        "currency": 3,
         "value": 500
       }
     ]
