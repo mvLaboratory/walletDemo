@@ -2,8 +2,17 @@ import React from "react";
 import NewWalletDialog from "./NewWalletDialog.js"
 import BalanceTableHeader from "./BalanceTable/BalanceTableHeader.js"
 import BalanceTableSummary from "./BalanceTable/BalanceTableSummary.js"
-import { makeStyles } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/styles';
 import { Paper, Table, TableBody, TableCell, TableRow} from '@material-ui/core'
+
+const styles = theme => ({
+  tableActions: {
+      display: "flex",
+      justifyContent: "space-between",
+      alignItems: "center"
+  }
+  });
+
 
 class WalletsList extends React.Component {
   getCurrencyReminder(currency, wallet) {
@@ -15,11 +24,13 @@ class WalletsList extends React.Component {
   }
 
   render() {
-    const { styles, selectWalletHandler, wallets, balanceSummary, currencyList, selectedWalletId, addWalletHandler } = this.props;
+    const { styles, classes, selectWalletHandler, wallets, balanceSummary, currencyList, selectedWalletId, addWalletHandler } = this.props;
+    
     return (
       <Paper style={styles.Paper}>
           <div className="Balance">
-            <div><span>Wallets:</span>
+            <div className={classes.tableActions}>
+              <span>Wallets:</span>
               <NewWalletDialog addWalletHandler={addWalletHandler}/>
             </div>
             <div className="WalletsList">
@@ -50,4 +61,4 @@ class WalletsList extends React.Component {
   }
 }
 
-export default (WalletsList);
+export default withStyles(styles)(WalletsList);

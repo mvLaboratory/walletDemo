@@ -1,6 +1,8 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';  
+import Button from '@material-ui/core/Button'; 
+import Fab from '@material-ui/core/Fab';
+import AddIcon from '@material-ui/icons/Add'; 
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
@@ -15,6 +17,9 @@ const useStyles = makeStyles(theme => ({
       flexDirection: 'column',
       margin: 'auto',
       width: 'fit-content',
+  },
+  addButton: {
+    margin: "10px"
   },
   formControl: {
       marginTop: theme.spacing(2),
@@ -51,9 +56,9 @@ export default function NewWalletDialog({ addWalletHandler }) {
 
   return (
     <>
-      <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-        New wallet
-      </Button>
+      <Fab size="small" color="primary" aria-label="add" onClick={handleClickOpen} className={classes.addButton}>
+          <AddIcon />
+        </Fab>
       <Dialog
       fullWidth={true}
       maxWidth={"xs"}
