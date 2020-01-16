@@ -8,18 +8,19 @@ import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 const useStyles = makeStyles({
     root: {
       width: "100%",
+      flexShrink: 0,
+      maxHeight: "53px"
     }
   });
 
-  export default function Footer() {
+  export default function Footer({activeTabId, setActiveTabId}) {
     const classes = useStyles();
-    const [value, setValue] = React.useState(0);
-  
+
     return (
       <BottomNavigation
-        value={value}
+        value={activeTabId}
         onChange={(event, newValue) => {
-          setValue(newValue);
+          setActiveTabId(newValue);
         }}
         showLabels
         className={classes.root}

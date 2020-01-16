@@ -19,7 +19,7 @@ const useStyles = makeStyles(theme => ({
       width: 'fit-content',
   },
   addButton: {
-    margin: "10px"
+    marginBottom: "0px"
   },
   formControl: {
       marginTop: theme.spacing(2),

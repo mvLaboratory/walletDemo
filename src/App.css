@@ -1,18 +1,24 @@
-:root {
-  /* --header-height: 64px;
-  --footer-height: 56px;
-  --body-height: 100%;
-  --bodycontent-height: 100%; */
-  /* calc(100% - var(--header-height) - var(--footer-height)); */
-  /* calc(100% - (var(--footer-height) / 2)); */
-}
-
 #root,
 html,
 body,
 .App {
   height: 100%;
   margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.BodyContainer {
+  display: flex;
+  flex-direction: column;
+
+  flex: 1 0 auto;
 }
 
 /* header {

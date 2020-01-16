@@ -10,7 +10,7 @@ const styles = theme => ({
       display: "flex",
       justifyContent: "space-between",
       alignItems: "center"
-  }
+    }
   });
 
 
@@ -30,7 +30,7 @@ class WalletsList extends React.Component {
       <Paper style={styles.Paper}>
           <div className="Balance">
             <div className={classes.tableActions}>
-              <span>Wallets:</span>
+              <span><h3>Wallets:</h3></span>
               <NewWalletDialog addWalletHandler={addWalletHandler}/>
             </div>
             <div className="WalletsList">
