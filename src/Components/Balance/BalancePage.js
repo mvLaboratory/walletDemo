@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import WalletsList from "./WalletsList.js"
+import WalletsList from "./BalanceTable/WalletsList.js"
 import WalletInfo from "./WalletInfo.js"
 import { addWallet, saveWallet, loadWaletsBalance, loadBalanceSummary } from "../../actions/BalanceActions.js";
 import { loadCurrency } from "../../actions/CurrencyActions.js";

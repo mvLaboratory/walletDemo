@@ -1,6 +1,7 @@
 import React from "react";
 
 import BalancePage from "./Components/Balance/BalancePage.js";
+import CurrencyPage from "./Components/Currency/CurrencyPage.js"
 import {Footer, Header} from "./Components/Layouts";
 
 import "./App.css";
@@ -8,10 +9,10 @@ import "./App.css";
 function App() {
   const appPages = {
     balance: {id: 0, component: <BalancePage />},
-    currency: {id: 1, component: <div>currency</div>}
+    currency: {id: 1, component: <CurrencyPage />}
   }
   const defaultPage = appPages.balance;
-  
+
   const [activeTabId, setActiveTabId] = React.useState(defaultPage.id);
 
   const getPageComponent = () => {

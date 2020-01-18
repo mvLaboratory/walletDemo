@@ -1,7 +1,7 @@
 import React from "react";
-import NewWalletDialog from "./NewWalletDialog.js"
-import BalanceTableHeader from "./BalanceTable/BalanceTableHeader.js"
-import BalanceTableSummary from "./BalanceTable/BalanceTableSummary.js"
+import NewWalletDialog from "../NewWalletDialog.js"
+import BalanceTableHeader from "./BalanceTableHeader.js"
+import BalanceTableSummary from "./BalanceTableSummary.js"
 import { withStyles } from '@material-ui/styles';
 import { Paper, Table, TableBody, TableCell, TableRow} from '@material-ui/core'
 
