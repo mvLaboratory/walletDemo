@@ -9,12 +9,12 @@ const styles = theme => ({
     justifyContent: "space-between",
     alignItems: "center"
   },
-  Paper: {
-    paddingLeft:20,
-    paddingRight:20,
-    paddingBottom:10,
-    marginTop: 1,
-    marginBottom: 1,
+  paper: {
+    paddingLeft: "20px",
+    paddingRight:"20px",
+    paddingBottom:"10px",
+    marginTop: "1px",
+    marginBottom: "1px",
     overflowY: 'auto'
   },
   tableHeader: {
@@ -30,7 +30,7 @@ class CurrencyList extends React.Component {
     const { classes, currencyList, selectedCurrencyId, handleCurrencySelect } = this.props;
     
     return (
-      <Paper style={styles.Paper}>
+      <Paper className={classes.paper}>
           <div className="Currency">
             <div className={classes.tableActions}>
               <span><h3>Currency:</h3></span>

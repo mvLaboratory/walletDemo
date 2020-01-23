@@ -67,7 +67,7 @@
     }
   ],
   "balanceSummary": {
-    "currencyBalance" : [
+    "currencyBalance": [
       {
         "currency": 2,
         "value": 100

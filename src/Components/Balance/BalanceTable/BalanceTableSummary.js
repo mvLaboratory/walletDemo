@@ -14,9 +14,12 @@ function BalanceTableSummary( {currencyList, balanceSummary} ) {
     }
   }));
   const classes = useStyles();
+  let totalCellsCount = 1;
+
   const renderBalanceTableCell = (text, align = "center", colSpan = 1, rowSpan = 1) => {
     return(
       <TableCell
+        key={++totalCellsCount}
         align={align}
         colSpan={colSpan}
         rowSpan={rowSpan}
@@ -51,7 +54,7 @@ function BalanceTableSummary( {currencyList, balanceSummary} ) {
 
   const renderMainCurrencySummaryRow = (rowData, shouldRenderTitle) => {
     return (
-      <TableRow>
+      <TableRow key={++totalCellsCount} >
         { shouldRenderTitle && renderBalanceTableCell("Σ", "center", 1, (currencyList.length - 1)) }
         { renderBalanceTableCell(getCurrencyInfo(rowData.rootCurrency, currencyList).name, "right") }
         {currencyList.map(currency => 
