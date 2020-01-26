@@ -87,7 +87,6 @@ export const ADD_WALLETS_BEGIN = "ADD_WALLETS_BEGIN";
 export const ADD_WALLETS_SUCCESS = "ADD_WALLETS_SUCCESS";
 export const ADD_WALLETS_FAILURE = "ADD_WALLETS_FAILURE";
 
-
 export const loadWaletsBalanceBegin = () => ({
   type: LOAD_WALETS_BALANCE_BEGIN
 });

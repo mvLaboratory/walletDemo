@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { loadCurrency } from "../../actions/CurrencyActions.js";
+import { loadCurrency, addCurrency } from "../../actions/CurrencyActions.js";
 import { Grid } from '@material-ui/core';
 import CurrencyList from './CurrencyTable/CurrencyList.js'
 
@@ -28,6 +28,10 @@ class CurrencyPage extends React.Component {
     this.setState({selectedCurrency: elementCopy});
   }
 
+  addCurrencyHandler = (currecny) => {
+    this.props.dispatch(addCurrency(currecny));
+  }
+
   render() {
     const { currency } = this.props;
     const { selectedCurrency } = this.state;
@@ -39,6 +43,7 @@ class CurrencyPage extends React.Component {
             currencyList={ currency} 
             selectedCurrencyId = {selectedCurrency ? selectedCurrency.id : 0} 
             handleCurrencySelect = { this.handleCurrencySelect }
+            addCurrencyHandler = { this.addCurrencyHandler }
           />
         </Grid>
         <Grid item sm>

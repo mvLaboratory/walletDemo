@@ -2,6 +2,7 @@ import React from "react";
 import { withStyles } from '@material-ui/styles';
 import CheckIcon from '@material-ui/icons/Check';
 import { Paper, Table, TableHead, TableBody, TableCell, TableRow} from '@material-ui/core'
+import NewCurrencyDialog from "../NewCurrencyDialog";
 
 const styles = theme => ({
   tableActions: {
@@ -27,13 +28,14 @@ const styles = theme => ({
 
 class CurrencyList extends React.Component {
   render() {
-    const { classes, currencyList, selectedCurrencyId, handleCurrencySelect } = this.props;
+    const { classes, currencyList, selectedCurrencyId, handleCurrencySelect, addCurrencyHandler } = this.props;
     
     return (
       <Paper className={classes.paper}>
           <div className="Currency">
             <div className={classes.tableActions}>
-              <span><h3>Currency:</h3></span>
+              <span> <h3>Currency:</h3> </span>
+              <NewCurrencyDialog addCurrencyHandler={ addCurrencyHandler }/>
             </div>
             <div>
               <Table aria-label="a dense table">
