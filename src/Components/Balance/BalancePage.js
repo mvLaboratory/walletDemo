@@ -1,11 +1,12 @@
 import React from "react";
 import { connect } from "react-redux";
 import WalletsList from "./BalanceTable/WalletsList.js"
-import WalletInfo from "./WalletInfo.js"
+import CreateOperationDialog from "./CreateOperationDialog.js"
 import { addWallet, saveWallet, loadWaletsBalance, loadBalanceSummary } from "../../actions/BalanceActions.js";
 import { loadCurrency } from "../../actions/CurrencyActions.js";
 import { Grid } from '@material-ui/core';
 
+//TODO::rename
 class BalancePage extends React.Component {
   constructor(props){
     super(props);
@@ -90,7 +91,7 @@ class BalancePage extends React.Component {
           />
         </Grid>
         <Grid item sm>
-          <WalletInfo  
+          <CreateOperationDialog  
             styles={styles}
             activeWallet={activeWallet}
             currencyList={currency}
