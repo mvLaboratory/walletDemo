@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState } from "react";
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import { Paper} from '@material-ui/core'
@@ -8,10 +8,9 @@ import InputLabel from '@material-ui/core/InputLabel';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import FormControl from '@material-ui/core/FormControl';
 import SaveIcon from '@material-ui/icons/Save';
+import Select from '@material-ui/core/Select';
 
-function CreateOperationDialog( {styles, activeWallet, currencyList, handleWalletNameChange, handleWalletBalanceChange, saveHandler }) {
-  const walletName = activeWallet ? activeWallet.name : '';
-
+function CreateQuickOperationDialog( {styles, saveHandler }) {
   const useStyles = makeStyles(theme => ({
     root: {
       display: 'flex',
@@ -34,41 +33,52 @@ function CreateOperationDialog( {styles, activeWallet, currencyList, handleWalle
   }));
   const classes = useStyles();
 
-  const getOperationValue = (currencyId) => {
-    if (!currencyId || !activeWallet || !activeWallet.remainders)
-    return 0;
-    var balance = activeWallet.remainders.find(x => x.currency === currencyId) || { value: 0 };
-    return balance.value;
-  }
+  const [summ, setSumm] = useState(0.00);
+  const [operationCategory, setOperationCategory] = useState(0);
 
-  const renderOperationAddForm = () => {
-    return(       
+  const renderSummInput = () => {
+    return (       
       <div>
-        <FormControl fullWidth className={clsx(classes.margin)}>
-          <InputLabel>Name</InputLabel>
-          <Input value={walletName}  
-            onChange={event => handleWalletNameChange(event.target.value)}
-          />
-        </FormControl> 
-        <InputLabel className={clsx(classes.margin)} htmlFor="standard-adornment-amount">Amount</InputLabel>     
+        <InputLabel className={clsx(classes.margin)} htmlFor="standard-adornment-amount">Summ:</InputLabel>     
         <FormControl fullWidth key={"operationValue"} className={clsx(classes.margin, classes.withlabel, classes.textField)}>
           <Input
             id={"standard-adornment-amount"}
             key={"amountInput"}
-            value={getOperationValue()}  
-            //onChange={event => handleOperationValueChange(event.target.value)}
+            value={summ}  
+            onChange={event => setSumm(event.target.value)}
             startAdornment={<InputAdornment position="start">{"Y"}</InputAdornment>}
           />
         </FormControl> 
-        ))
       </div>
     ); 
   }
 
+  const renderOperationTypeSelect = () => {
+    return (
+      <FormControl className={clsx(classes.margin, classes.withlabel, classes.textField)}>
+        <InputLabel className={clsx(classes.margin)} htmlFor="opCategory-native-simple">Operation Category</InputLabel>
+        <Select
+          native
+          value={operationCategory}
+          onChange={event => setOperationCategory(event.target.value)}
+          inputProps={{
+            name: 'opCategory',
+            id: 'opCategory-native-simple',
+          }}
+        >
+          <option value={1}>Food</option>
+          <option value={2}>Internet</option>
+          <option value={3}>Clothes</option>
+        </Select>
+      </FormControl>
+    )
+  }
+
   return (
     <Paper style={styles.Paper}>
-      <h1>New Operation:</h1>
-      {renderOperationAddForm()}
+      <h1>Quick Operation:</h1>
+      <div>{renderSummInput()}</div>
+      <div>{renderOperationTypeSelect()}</div>
         <Button
           className={clsx(classes.margin)}
           variant="contained"
@@ -82,4 +92,4 @@ function CreateOperationDialog( {styles, activeWallet, currencyList, handleWalle
     </Paper>
   )
 }
-export default CreateOperationDialog;
+export default CreateQuickOperationDialog;

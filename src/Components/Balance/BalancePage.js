@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import WalletsList from "./BalanceTable/WalletsList.js"
-import CreateOperationDialog from "./CreateOperationDialog.js"
+import CreateQuickOperationDialog from "./CreateQuickOperationDialog.js"
 import { addWallet, saveWallet, loadWaletsBalance, loadBalanceSummary } from "../../actions/BalanceActions.js";
 import { loadCurrency } from "../../actions/CurrencyActions.js";
 import { Grid } from '@material-ui/core';
@@ -33,12 +33,6 @@ class BalancePage extends React.Component {
     this.setState({activeWallet: walletCopy});
   }
 
-  handleActiveWalletNameChange = (walletName) => {
-    const { activeWallet } = this.state;
-    activeWallet.name = walletName;
-    this.setState({activeWallet: activeWallet });
-  }
-
   handleActiveWalletBalanceChange = (currencyId, walletBalance) => {
     const { activeWallet } = this.state;
     if (!activeWallet) return;
@@ -53,9 +47,10 @@ class BalancePage extends React.Component {
     this.setState({ activeWallet: activeWallet });
   }
 
-  saveWalletHandler = () => {
-    const { activeWallet } = this.state; 
-    this.props.dispatch(saveWallet(activeWallet));
+  saveOperationHandler = () => {
+    //const { activeWallet } = this.state; 
+    //this.props.dispatch(saveWallet(activeWallet));
+    //TODO:: Call endpoint
   }
 
   addWalletHandler = (walletName) => {
@@ -91,13 +86,9 @@ class BalancePage extends React.Component {
           />
         </Grid>
         <Grid item sm>
-          <CreateOperationDialog  
+          <CreateQuickOperationDialog  
             styles={styles}
-            activeWallet={activeWallet}
-            currencyList={currency}
-            saveHandler={this.saveWalletHandler}
-            handleWalletNameChange={this.handleActiveWalletNameChange}
-            handleWalletBalanceChange={this.handleActiveWalletBalanceChange}
+            saveHandler={this.saveOperationHandler}
           />
         </Grid>
       </Grid>    
