@@ -2,8 +2,9 @@ import React from "react";
 import { connect } from "react-redux";
 import WalletsList from "./BalanceTable/WalletsList.js"
 import CreateQuickOperationDialog from "./CreateQuickOperationDialog.js"
-import { addWallet, saveWallet, loadWaletsBalance, loadBalanceSummary } from "../../actions/BalanceActions.js";
+import { addWallet, saveWallet  , loadWaletsBalance, loadBalanceSummary } from "../../actions/BalanceActions.js";
 import { loadCurrency } from "../../actions/CurrencyActions.js";
+import { loadWallets } from "../../actions/WalletsActions.js";
 import { Grid } from '@material-ui/core';
 
 //TODO::rename
@@ -15,6 +16,8 @@ class BalancePage extends React.Component {
 
   componentDidMount() {
     this.props.dispatch(loadCurrency());
+    this.props.dispatch(loadWallets());
+
     this.props.dispatch(loadWaletsBalance());
     this.props.dispatch(loadBalanceSummary());
   }
@@ -69,7 +72,7 @@ class BalancePage extends React.Component {
         overflowY: 'auto'
       }
     }
-    const { balance, balanceSummary, currency } = this.props;
+    const { balance, balanceSummary, currency, wallets } = this.props;
     const { activeWallet } = this.state;
 
     return (     
@@ -88,6 +91,8 @@ class BalancePage extends React.Component {
         <Grid item sm>
           <CreateQuickOperationDialog  
             styles={styles}
+            currencyList={currency}
+            walletsList={wallets}
             saveHandler={this.saveOperationHandler}
           />
         </Grid>
@@ -101,6 +106,8 @@ const mapStateToProps = function(state) {
      balance: state.BalanceReducer.items,
      balanceSummary: state.BalanceReducer.balanceSummary,
      currency: state.CurrencyReducer.currency,
+     wallets: state.WalletsReducer.wallets,
+
      loading: state.BalanceReducer.loading,
      error: state.BalanceReducer.error
    };

@@ -4,7 +4,7 @@ export function loadWaletsBalance() {
   return dispatch => {
     dispatch(loadWaletsBalanceBegin());
     return axios
-      .get("https://localhost:44319/api/balance")
+      .get("https://walletdev.azurewebsites.net/api/balance")
       .then(response => {
         return response.data;
       })
