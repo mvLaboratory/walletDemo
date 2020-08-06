@@ -31,14 +31,19 @@ const useStyles = makeStyles(theme => ({
   })
 );
 
-export default function NewWalletDialog({ addWalletHandler }) {
+export default function NewCurrencyDialog({ addCurrencyHandler }) {
   const classes = useStyles();
+  const emptyCurrency = {
+    name: "",
+    symbol: "",
+    isMain: false
+  }
   const [open, setOpen] = React.useState(false);
-  const [walletName, setwalletName] = React.useState("");
+  const [currencyInfo, setCurrencyInfo] = React.useState(emptyCurrency);
 
   const handleClickOpen = () => {
     setOpen(true);
-    setwalletName("");
+    setCurrencyInfo(emptyCurrency);
   };
 
   const handleClose = () => {
@@ -46,13 +51,20 @@ export default function NewWalletDialog({ addWalletHandler }) {
   };
 
   const handleSave = () => {
-    addWalletHandler(walletName);
+    addCurrencyHandler(currencyInfo);
     setOpen(false);
   };
 
-  const handleWalletNameChange = event => {
-    setwalletName(event.target.value);
+  const handleCurrencyNameChange = event => {
+    currencyInfo.name = currencyInfo.name + event.target.value;
+    console.log(`new currency name = ${currencyInfo.name}`)
+    setCurrencyInfo(currencyInfo);
   };
+
+  const getNewCurrencyName = () => {
+    console.log(`returning currency name = ${currencyInfo.name}`)
+    return currencyInfo.name;
+  }
 
   return (
     <>
@@ -66,12 +78,12 @@ export default function NewWalletDialog({ addWalletHandler }) {
       onClose={handleClose}
       aria-labelledby="addWallet-dialog-title"
       >
-        <DialogTitle id="addWallet-dialog-title">New Wallet</DialogTitle>
+        <DialogTitle id="addWallet-dialog-title">New Currecny</DialogTitle>
         <DialogContent>
           <form className={classes.form} noValidate>
               <FormControl className={classes.formControl}>
                 <InputLabel htmlFor="max-width">Name</InputLabel>
-                <Input value={walletName} onChange={handleWalletNameChange}/>
+                <Input value={currencyInfo.name} onChange={handleCurrencyNameChange}/>
               </FormControl>
           </form>
         </DialogContent>

@@ -1,13 +1,13 @@
 import React from "react";
 import { connect } from "react-redux";
-import WalletsList from "./WalletsList.js"
-import WalletInfo from "./WalletInfo.js"
-import { addWallet, saveWallet, loadWaletsBalance } from "../../actions/BalanceActions.js";
+import WalletsList from "./BalanceTable/WalletsList.js"
+import CreateQuickOperationDialog from "./CreateQuickOperationDialog.js"
+import { addWallet, saveWallet  , loadWaletsBalance, loadBalanceSummary } from "../../actions/BalanceActions.js";
 import { loadCurrency } from "../../actions/CurrencyActions.js";
+import { loadWallets } from "../../actions/WalletsActions.js";
+import { Grid } from '@material-ui/core';
 
-
-import { Grid } from '@material-ui/core'
-
+//TODO::rename
 class BalancePage extends React.Component {
   constructor(props){
     super(props);
@@ -16,7 +16,10 @@ class BalancePage extends React.Component {
 
   componentDidMount() {
     this.props.dispatch(loadCurrency());
+    this.props.dispatch(loadWallets());
+
     this.props.dispatch(loadWaletsBalance());
+    this.props.dispatch(loadBalanceSummary());
   }
   
   componentDidUpdate() {
@@ -33,12 +36,6 @@ class BalancePage extends React.Component {
     this.setState({activeWallet: walletCopy});
   }
 
-  handleActiveWalletNameChange = (walletName) => {
-    const { activeWallet } = this.state;
-    activeWallet.name = walletName;
-    this.setState({activeWallet: activeWallet });
-  }
-
   handleActiveWalletBalanceChange = (currencyId, walletBalance) => {
     const { activeWallet } = this.state;
     if (!activeWallet) return;
@@ -53,9 +50,10 @@ class BalancePage extends React.Component {
     this.setState({ activeWallet: activeWallet });
   }
 
-  saveWalletHandler = () => {
-    const { activeWallet } = this.state; 
-    this.props.dispatch(saveWallet(activeWallet));
+  saveOperationHandler = () => {
+    //const { activeWallet } = this.state; 
+    //this.props.dispatch(saveWallet(activeWallet));
+    //TODO:: Call endpoint
   }
 
   addWalletHandler = (walletName) => {
@@ -66,15 +64,17 @@ class BalancePage extends React.Component {
   render() {
     const styles = {
       Paper: {
-        padding: 20,
-        marginTop: 10,
-        marginBottom: 10,
+        paddingLeft:20,
+        paddingRight:20,
+        paddingBottom:10,
+        marginTop: 1,
+        marginBottom: 1,
         overflowY: 'auto'
       }
     }
-    const { balance, currency } = this.props;
+    const { balance, balanceSummary, currency, wallets } = this.props;
     const { activeWallet } = this.state;
-    
+
     return (     
       <Grid container>
         <Grid item sm>
@@ -83,18 +83,17 @@ class BalancePage extends React.Component {
             selectWalletHandler={this.handleWalletSelect}
             selectedWalletId={activeWallet ? activeWallet.id : 0}
             wallets={balance}
+            balanceSummary={balanceSummary}
             currencyList={currency}
             addWalletHandler={this.addWalletHandler}
           />
         </Grid>
         <Grid item sm>
-          <WalletInfo  
+          <CreateQuickOperationDialog  
             styles={styles}
-            activeWallet={activeWallet}
             currencyList={currency}
-            saveHandler={this.saveWalletHandler}
-            handleWalletNameChange={this.handleActiveWalletNameChange}
-            handleWalletBalanceChange={this.handleActiveWalletBalanceChange}
+            walletsList={wallets}
+            saveHandler={this.saveOperationHandler}
           />
         </Grid>
       </Grid>    
@@ -105,7 +104,10 @@ class BalancePage extends React.Component {
 const mapStateToProps = function(state) {
    return {
      balance: state.BalanceReducer.items,
+     balanceSummary: state.BalanceReducer.balanceSummary,
      currency: state.CurrencyReducer.currency,
+     wallets: state.WalletsReducer.wallets,
+
      loading: state.BalanceReducer.loading,
      error: state.BalanceReducer.error
    };

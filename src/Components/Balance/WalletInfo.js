@@ -11,7 +11,6 @@ import SaveIcon from '@material-ui/icons/Save';
 
 function WalletInfo( {styles, activeWallet, currencyList, handleWalletNameChange, handleWalletBalanceChange, saveHandler }) {
   const walletName = activeWallet ? activeWallet.name : '';
-  //const walletBalance = activeWallet ? activeWallet.value : 0;
 
   const useStyles = makeStyles(theme => ({
     root: {

@@ -1,7 +1,10 @@
 import {
   LOAD_CURRENCY_BEGIN,
   LOAD_CURRENCY_SUCCESS,
-  LOAD_CURRENCY_FAILURE
+  LOAD_CURRENCY_FAILURE,
+  ADD_CURRENCY_BEGIN,
+  ADD_CURRENCY_SUCCESS,
+  ADD_CURRENCY_FAILURE
 } from "../actions/CurrencyActions";
 
 const initialState = {
@@ -33,6 +36,29 @@ export default function CurrencyReducer(state = initialState, action) {
         error: action.payload.error,
         items: []
       };
+
+
+      case ADD_CURRENCY_BEGIN:
+        return {
+          ...state,
+          currencyAdding: true,
+          error: null
+        };
+  
+      case ADD_CURRENCY_SUCCESS:
+        return {
+          ...state,
+          currencyAdding: false,
+          currencyAddingResult: true
+        };
+    
+      case ADD_CURRENCY_FAILURE:
+        return {
+          ...state,
+          currencyAdding: false,
+          currencyAddingResult: false,
+          error: action.payload.error,
+        };
 
     default:
       // ALWAYS have a default case in a reducer
