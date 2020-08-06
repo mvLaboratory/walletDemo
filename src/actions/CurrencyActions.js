@@ -20,7 +20,7 @@ export function addCurrency() {
   return dispatch => {
     dispatch(addCurrencyBegin());
     return axios
-      .post("http://localhost:30001/currency")
+      .post("https://walletdev.azurewebsites.net/api/currency")
       .then(response => {
         return response.data;
       })

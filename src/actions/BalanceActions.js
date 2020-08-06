@@ -20,7 +20,7 @@ export function loadBalanceSummary() {
   return dispatch => {
     dispatch(loadBalanceSummaryBegin());
     return axios
-      .get("http://localhost:30001/balanceSummary")
+      .get("https://walletdev.azurewebsites.net/api/balanceSummary")
       .then(response => {
         return response.data;
       })
@@ -36,7 +36,7 @@ export function saveWallet(wallet) {
   return dispatch => {
     dispatch(saveWalletBegin());
     return axios
-      .put(`http://localhost:30001/balance/${wallet.id}`, wallet)
+      .put(`https://walletdev.azurewebsites.net/api/balance/${wallet.id}`, wallet)
       .then(response => {
         return response.data;
       })
@@ -51,11 +51,12 @@ export function saveWallet(wallet) {
   };
 }
 
+//Move to wallets actions
 export function addWallet(wallet) {
   return dispatch => {
     dispatch(addWalletBegin());
     return axios
-      .post("http://localhost:30001/balance", wallet)
+      .post("https://walletdev.azurewebsites.net/api/wallets", wallet)
       .then(response => {
         dispatch(addWalletSuccess());
         return response.data;
