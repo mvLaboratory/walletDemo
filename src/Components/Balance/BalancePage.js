@@ -5,6 +5,7 @@ import CreateQuickOperationDialog from "./CreateQuickOperationDialog.js"
 import { addWallet, saveWallet  , loadWaletsBalance, loadBalanceSummary } from "../../actions/BalanceActions.js";
 import { loadCurrency } from "../../actions/CurrencyActions.js";
 import { loadWallets } from "../../actions/WalletsActions.js";
+//import { loadOperationCategories } from "../../actions/OperationCategoriesActions.js";
 import { Grid } from '@material-ui/core';
 
 //TODO::rename
