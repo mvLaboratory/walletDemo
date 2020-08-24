@@ -6,5 +6,6 @@ services:
     build: .
     environment:
       NODE_ENV: production
+    stdin_open: true
     ports:
-      - 3000
+      - "3000:3000"
