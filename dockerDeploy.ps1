@@ -17,6 +17,7 @@ docker build --tag $imagename .
 
 #  $containerGuid = docker run -d -p 3000:3000 $imagename --name "$($imagename)container"
 #  docker stop $containerGuid
+#  docker rm $containerGuid
 
 #az group create --name $resourceGroup --location francecentral
 az acr create --name $registryname --resource-group $resourceGroup --sku Basic --admin-enabled true
