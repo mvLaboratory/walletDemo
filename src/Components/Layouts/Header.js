@@ -7,5 +7,6 @@ export default props =>
       <Typography variant="h3" color="inherit">
         Personal Wallet!
       </Typography>
+      <button onClick={props.auth.login}>Log in</button>
     </Toolbar>
   </AppBar>

@@ -1,17 +1,18 @@
 import React from "react";
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-
 import BalancePage from "./Components/Balance/BalancePage.js";
 import CurrencyPage from "./Components/Currency/CurrencyPage.js"
 import {Footer, Header} from "./Components/Layouts";
+import Auth from "./auth/auth"
 
 import "./App.css";
 
 const CALLBACK_PATH = '/login/callback';
 
-function App() {
+function App(props)  {
+  const auth = new Auth(props.history);
   const appPages = {
-    balance: {id: 0, component: <BalancePage />},
+    balance: {id: 0, component: <BalancePage auth={auth}/>},
     currency: {id: 1, component: <CurrencyPage />}
   }
   const defaultPage = appPages.balance;
@@ -27,9 +28,9 @@ function App() {
 
   return (
     <Router>
-      <Route path="/">
+      <Route path="/" exact >
         <div className="App">
-          <Header />
+          <Header auth={auth}/>
           <div className="BodyContainer">
             {getPageComponent()}
           </div>
