@@ -1,25 +1,29 @@
 import React from "react";
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import BalancePage from "./Components/Balance/BalancePage.js";
-import CurrencyPage from "./Components/Currency/CurrencyPage.js"
+//import CurrencyPage from "./Components/Currency/CurrencyPage.js"
+import Callback from "./auth/Callback"
 import {Footer, Header} from "./Components/Layouts";
 import Auth from "./auth/auth"
 
 import "./App.css";
 
-const CALLBACK_PATH = '/login/callback';
-
 function App(props)  {
-  const auth = new Auth(props.history);
+
+  const auth = new Auth();
   const appPages = {
     balance: {id: 0, component: <BalancePage auth={auth}/>},
-    currency: {id: 1, component: <CurrencyPage />}
+    //currency: {id: 1, component: <CurrencyPage />}
   }
   const defaultPage = appPages.balance;
 
   const [activeTabId, setActiveTabId] = React.useState(defaultPage.id);
 
   const getPageComponent = () => {
+    if (!auth.isAuthenticated() && !auth.isCallbackPage()) {
+      auth.login();
+    }
+
     const pagesNames = Object.keys(appPages);
     return (
       (appPages[pagesNames[activeTabId]] || defaultPage).component
@@ -27,7 +31,7 @@ function App(props)  {
   }
 
   return (
-    <Router>
+    <>
       <Route path="/" exact >
         <div className="App">
           <Header auth={auth}/>
@@ -37,8 +41,8 @@ function App(props)  {
           <Footer activeTabId={activeTabId} setActiveTabId={setActiveTabId}/>
         </div>
       </Route>
-      <Route path={CALLBACK_PATH} />
-    </Router>
+      <Route path="/login/callback" render={props => <Callback auth={auth} {...props} />} />
+    </>
   );
 }
 
