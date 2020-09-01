@@ -1,10 +1,10 @@
 import axios from "axios";
 
-export function loadWaletsBalance() {
+export function loadWaletsBalance(auth) {
   return dispatch => {
     dispatch(loadWaletsBalanceBegin());
     return axios
-      .get("https://walletdev.azurewebsites.net/api/balance")
+      .get("/api/balance", {headers: {"Authorization": `Bearer ${auth.getAccessToken()}`}})
       .then(response => {
         return response.data;
       })
@@ -20,7 +20,7 @@ export function loadBalanceSummary() {
   return dispatch => {
     dispatch(loadBalanceSummaryBegin());
     return axios
-      .get("https://walletdev.azurewebsites.net/api/balanceSummary")
+      .get("/api/balanceSummary")
       .then(response => {
         return response.data;
       })
@@ -36,7 +36,7 @@ export function saveWallet(wallet) {
   return dispatch => {
     dispatch(saveWalletBegin());
     return axios
-      .put(`https://walletdev.azurewebsites.net/api/balance/${wallet.id}`, wallet)
+      .put(`/api/balance/${wallet.id}`, wallet)
       .then(response => {
         return response.data;
       })
@@ -51,12 +51,12 @@ export function saveWallet(wallet) {
   };
 }
 
-//Move to wallets actions
+//TODO::Move to wallets actions
 export function addWallet(wallet) {
   return dispatch => {
     dispatch(addWalletBegin());
     return axios
-      .post("https://walletdev.azurewebsites.net/api/wallets", wallet)
+      .post("/api/wallets", wallet)
       .then(response => {
         dispatch(addWalletSuccess());
         return response.data;

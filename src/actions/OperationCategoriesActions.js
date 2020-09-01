@@ -4,7 +4,7 @@ export function loadOperationCategories() {
   return dispatch => {
     dispatch(loadOperationCategoriesBegin());
     return axios
-      .get("https://walletdev.azurewebsites.net/api/operationCategory")
+      .get("/api/operationCategory")
       .then(response => {
         return response.data;
       })

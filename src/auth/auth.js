@@ -5,10 +5,14 @@ export default class Auth {
   constructor() {
     let history = useHistory();
     this.history = history;
+    this.host = process.env.REACT_APP_HOST;
+    this.userProfile = null;
+    this.clientId = process.env.REACT_APP_AUTH0_CLIENTID;
     this.auth0 = new auth0.WebAuth({
         domain: process.env.REACT_APP_AUTH0_DOMAIN,
         clientID: process.env.REACT_APP_AUTH0_CLIENTID,
-        redirectUri: process.env.REACT_APP_AUTH0_CALLBACK,
+        redirectUri: this.host + process.env.REACT_APP_AUTH0_CALLBACK,
+        audience: process.env.REACT_APP_AUTH0_AUDIENCE,
         responseType: "token id_token",
         scope: "openid profile email"
     });
@@ -49,4 +53,32 @@ export default class Auth {
   isCallbackPage() {
     return  new RegExp('login/callback').test(this.history.location.pathname);
   }
+
+  logout = () => {
+    debugger;
+    localStorage.removeItem("access_token");
+    localStorage.removeItem("id_token");
+    localStorage.removeItem("expires_at");
+    this.userProfile = null;
+    this.auth0.logout({
+      clientID: this.clientId,
+      returnTo: this.host
+    });
+  };
+
+  getAccessToken = () => {
+    const accessToken = localStorage.getItem("access_token");
+    if (!accessToken) {
+      throw new Error("No access token found.");
+    }
+    return accessToken;
+  };
+
+  getProfile = cb => {
+    if (this.userProfile) return cb(this.userProfile);
+    this.auth0.client.userInfo(this.getAccessToken(), (err, profile) => {
+      if (profile) this.userProfile = profile;
+      cb(profile, err);
+    });
+  };
 }

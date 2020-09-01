@@ -4,7 +4,7 @@ export function loadCurrency() {
   return dispatch => {
     dispatch(loadCurrencyBegin());
     return axios
-      .get("https://walletdev.azurewebsites.net/api/currency")
+      .get("/api/currency")
       .then(response => {
         return response.data;
       })
@@ -20,7 +20,7 @@ export function addCurrency() {
   return dispatch => {
     dispatch(addCurrencyBegin());
     return axios
-      .post("https://walletdev.azurewebsites.net/api/currency")
+      .post("/api/currency")
       .then(response => {
         return response.data;
       })
