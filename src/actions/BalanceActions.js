@@ -1,10 +1,10 @@
 import axios from "axios";
 
-export function loadWaletsBalance() {
+export function loadWaletsBalance(auth) {
   return dispatch => {
     dispatch(loadWaletsBalanceBegin());
     return axios
-      .get("/api/balance")
+      .get("/api/balance", {headers: {"Authorization": `Bearer ${auth.getAccessToken()}`}})
       .then(response => {
         return response.data;
       })
@@ -51,7 +51,7 @@ export function saveWallet(wallet) {
   };
 }
 
-//Move to wallets actions
+//TODO::Move to wallets actions
 export function addWallet(wallet) {
   return dispatch => {
     dispatch(addWalletBegin());

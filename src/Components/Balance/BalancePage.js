@@ -19,7 +19,7 @@ class BalancePage extends React.Component {
     this.props.dispatch(loadCurrency());
     this.props.dispatch(loadWallets());
 
-    this.props.dispatch(loadWaletsBalance());
+    this.props.dispatch(loadWaletsBalance(this.props.auth));
     this.props.dispatch(loadBalanceSummary());
   }
   
