@@ -5,7 +5,7 @@ export default class Auth {
   constructor() {
     let history = useHistory();
     this.history = history;
-    this.host = process.env.REACT_APP_HOST;
+    this.host = process.env.REACT_APP_LOGIN_HOST;
     this.userProfile = null;
     this.clientId = process.env.REACT_APP_AUTH0_CLIENTID;
     this.auth0 = new auth0.WebAuth({
