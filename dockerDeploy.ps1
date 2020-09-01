@@ -40,3 +40,6 @@ $principalId  = az webapp identity assign --resource-group $resourceGroup --name
 $subscriptionId = az account show --query id --output tsv
 az role assignment create --assignee $principalId --scope "/subscriptions/$($subscriptionId)/resourceGroups/$($resourceGroup)/providers/Microsoft.ContainerRegistry/registries/$($registryname)" --role "AcrPull"
 az webapp config container set --name $appName --resource-group $resourceGroup --docker-custom-image-name $containerName --docker-registry-server-url "https://$($registryname).azurecr.io"
+
+
+#az acr task create --registry $registryname --name fe-acr-task --image "$($imagename):latest" --context https://github.com/mvlaboratory/walletDemo.git --file Dockerfile --git-access-token <token>

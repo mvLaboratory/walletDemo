@@ -23,7 +23,7 @@
     "redux": "^4.0.4",
     "redux-thunk": "^2.3.0"
   },
-  "proxy": "https://localhost:44319/",
+  "proxy": "https://walletdev.azurewebsites.net/",
   "scripts": {
     "start": "react-scripts start",
     "server": "json-server --watch mockDb.json --port 30001",

@@ -7,6 +7,7 @@ export default class Auth {
     this.history = history;
     this.host = process.env.REACT_APP_HOST;
     this.userProfile = null;
+    this.clientId = process.env.REACT_APP_AUTH0_CLIENTID;
     this.auth0 = new auth0.WebAuth({
         domain: process.env.REACT_APP_AUTH0_DOMAIN,
         clientID: process.env.REACT_APP_AUTH0_CLIENTID,
@@ -54,12 +55,13 @@ export default class Auth {
   }
 
   logout = () => {
+    debugger;
     localStorage.removeItem("access_token");
     localStorage.removeItem("id_token");
     localStorage.removeItem("expires_at");
     this.userProfile = null;
     this.auth0.logout({
-      clientID: process.env.REACT_APP_AUTH0_CLIENT_ID,
+      clientID: this.clientId,
       returnTo: this.host
     });
   };
