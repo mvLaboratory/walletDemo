@@ -13,7 +13,7 @@ $registryname  = 'walletfecr'
 $appServicePlan  = 'walletfe-app-plan'
 $appName  = 'app-wallet'
 
-docker build --tag $imagename .  
+docker build --tag $imagename .
 
 #  $containerGuid = docker run -d -p 3000:3000 $imagename --name "$($imagename)container"
 #  docker stop $containerGuid
@@ -26,7 +26,7 @@ $acrUserName = az acr credential show --resource-group $resourceGroup -n $regist
 $acrPassword = az acr credential show --resource-group $resourceGroup -n $registryname --query passwords[1].value -o tsv
 docker login "$($registryname).azurecr.io" --username $acrUserName -p $acrPassword
 
-$containerName  = "$($registryname).azurecr.io/$($imagename):latest"
+$containerName  = "$($registryname).azurecr.io/$($imagename):0.0.1"
 docker tag $imagename $containerName 
 docker push $containerName 
 

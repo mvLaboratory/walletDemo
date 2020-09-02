@@ -4,7 +4,8 @@ export function loadWaletsBalance(auth) {
   return dispatch => {
     dispatch(loadWaletsBalanceBegin());
     return axios
-      .get("/api/balance", {headers: {"Authorization": `Bearer ${auth.getAccessToken()}`}})
+      .get(process.env.REACT_APP_API_PREFIX + "api/balance", 
+        {headers: {"Authorization": `Bearer ${auth.getAccessToken()}`}})
       .then(response => {
         return response.data;
       })
