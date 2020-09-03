@@ -5,6 +5,7 @@ import CreateQuickOperationDialog from "./CreateQuickOperationDialog.js"
 import { addWallet, saveWallet  , loadWaletsBalance, loadBalanceSummary } from "../../actions/BalanceActions.js";
 import { loadCurrency } from "../../actions/CurrencyActions.js";
 import { loadWallets } from "../../actions/WalletsActions.js";
+import { loadOperationCategories } from "../../actions/OperationCategoriesActions.js";
 //import { loadOperationCategories } from "../../actions/OperationCategoriesActions.js";
 import { Grid } from '@material-ui/core';
 
@@ -18,7 +19,7 @@ class BalancePage extends React.Component {
   componentDidMount() {
     this.props.dispatch(loadCurrency(this.props.auth));
     this.props.dispatch(loadWallets(this.props.auth));
-
+    this.props.dispatch(loadOperationCategories(this.props.auth))
     this.props.dispatch(loadWaletsBalance(this.props.auth));
     this.props.dispatch(loadBalanceSummary(this.props.auth));
   }
@@ -51,7 +52,8 @@ class BalancePage extends React.Component {
     this.setState({ activeWallet: activeWallet });
   }
 
-  saveOperationHandler = () => {
+  saveOperationHandler = (operationType, operationCategory, wallet, currency, summ) => {
+    //var state = this.state;
     //const { activeWallet } = this.state; 
     //this.props.dispatch(saveWallet(activeWallet));
     //TODO:: Call endpoint
@@ -73,7 +75,7 @@ class BalancePage extends React.Component {
         overflowY: 'auto'
       }
     }
-    const { balance, balanceSummary, currency, wallets } = this.props;
+    const { balance, balanceSummary, currency, wallets, operationCategoriesList } = this.props;
     const { activeWallet } = this.state;
 
     return (     
@@ -92,6 +94,7 @@ class BalancePage extends React.Component {
         <Grid item sm>
           <CreateQuickOperationDialog  
             styles={styles}
+            operationCategoriesList={operationCategoriesList}
             currencyList={currency}
             walletsList={wallets}
             saveHandler={this.saveOperationHandler}
@@ -108,6 +111,7 @@ const mapStateToProps = function(state) {
      balanceSummary: state.BalanceReducer.balanceSummary,
      currency: state.CurrencyReducer.currency,
      wallets: state.WalletsReducer.wallets,
+     operationCategoriesList: state.OperationCategoryReducer.operationCategories,
 
      loading: state.BalanceReducer.loading,
      error: state.BalanceReducer.error

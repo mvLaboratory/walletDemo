@@ -23,7 +23,7 @@ export default function OperationCategoryReducer(state = initialState, action) {
       return {
         ...state,
         operationCategoriesLoading: false,
-        operationCategories: action.payload.wallets
+        operationCategories: action.payload.operationCategoriesList
       };
   
     case LOAD_OPERATION_CATEGORIES_FAILURE:

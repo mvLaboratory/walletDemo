@@ -11,7 +11,7 @@ import SaveIcon from '@material-ui/icons/Save';
 import Select from '@material-ui/core/Select';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 
-function CreateQuickOperationDialog( {styles, currencyList, walletsList, saveHandler }) {
+function CreateQuickOperationDialog( {styles, currencyList, walletsList, operationCategoriesList, saveHandler }) {
   const useStyles = makeStyles(theme => ({
     root: {
       display: 'flex',
@@ -42,7 +42,9 @@ function CreateQuickOperationDialog( {styles, currencyList, walletsList, saveHan
   const classes = useStyles();
 
   const [summ, setSumm] = useState(0.00);
-  const [operationCategory, setOperationCategory] = useState(0);
+
+  const defaultOperationCategory = (operationCategoriesList && operationCategoriesList[0] && operationCategoriesList[0].id) || 1;
+  const [operationCategory, setOperationCategory] = useState(defaultOperationCategory);
 
   const defaultWallet = (walletsList && walletsList[0] && walletsList[0].id) || 1;
   const [wallet, setWallet] = useState(defaultWallet);
@@ -51,7 +53,6 @@ function CreateQuickOperationDialog( {styles, currencyList, walletsList, saveHan
   const [currency, setCurrency] = useState(defaultCurrecny);
 
   const [operationType, setOperationType] = useState(1);
-
 
   const selectOperationType = (value) => {
     setOperationType(value);
@@ -109,7 +110,7 @@ function CreateQuickOperationDialog( {styles, currencyList, walletsList, saveHan
         <div>{renderSummInput()}</div>
         <div>{renderOperationTypeSelector()}</div>
       </div>
-      <div>{renderSelect('operationCategory', 'Operation Category:', operationCategory, setOperationCategory, [{id: 1, name: "Food"}, {id: 2, name: "Internet" }, {id: 3, name: "Clothers" }])}</div>
+      <div>{renderSelect('operationCategory', 'Operation Category:', operationCategory, setOperationCategory, operationCategoriesList)}</div>
       <div>{renderSelect('wallet', 'Wallet:', wallet, setWallet, walletsList)}</div>
       <div>{renderSelect('currency', 'Currency:', currency, setCurrency, currencyList)}</div>
       <Button
@@ -118,7 +119,7 @@ function CreateQuickOperationDialog( {styles, currencyList, walletsList, saveHan
         color="primary"
         size="large"
         startIcon={<SaveIcon />}
-        onClick={() => saveHandler()}
+        onClick={() => saveHandler(operationType, operationCategory, wallet, currency, summ)}
       >
         Save
       </Button>

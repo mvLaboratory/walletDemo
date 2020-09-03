@@ -23,9 +23,9 @@ export const loadOperationCategoriesBegin = () => ({
   type: LOAD_OPERATION_CATEGORIES_BEGIN
 });
 
-export const loadOperationCategoriesSuccess = (wallets) => ({
+export const loadOperationCategoriesSuccess = (operationCategoriesList) => ({
   type: LOAD_OPERATION_CATEGORIES_SUCCESS,
-  payload: {wallets}
+  payload: {operationCategoriesList}
 });
 
 export const loadOperationCategoriesFailure = error => ({
