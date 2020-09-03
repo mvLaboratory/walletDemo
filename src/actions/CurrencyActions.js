@@ -1,10 +1,10 @@
 import axios from "axios";
+import { GetRequest } from "../shared/serviceUtils";
 
-export function loadCurrency() {
+export function loadCurrency(auth) {
   return dispatch => {
     dispatch(loadCurrencyBegin());
-    return axios
-      .get("/api/currency")
+    return GetRequest("/api/currency", auth)
       .then(response => {
         return response.data;
       })
@@ -16,11 +16,11 @@ export function loadCurrency() {
   };
 }
 
-export function addCurrency() {
+export function addCurrency(auth) {
   return dispatch => {
     dispatch(addCurrencyBegin());
     return axios
-      .post("/api/currency")
+      .post(process.env.REACT_APP_API_PREFIX + "/api/currency")
       .then(response => {
         return response.data;
       })

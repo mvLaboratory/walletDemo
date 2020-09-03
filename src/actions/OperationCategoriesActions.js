@@ -1,10 +1,9 @@
-import axios from "axios";
+import { GetRequest } from "../shared/serviceUtils";
 
-export function loadOperationCategories() {
+export function loadOperationCategories(auth) {
   return dispatch => {
     dispatch(loadOperationCategoriesBegin());
-    return axios
-      .get("/api/operationCategory")
+    return GetRequest("/api/operationCategory", auth)
       .then(response => {
         return response.data;
       })
