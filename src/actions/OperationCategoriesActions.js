@@ -1,10 +1,9 @@
-import axios from "axios";
+import { GetRequest } from "../shared/serviceUtils";
 
-export function loadOperationCategories() {
+export function loadOperationCategories(auth) {
   return dispatch => {
     dispatch(loadOperationCategoriesBegin());
-    return axios
-      .get("/api/operationCategory")
+    return GetRequest("/api/operationCategory", auth)
       .then(response => {
         return response.data;
       })
@@ -24,9 +23,9 @@ export const loadOperationCategoriesBegin = () => ({
   type: LOAD_OPERATION_CATEGORIES_BEGIN
 });
 
-export const loadOperationCategoriesSuccess = (wallets) => ({
+export const loadOperationCategoriesSuccess = (operationCategoriesList) => ({
   type: LOAD_OPERATION_CATEGORIES_SUCCESS,
-  payload: {wallets}
+  payload: {operationCategoriesList}
 });
 
 export const loadOperationCategoriesFailure = error => ({

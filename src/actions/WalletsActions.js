@@ -1,10 +1,9 @@
-import axios from "axios";
+import { GetRequest } from "../shared/serviceUtils";
 
-export function loadWallets() {
+export function loadWallets(auth) {
   return dispatch => {
     dispatch(loadWalletsBegin());
-    return axios
-      .get("/api/wallets")
+    return GetRequest("/api/wallets", auth)
       .then(response => {
         return response.data;
       })

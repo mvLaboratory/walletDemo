@@ -1,11 +1,10 @@
 import axios from "axios";
+import { GetRequest } from "../shared/serviceUtils";
 
 export function loadWaletsBalance(auth) {
   return dispatch => {
     dispatch(loadWaletsBalanceBegin());
-    return axios
-      .get(process.env.REACT_APP_API_PREFIX + "api/balance", 
-        {headers: {"Authorization": `Bearer ${auth.getAccessToken()}`}})
+    return GetRequest("api/balance", auth)
       .then(response => {
         return response.data;
       })
@@ -17,11 +16,10 @@ export function loadWaletsBalance(auth) {
   };
 }
 
-export function loadBalanceSummary() {
+export function loadBalanceSummary(auth) {
   return dispatch => {
     dispatch(loadBalanceSummaryBegin());
-    return axios
-      .get("/api/balanceSummary")
+    return GetRequest("api/balanceSummary", auth)
       .then(response => {
         return response.data;
       })
@@ -37,7 +35,7 @@ export function saveWallet(wallet) {
   return dispatch => {
     dispatch(saveWalletBegin());
     return axios
-      .put(`/api/balance/${wallet.id}`, wallet)
+      .put(process.env.REACT_APP_API_PREFIX + `api/balance/${wallet.id}`, wallet)
       .then(response => {
         return response.data;
       })
@@ -57,7 +55,7 @@ export function addWallet(wallet) {
   return dispatch => {
     dispatch(addWalletBegin());
     return axios
-      .post("/api/wallets", wallet)
+      .post(process.env.REACT_APP_API_PREFIX + "api/wallets", wallet)
       .then(response => {
         dispatch(addWalletSuccess());
         return response.data;
