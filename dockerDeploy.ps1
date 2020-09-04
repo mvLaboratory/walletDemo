@@ -26,7 +26,7 @@ $acrUserName = az acr credential show --resource-group $resourceGroup -n $regist
 $acrPassword = az acr credential show --resource-group $resourceGroup -n $registryname --query passwords[1].value -o tsv
 docker login "$($registryname).azurecr.io" --username $acrUserName -p $acrPassword
 
-$containerName  = "$($registryname).azurecr.io/$($imagename):0.0.1"
+$containerName  = "$($registryname).azurecr.io/$($imagename):latest"
 docker tag $imagename $containerName 
 docker push $containerName 
 
