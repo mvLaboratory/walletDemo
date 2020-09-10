@@ -2,11 +2,11 @@ import React from "react";
 import { connect } from "react-redux";
 import WalletsList from "./BalanceTable/WalletsList.js"
 import CreateQuickOperationDialog from "./CreateQuickOperationDialog.js"
-import { addWallet, saveWallet  , loadWaletsBalance, loadBalanceSummary } from "../../actions/BalanceActions.js";
+import { addWallet, loadWaletsBalance, loadBalanceSummary } from "../../actions/BalanceActions.js";
+import { saveOperation } from "../../actions/OperationsActions.js";
 import { loadCurrency } from "../../actions/CurrencyActions.js";
 import { loadWallets } from "../../actions/WalletsActions.js";
 import { loadOperationCategories } from "../../actions/OperationCategoriesActions.js";
-//import { loadOperationCategories } from "../../actions/OperationCategoriesActions.js";
 import { Grid } from '@material-ui/core';
 
 //TODO::rename
@@ -53,10 +53,18 @@ class BalancePage extends React.Component {
   }
 
   saveOperationHandler = (operationType, operationCategory, wallet, currency, summ) => {
-    //var state = this.state;
-    //const { activeWallet } = this.state; 
-    //this.props.dispatch(saveWallet(activeWallet));
-    //TODO:: Call endpoint
+
+    let operation = {
+      "date": new Date().toJSON(),
+      "operationType": operationType,
+      "operationCategory": { "id": operationCategory },
+      "wallet": { "id": wallet },
+      "currency": { "id": currency },
+      "description": "test",
+      "sum": parseFloat(summ)
+    }
+
+    this.props.dispatch(saveOperation(operation, this.props.auth));
   }
 
   addWalletHandler = (walletName) => {
