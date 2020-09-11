@@ -10,6 +10,7 @@ import FormControl from '@material-ui/core/FormControl';
 import SaveIcon from '@material-ui/icons/Save';
 import Select from '@material-ui/core/Select';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
+import FormattedNumberInput from '../Atoms/FormattedNumberInput';
 
 function CreateQuickOperationDialog( {styles, currencyList, walletsList, operationCategoriesList, saveHandler }) {
   const useStyles = makeStyles(theme => ({
@@ -41,7 +42,7 @@ function CreateQuickOperationDialog( {styles, currencyList, walletsList, operati
   }));
   const classes = useStyles();
 
-  const [summ, setSumm] = useState(0.00);
+  const [summ, setSumm] = useState("0.00");
 
   const defaultOperationCategory = (operationCategoriesList && operationCategoriesList[0] && operationCategoriesList[0].id) || 1;
   const [operationCategory, setOperationCategory] = useState(defaultOperationCategory);
@@ -52,7 +53,7 @@ function CreateQuickOperationDialog( {styles, currencyList, walletsList, operati
   let defaultCurrecny = (currencyList && currencyList[0] && currencyList[0].id) || 1;
   const [currency, setCurrency] = useState(defaultCurrecny);
 
-  const [operationType, setOperationType] = useState(1);
+  const [operationType, setOperationType] = useState(2);
 
   const selectOperationType = (value) => {
     setOperationType(value);
@@ -61,8 +62,8 @@ function CreateQuickOperationDialog( {styles, currencyList, walletsList, operati
   const renderOperationTypeSelector = () => {
     return (
       <ButtonGroup color="primary" aria-label="outlined primary button group">
-        <Button variant={operationType === 1 ? "contained" : ""} onClick={() => selectOperationType(1)}>-</Button>
-        <Button variant={operationType === 2 ? "contained" : ""} onClick={() => selectOperationType(2)}>+</Button>
+        <Button variant={operationType === 2 ? "contained" : ""} onClick={() => selectOperationType(2)}>-</Button>
+        <Button variant={operationType === 1 ? "contained" : ""} onClick={() => selectOperationType(1)}>+</Button>
         <Button variant={operationType === 3 ? "contained" : ""} onClick={() => selectOperationType(3)}>+/-</Button>
       </ButtonGroup>
     )
@@ -71,15 +72,9 @@ function CreateQuickOperationDialog( {styles, currencyList, walletsList, operati
   const renderSummInput = () => {
     return (       
       <div>
-        <InputLabel className={clsx(classes.margin)} htmlFor="standard-adornment-amount">Summ:</InputLabel>     
+    
         <FormControl fullWidth key={"operationValue"} className={clsx(classes.margin, classes.withlabel, classes.textField)}>
-          <Input
-            id={"standard-adornment-amount"}
-            key={"amountInput"}
-            value={summ}  
-            onChange={event => setSumm(event.target.value)}
-            startAdornment={<InputAdornment position="start">{"Y"}</InputAdornment>}
-          />
+          <FormattedNumberInput  value={summ} setValue={setSumm}/>
         </FormControl> 
       </div>
     ); 
