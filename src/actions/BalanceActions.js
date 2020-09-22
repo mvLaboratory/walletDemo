@@ -4,7 +4,7 @@ import { GetRequest } from "../shared/serviceUtils";
 export function loadWaletsBalance(auth) {
   return dispatch => {
     dispatch(loadWaletsBalanceBegin());
-    return GetRequest("api/balance", auth)
+    return GetRequest("/api/balance", auth)
       .then(response => {
         return response.data;
       })

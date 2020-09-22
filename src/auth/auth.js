@@ -55,7 +55,6 @@ export default class Auth {
   }
 
   logout = () => {
-    debugger;
     localStorage.removeItem("access_token");
     localStorage.removeItem("id_token");
     localStorage.removeItem("expires_at");

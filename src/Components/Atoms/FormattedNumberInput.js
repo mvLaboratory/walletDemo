@@ -40,8 +40,18 @@ export default function FormattedNumberInput(props) {
   const classes = useStyles();
 
   const handleChange = (event) => {
-    debugger;
-    props.setValue( event.target.value );
+    let value = event.target.value;
+    if (value !== "")
+      value = parseFloat(value).toFixed(2);
+      
+    props.setValue( value );
+  };
+
+  const handleClick = (event) => {
+    // eslint-disable-next-line eqeqeq
+    if (!props.value || props.value == 0) {
+      props.setValue("");
+    };
   };
 
   return (
@@ -50,6 +60,7 @@ export default function FormattedNumberInput(props) {
         label="Summ"
         value={props.value}
         onChange={handleChange}
+        onClick={handleClick}
         name="numberformat"
         id="formatted-numberformat-input"
         InputProps={{
