@@ -42,4 +42,11 @@ az role assignment create --assignee $principalId --scope "/subscriptions/$($sub
 az webapp config container set --name $appName --resource-group $resourceGroup --docker-custom-image-name $containerName --docker-registry-server-url "https://$($registryname).azurecr.io"
 
 
-#az acr task create --registry $registryname --name fe-acr-task --image "$($imagename):latest" --context https://github.com/mvlaboratory/walletDemo.git --file Dockerfile --git-access-token <token>
+
+#   az login
+#   $imagename  = 'presentation'
+#   $registryname  = 'walletfecr'
+#   $repo  = 'https://github.com/mvlaboratory/walletdev.git'
+#   $taskName  = 'be-acr-task'
+#   $dockerFilePath  = 'Presentation/Dockerfile'
+#   az acr task create --registry $registryname --name $taskName --image "$($imagename):latest" --context $repo --file $dockerFilePath --git-access-token <token>

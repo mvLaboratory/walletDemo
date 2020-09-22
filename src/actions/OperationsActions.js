@@ -18,7 +18,7 @@ export function loadOperations(auth) {
 export function saveOperation(operation, auth) {
   return dispatch => {
     dispatch(saveOperationBegin());
-    return PostRequest("api/operations", operation, auth)
+    return PostRequest("/api/operations", operation, auth)
       .then(response => {
         return response.data;
       })
