@@ -8,7 +8,7 @@ import FormControl from "@material-ui/core/FormControl";
 import SaveIcon from "@material-ui/icons/Save";
 import Select from "@material-ui/core/Select";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
-import FormattedNumberInput from "../Atoms/FormattedNumberInput";
+import FormattedNumberInput from "../atoms/FormattedNumberInput";
 
 function CreateQuickOperationDialog({
   styles,
