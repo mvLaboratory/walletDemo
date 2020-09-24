@@ -2,11 +2,11 @@ import React from "react";
 import { Grid } from "@material-ui/core";
 import OperationCategoryList from "./OperationCategoryList";
 
-export default function OperationCategoryPage() {
+export default function OperationCategoryPage({ auth }) {
   return (
     <Grid container>
       <Grid item sm>
-        <OperationCategoryList />
+        <OperationCategoryList auth={auth} />
       </Grid>
       <Grid item sm>
         <h1>diagrams here</h1>

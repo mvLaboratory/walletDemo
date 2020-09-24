@@ -13,7 +13,10 @@ function App(props) {
   const auth = new Auth();
   const appPages = {
     balance: { id: 0, component: <BalancePage auth={auth} /> },
-    operationCategory: { id: 1, component: <OperationCategoryPage /> },
+    operationCategory: {
+      id: 1,
+      component: <OperationCategoryPage auth={auth} />,
+    },
     currency: { id: 2, component: <CurrencyPage /> },
   };
   const defaultPage = appPages.balance;

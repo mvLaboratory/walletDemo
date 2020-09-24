@@ -75,12 +75,12 @@ function BalanceTableSummary({ currencyList, balanceSummary }) {
   return (
     <>
       <TableRow>
-        {renderBalanceTableCell("Total", "center", 2)}
+        {renderBalanceTableCell("Total", "center", 1)}
         {renderCurrencyTotalCollumns(balanceSummary.currencyBalance || [])}
       </TableRow>
       {renderMainCurrencySummary()}
       <TableRow>
-        {renderBalanceTableCell("Consolidated balance", "center", 2)}
+        {renderBalanceTableCell("Consolidated balance", "center", 1)}
         {renderCurrencyTotalCollumns(balanceSummary.consolidatedBalance || [])}
       </TableRow>
     </>
