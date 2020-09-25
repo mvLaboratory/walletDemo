@@ -3,6 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { useDispatch, useSelector } from "react-redux";
 import { loadOperationCategories } from "../../actions/OperationCategoriesActions.js";
 import OperationTypeSelector from "./OperationTypeSelector";
+import NewWalletDialog from "../balance/NewWalletDialog";
 import {
   Paper,
   Table,
@@ -17,38 +18,52 @@ const useStyles = makeStyles({
     paddingLeft: "20px",
     paddingRight: "20px",
     paddingBottom: "10px",
-    marginTop: "1px",
+    marginTop: "5px",
     marginBottom: "1px",
     overflowY: "auto",
+  },
+  headerMenu: {
+    display: "flex",
+    marginTop: "5px",
+    justifyContent: "space-between",
   },
 });
 
 export default function OperationCategoryList(props) {
   const classes = useStyles();
-
+  const [operationType, setOperationType] = useState(2);
+  const dispatch = useDispatch();
   const operationCategories = useSelector(
     (state) => state.OperationCategoryReducer.operationCategories
   );
-  const dispatch = useDispatch();
+  let operationCategoriesFiltered = operationCategories.filter(
+    (x) => x.operationType === operationType
+  );
 
   useEffect(() => {
     dispatch(loadOperationCategories(props.auth));
   });
 
-  const [operationType, setOperationType] = useState(2);
+  const handleTypeChange = (typeValue) => {
+    setOperationType(typeValue);
+
+    operationCategoriesFiltered = operationCategories.filter(
+      (x) => x.operationType === typeValue
+    );
+  };
 
   return (
     <Paper className={classes.paper}>
-      <div>
-        <h3>Filter:</h3>
+      <div className={classes.headerMenu}>
         <OperationTypeSelector
           operationType={operationType}
-          setOperationType={setOperationType}
+          setOperationType={handleTypeChange}
         />
+        <NewWalletDialog />
       </div>
       <Table aria-label="a dense table">
         <TableBody>
-          {operationCategories.map((x) => (
+          {operationCategoriesFiltered.map((x) => (
             <TableRow key={x.id}>
               <TableCell key={x.id} align="center">
                 {x.name}
