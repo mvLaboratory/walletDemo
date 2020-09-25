@@ -53,9 +53,9 @@ az webapp config container set --name $appName --resource-group $resourceGroup -
 
 
 #   az login
-#   $imagename  = 'presentation'
+#   $imagename  = 'walletfeimage'
 #   $registryname  = 'walletfecr'
-#   $repo  = 'https://github.com/mvlaboratory/walletdev.git'
-#   $taskName  = 'be-acr-task'
-#   $dockerFilePath  = 'Presentation/Dockerfile'
+#   $repo  = 'https://github.com/mvLaboratory/walletDemo.git'
+#   $taskName  = 'fe-acr-task'
+#   $dockerFilePath  = 'Dockerfile'
 #   az acr task create --registry $registryname --name $taskName --image "$($imagename):latest" --context $repo --file $dockerFilePath --git-access-token <token>
