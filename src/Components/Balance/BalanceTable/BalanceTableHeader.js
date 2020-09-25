@@ -6,8 +6,8 @@ import { makeStyles } from "@material-ui/core/styles";
 function BalanceTableHeader({ currencyList }) {
   const useStyles = makeStyles((theme) => ({
     tableHeader: {
-      backgroundColor: "#3f51b5",
-      color: "#ffffff",
+      backgroundColor: theme.palette.secondary.main,
+      color: theme.palette.secondary.contrastText,
       fontWeight: 900,
       padding: 0,
     },

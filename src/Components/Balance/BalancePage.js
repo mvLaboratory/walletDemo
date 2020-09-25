@@ -101,6 +101,9 @@ class BalancePage extends React.Component {
         marginBottom: 1,
         overflowY: "auto",
       },
+      grid: {
+        backgroundColor: " #ffffff",
+      },
     };
     const {
       balance,

@@ -6,13 +6,15 @@ import AccountBalanceWalletIcon from "@material-ui/icons/AccountBalanceWallet";
 import AttachMoneyIcon from "@material-ui/icons/AttachMoney";
 import ExposureIcon from "@material-ui/icons/Exposure";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   root: {
+    backgroundColor: theme.palette.secondary.main,
+    color: theme.palette.secondary.contrastText,
     width: "100%",
     flexShrink: 0,
     maxHeight: "53px",
   },
-});
+}));
 
 export default function Footer({ activeTabId, setActiveTabId }) {
   const classes = useStyles();

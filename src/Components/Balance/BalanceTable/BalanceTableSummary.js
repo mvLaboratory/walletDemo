@@ -7,8 +7,8 @@ import { getCurrencyValue, getCurrencyInfo } from "../../../shared/utils";
 function BalanceTableSummary({ currencyList, balanceSummary }) {
   const useStyles = makeStyles((theme) => ({
     tableSummary: {
-      backgroundColor: "#3f51b5",
-      color: "#ffffff",
+      backgroundColor: theme.palette.secondary.main,
+      color: theme.palette.secondary.contrastText,
       fontWeight: 900,
       padding: 0,
     },

@@ -5,11 +5,25 @@ import CurrencyPage from "./components/currency/CurrencyPage.js";
 import OperationCategoryPage from "./components/operationCategory/OperationCategoryPage.js";
 import Callback from "./auth/Callback";
 import { Footer, Header } from "./components/layouts";
+import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import Auth from "./auth/auth";
 
 import "./App.css";
 
 function App(props) {
+  const themeStyle = "dark";
+  const theme = createMuiTheme({
+    palette: {
+      type: themeStyle,
+      primary: {
+        main: "#989898",
+      },
+      secondary: {
+        main: "#222222",
+      },
+    },
+  });
+
   const auth = new Auth();
   const appPages = {
     balance: { id: 0, component: <BalancePage auth={auth} /> },
@@ -29,7 +43,7 @@ function App(props) {
 
   const renderAppComponents = () => {
     return (
-      <div className="App">
+      <div className={"App " + themeStyle}>
         <Header auth={auth} />
         <div className="BodyContainer">{getPageComponent()}</div>
         <Footer activeTabId={activeTabId} setActiveTabId={setActiveTabId} />
@@ -38,7 +52,7 @@ function App(props) {
   };
 
   return (
-    <>
+    <MuiThemeProvider theme={theme}>
       <Route path="/" exact>
         {!auth.isAuthenticated() && !auth.isCallbackPage()
           ? auth.login()
@@ -48,7 +62,7 @@ function App(props) {
         path="/login/callback"
         render={(props) => <Callback auth={auth} {...props} />}
       />
-    </>
+    </MuiThemeProvider>
   );
 }
 
