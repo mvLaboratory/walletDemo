@@ -19,7 +19,7 @@ function App(props) {
         main: "#989898",
       },
       secondary: {
-        main: "#222222",
+        main: "#2c5150",
       },
     },
   });

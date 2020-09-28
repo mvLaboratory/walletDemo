@@ -1,44 +1,43 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button'; 
-import Fab from '@material-ui/core/Fab';
-import AddIcon from '@material-ui/icons/Add'; 
-import Dialog from '@material-ui/core/Dialog';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import FormControl from '@material-ui/core/FormControl';
-import InputLabel from '@material-ui/core/InputLabel';
-import DialogActions from '@material-ui/core/DialogActions';
-import Input from '@material-ui/core/Input';
+import React from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import Button from "@material-ui/core/Button";
+import Fab from "@material-ui/core/Fab";
+import AddIcon from "@material-ui/icons/Add";
+import Dialog from "@material-ui/core/Dialog";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import FormControl from "@material-ui/core/FormControl";
+import InputLabel from "@material-ui/core/InputLabel";
+import DialogActions from "@material-ui/core/DialogActions";
+import Input from "@material-ui/core/Input";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   form: {
-      display: 'flex',
-      flexDirection: 'column',
-      margin: 'auto',
-      width: 'fit-content',
+    display: "flex",
+    flexDirection: "column",
+    margin: "auto",
+    width: "fit-content",
   },
   addButton: {
-    marginBottom: "0px"
+    marginBottom: "0px",
   },
   formControl: {
-      marginTop: theme.spacing(2),
-      minWidth: 120,
+    marginTop: theme.spacing(2),
+    minWidth: 120,
   },
   formControlLabel: {
-      marginTop: theme.spacing(1),
+    marginTop: theme.spacing(1),
   },
-  })
-);
+}));
 
-export default function NewWalletDialog({ addWalletHandler }) {
+export default function NewOperationCategoryDialog({ addCategoryHandler }) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
-  const [walletName, setwalletName] = React.useState("");
+  const [categoryName, setCategoryName] = React.useState("");
 
   const handleClickOpen = () => {
     setOpen(true);
-    setwalletName("");
+    setCategoryName("");
   };
 
   const handleClose = () => {
@@ -46,33 +45,39 @@ export default function NewWalletDialog({ addWalletHandler }) {
   };
 
   const handleSave = () => {
-    addWalletHandler(walletName);
+    addCategoryHandler(categoryName);
     setOpen(false);
   };
 
-  const handleWalletNameChange = event => {
-    setwalletName(event.target.value);
+  const handleCategoryNameChange = (event) => {
+    setCategoryName(event.target.value);
   };
 
   return (
     <>
-      <Fab size="small" color="primary" aria-label="add" onClick={handleClickOpen} className={classes.addButton}>
-          <AddIcon />
-        </Fab>
-      <Dialog
-      fullWidth={true}
-      maxWidth={"xs"}
-      open={open}
-      onClose={handleClose}
-      aria-labelledby="addWallet-dialog-title"
+      <Fab
+        size="small"
+        color="primary"
+        aria-label="add"
+        onClick={handleClickOpen}
+        className={classes.addButton}
       >
-        <DialogTitle id="addWallet-dialog-title">New Wallet</DialogTitle>
+        <AddIcon />
+      </Fab>
+      <Dialog
+        fullWidth={true}
+        maxWidth={"xs"}
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="addWallet-dialog-title"
+      >
+        <DialogTitle id="addWallet-dialog-title">New Category</DialogTitle>
         <DialogContent>
           <form className={classes.form} noValidate>
-              <FormControl className={classes.formControl}>
-                <InputLabel htmlFor="max-width">Name</InputLabel>
-                <Input value={walletName} onChange={handleWalletNameChange}/>
-              </FormControl>
+            <FormControl className={classes.formControl}>
+              <InputLabel htmlFor="max-width">Name</InputLabel>
+              <Input value={categoryName} onChange={handleCategoryNameChange} />
+            </FormControl>
           </form>
         </DialogContent>
         <DialogActions>

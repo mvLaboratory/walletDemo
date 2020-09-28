@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { useDispatch, useSelector } from "react-redux";
-import { loadOperationCategories } from "../../actions/OperationCategoriesActions.js";
+import {
+  loadOperationCategories,
+  addOperationCategory,
+} from "../../actions/OperationCategoriesActions.js";
 import OperationTypeSelector from "./OperationTypeSelector";
-import NewWalletDialog from "../balance/NewWalletDialog";
+import NewOperationCategoryDialog from "./NewOperationCategoryDialog";
 import {
   Paper,
   Table,
-  TableHead,
   TableBody,
   TableCell,
   TableRow,
@@ -31,18 +33,23 @@ const useStyles = makeStyles({
 
 export default function OperationCategoryList(props) {
   const classes = useStyles();
+
   const [operationType, setOperationType] = useState(2);
   const dispatch = useDispatch();
+
   const operationCategories = useSelector(
     (state) => state.OperationCategoryReducer.operationCategories
   );
+  const operationCategoryAddInProgres = useSelector(
+    (state) => state.OperationCategoryReducer.addInProgres
+  );
+
   let operationCategoriesFiltered = operationCategories.filter(
     (x) => x.operationType === operationType
   );
-
   useEffect(() => {
     dispatch(loadOperationCategories(props.auth));
-  });
+  }, [dispatch, props.auth, operationCategoryAddInProgres]);
 
   const handleTypeChange = (typeValue) => {
     setOperationType(typeValue);
@@ -52,6 +59,11 @@ export default function OperationCategoryList(props) {
     );
   };
 
+  const handleNewCategory = (categoryName) => {
+    let category = { name: categoryName, operationType: operationType };
+    dispatch(addOperationCategory(category, props.auth));
+  };
+
   return (
     <Paper className={classes.paper}>
       <div className={classes.headerMenu}>
@@ -59,7 +71,7 @@ export default function OperationCategoryList(props) {
           operationType={operationType}
           setOperationType={handleTypeChange}
         />
-        <NewWalletDialog />
+        <NewOperationCategoryDialog addCategoryHandler={handleNewCategory} />
       </div>
       <Table aria-label="a dense table">
         <TableBody>
