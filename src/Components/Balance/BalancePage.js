@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import WalletsList from "./BalanceTable/WalletsList.js";
+import WalletsList from "./balanceTable/WalletsList.js";
 import CreateQuickOperationDialog from "./CreateQuickOperationDialog.js";
 import {
   addWallet,
@@ -100,6 +100,9 @@ class BalancePage extends React.Component {
         marginTop: 1,
         marginBottom: 1,
         overflowY: "auto",
+      },
+      grid: {
+        backgroundColor: " #ffffff",
       },
     };
     const {

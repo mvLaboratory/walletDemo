@@ -8,6 +8,14 @@ body,
   flex-direction: column;
 }
 
+.App.dark {
+  background-color: #424242;
+}
+
+.App.light {
+  background-color: #ffffff;
+}
+
 body {
   display: flex;
   flex-direction: column;

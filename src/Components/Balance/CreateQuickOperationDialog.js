@@ -8,7 +8,8 @@ import FormControl from "@material-ui/core/FormControl";
 import SaveIcon from "@material-ui/icons/Save";
 import Select from "@material-ui/core/Select";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
-import FormattedNumberInput from "../Atoms/FormattedNumberInput";
+import FormattedNumberInput from "../atoms/FormattedNumberInput";
+import OperationTypeSelector from "../operationCategory/OperationTypeSelector";
 
 function CreateQuickOperationDialog({
   styles,
@@ -85,33 +86,6 @@ function CreateQuickOperationDialog({
     setOperationType(value);
   };
 
-  const renderOperationTypeSelector = () => {
-    return (
-      <ButtonGroup color="primary" aria-label="outlined primary button group">
-        <Button
-          variant={operationType === 2 ? "contained" : ""}
-          onClick={() => selectOperationType(2)}
-        >
-          -
-        </Button>
-        <Button
-          variant={operationType === 1 ? "contained" : ""}
-          onClick={() => selectOperationType(1)}
-        >
-          +
-        </Button>
-        {false ? (
-          <Button
-            variant={operationType === 3 ? "contained" : ""}
-            onClick={() => selectOperationType(3)}
-          >
-            +/-
-          </Button>
-        ) : null}
-      </ButtonGroup>
-    );
-  };
-
   const renderSummInput = () => {
     return (
       <div>
@@ -153,7 +127,10 @@ function CreateQuickOperationDialog({
       <h1>Quick Operation:</h1>
       <div className={clsx(classes.inline)}>
         <div>{renderSummInput()}</div>
-        <div>{renderOperationTypeSelector()}</div>
+        <OperationTypeSelector
+          operationType={operationType}
+          setOperationType={selectOperationType}
+        />
       </div>
       <div>
         {renderSelect(

@@ -1,20 +1,22 @@
-import React from 'react'
-import clsx from 'clsx';
-import { AppBar, Toolbar, Typography } from '@material-ui/core'
-import { makeStyles } from '@material-ui/core/styles';
+import React from "react";
+import clsx from "clsx";
+import { AppBar, Toolbar, Typography } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
 
 function Header(props) {
-  const useStyles = makeStyles(theme => ({
+  const useStyles = makeStyles((theme) => ({
     header: {
-      display: 'inline-flex', 
-      flexDirection: 'row',
+      backgroundColor: theme.palette.secondary.main,
+      color: theme.palette.secondary.contrastText,
+      display: "inline-flex",
+      flexDirection: "row",
       alignItems: "center",
-      justifyContent: "space-between"
-    }
+      justifyContent: "space-between",
+    },
   }));
   const classes = useStyles();
 
-  return (  
+  return (
     <AppBar position="static">
       <Toolbar className={clsx(classes.header)}>
         <Typography variant="h3" color="inherit">

@@ -7,11 +7,11 @@
 
 
 az login
-$imagename  = 'walletfeimage'
+$imagename = 'walletfeimage'
 $resourceGroup = 'walletDevelop'
-$registryname  = 'walletfecr'
-$appServicePlan  = 'walletfe-app-plan'
-$appName  = 'app-wallet'
+$registryname = 'walletfecr'
+$appServicePlan = 'walletfe-app-plan'
+$appName = 'app-wallet'
 
 docker build --tag $imagename .
 
@@ -26,7 +26,7 @@ $acrUserName = az acr credential show --resource-group $resourceGroup -n $regist
 $acrPassword = az acr credential show --resource-group $resourceGroup -n $registryname --query passwords[1].value -o tsv
 docker login "$($registryname).azurecr.io" --username $acrUserName -p $acrPassword
 
-$containerName  = "$($registryname).azurecr.io/$($imagename):latest"
+$containerName = "$($registryname).azurecr.io/$($imagename):latest"
 docker tag $imagename $containerName 
 docker push $containerName 
 
@@ -36,7 +36,7 @@ az appservice plan create --name $appServicePlan --resource-group $resourceGroup
 
 az webapp create --name $appName --resource-group $resourceGroup --plan $appServicePlan --deployment-container-image-name $containerName
 az webapp config appsettings set --resource-group $resourceGroup --name $appName --settings WEBSITES_PORT=3000
-$principalId  = az webapp identity assign --resource-group $resourceGroup --name $appName --query principalId --output tsv
+$principalId = az webapp identity assign --resource-group $resourceGroup --name $appName --query principalId --output tsv
 $subscriptionId = az account show --query id --output tsv
 az role assignment create --assignee $principalId --scope "/subscriptions/$($subscriptionId)/resourceGroups/$($resourceGroup)/providers/Microsoft.ContainerRegistry/registries/$($registryname)" --role "AcrPull"
 az webapp config container set --name $appName --resource-group $resourceGroup --docker-custom-image-name $containerName --docker-registry-server-url "https://$($registryname).azurecr.io"
@@ -49,4 +49,13 @@ az webapp config container set --name $appName --resource-group $resourceGroup -
 #   $repo  = 'https://github.com/mvlaboratory/walletdev.git'
 #   $taskName  = 'be-acr-task'
 #   $dockerFilePath  = 'Presentation/Dockerfile'
+#   az acr task create --registry $registryname --name $taskName --image "$($imagename):latest" --context $repo --file $dockerFilePath --git-access-token <token>
+
+
+#   az login
+#   $imagename  = 'walletfeimage'
+#   $registryname  = 'walletfecr'
+#   $repo  = 'https://github.com/mvLaboratory/walletDemo.git'
+#   $taskName  = 'fe-acr-task'
+#   $dockerFilePath  = 'Dockerfile'
 #   az acr task create --registry $registryname --name $taskName --image "$($imagename):latest" --context $repo --file $dockerFilePath --git-access-token <token>
