@@ -1,13 +1,17 @@
 import {
   LOAD_WALLETS_BEGIN,
   LOAD_WALLETS_SUCCESS,
-  LOAD_WALLETS_FAILURE
+  LOAD_WALLETS_FAILURE,
+  ADD_WALLETS_BEGIN,
+  ADD_WALLETS_SUCCESS,
+  ADD_WALLETS_FAILURE,
 } from "../actions/WalletsActions";
 
 const initialState = {
   wallets: [],
   walletsLoading: false,
-  error: null
+  walletSaveInProgress: false,
+  error: null,
 };
 
 export default function WalletsReducer(state = initialState, action) {
@@ -16,22 +20,44 @@ export default function WalletsReducer(state = initialState, action) {
       return {
         ...state,
         walletsLoading: true,
-        error: null
+        error: null,
       };
 
     case LOAD_WALLETS_SUCCESS:
       return {
         ...state,
         walletsLoading: false,
-        wallets: action.payload.wallets
+        wallets: action.payload.wallets,
       };
-  
+
     case LOAD_WALLETS_FAILURE:
       return {
         ...state,
         walletsLoading: false,
         error: action.payload.error,
-        items: []
+        items: [],
+      };
+
+    case ADD_WALLETS_BEGIN:
+      return {
+        ...state,
+        walletSaveInProgress: true,
+        error: null,
+      };
+
+    case ADD_WALLETS_SUCCESS:
+      return {
+        ...state,
+        walletSaveInProgress: false,
+        addWalletResult: action.payload.addWalletResult,
+      };
+
+    case ADD_WALLETS_FAILURE:
+      return {
+        ...state,
+        walletSaveInProgress: false,
+        error: action.payload.error,
+        items: [],
       };
 
     default:

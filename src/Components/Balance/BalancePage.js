@@ -1,16 +1,15 @@
 import React from "react";
 import { connect } from "react-redux";
-import WalletsList from "./balanceTable/WalletsList.js";
-import CreateQuickOperationDialog from "./CreateQuickOperationDialog.js";
+import WalletsList from "./balanceTable/WalletsList";
+import CreateQuickOperationDialog from "./CreateQuickOperationDialog";
 import {
-  addWallet,
   loadWaletsBalance,
   loadBalanceSummary,
 } from "../../actions/BalanceActions.js";
-import { saveOperation } from "../../actions/OperationsActions.js";
-import { loadCurrency } from "../../actions/CurrencyActions.js";
-import { loadWallets } from "../../actions/WalletsActions.js";
-import { loadOperationCategories } from "../../actions/OperationCategoriesActions.js";
+import { saveOperation } from "../../actions/OperationsActions";
+import { loadCurrency } from "../../actions/CurrencyActions";
+import { loadWallets, addWallet } from "../../actions/WalletsActions";
+import { loadOperationCategories } from "../../actions/OperationCategoriesActions";
 import { Grid } from "@material-ui/core";
 
 //TODO::rename
@@ -29,13 +28,23 @@ class BalancePage extends React.Component {
   }
 
   componentDidUpdate(oldProps) {
-    const { balance, operationSavingInProgres, auth } = this.props;
+    const {
+      balance,
+      operationSavingInProgres,
+      walletSaveInProgress,
+      auth,
+    } = this.props;
     if (!this.state.activeWallet && balance && balance.length > 0) {
       this.handleWalletSelect(balance[0].id);
     }
 
     if (oldProps.operationSavingInProgres && !operationSavingInProgres) {
       this.props.dispatch(loadWaletsBalance(auth));
+    }
+
+    if (oldProps.walletSaveInProgress && !walletSaveInProgress) {
+      this.props.dispatch(loadWaletsBalance(auth));
+      this.props.dispatch(loadWallets(this.props.auth));
     }
   }
 
@@ -88,7 +97,7 @@ class BalancePage extends React.Component {
 
   addWalletHandler = (walletName) => {
     const wallet = { name: walletName, remainders: [] };
-    this.props.dispatch(addWallet(wallet));
+    this.props.dispatch(addWallet(wallet, this.props.auth));
   };
 
   render() {
@@ -157,6 +166,7 @@ const mapStateToProps = function (state) {
     operationCategoriesList: state.OperationCategoryReducer.operationCategories,
 
     operationSavingInProgres: state.OperationsReducer.operationSavingLoading,
+    walletSaveInProgress: state.WalletsReducer.walletSaveInProgress,
 
     loading: state.BalanceReducer.loading,
     error: state.BalanceReducer.error,
