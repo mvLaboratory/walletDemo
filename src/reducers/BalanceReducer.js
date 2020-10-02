@@ -8,9 +8,6 @@ import {
   SAVE_WALLET_BEGIN,
   SAVE_WALLET_SUCCESS,
   SAVE_WALLET_FAILURE,
-  ADD_WALLETS_BEGIN,
-  ADD_WALLETS_SUCCESS,
-  ADD_WALLETS_FAILURE
 } from "../actions/BalanceActions";
 
 const defaultBalance = [];
@@ -23,7 +20,7 @@ const initialState = {
   balanceSummaryLoading: false,
   saveWalletResult: false,
   addWalletResult: false,
-  error: null
+  error: null,
 };
 
 export default function BalanceReducer(state = initialState, action) {
@@ -32,14 +29,14 @@ export default function BalanceReducer(state = initialState, action) {
       return {
         ...state,
         loading: true,
-        error: null
+        error: null,
       };
 
     case LOAD_WALETS_BALANCE_SUCCESS:
       return {
         ...state,
         loading: false,
-        items: action.payload.balance
+        items: action.payload.balance,
       };
 
     case LOAD_WALETS_BALANCE_FAILURE:
@@ -47,21 +44,21 @@ export default function BalanceReducer(state = initialState, action) {
         ...state,
         loading: false,
         error: action.payload.error,
-        items: []
+        items: [],
       };
 
     case LOAD_BALANCE_SUMMARY_BEGIN:
       return {
         ...state,
         balanceSummaryLoading: true,
-        error: null
+        error: null,
       };
 
     case LOAD_BALANCE_SUMMARY_SUCCESS:
       return {
         ...state,
         balanceSummaryLoading: false,
-        balanceSummary: action.payload.balanceSummary
+        balanceSummary: action.payload.balanceSummary,
       };
 
     case LOAD_BALANCE_SUMMARY_FAILURE:
@@ -69,21 +66,21 @@ export default function BalanceReducer(state = initialState, action) {
         ...state,
         balanceSummaryLoading: false,
         error: action.payload.error,
-        balanceSummary: {}
+        balanceSummary: {},
       };
 
     case SAVE_WALLET_BEGIN:
       return {
         ...state,
         saveWalletLoading: true,
-        error: null
+        error: null,
       };
 
     case SAVE_WALLET_SUCCESS:
       return {
         ...state,
         saveWalletLoading: false,
-        saveWalletResult: action.payload.balance
+        saveWalletResult: action.payload.balance,
       };
 
     case SAVE_WALLET_FAILURE:
@@ -91,29 +88,8 @@ export default function BalanceReducer(state = initialState, action) {
         ...state,
         saveWalletLoading: false,
         error: action.payload.error,
-        items: []
+        items: [],
       };
-    case ADD_WALLETS_BEGIN:
-      return {
-        ...state,
-        loading: true,
-        error: null
-      };
-
-    case ADD_WALLETS_SUCCESS:
-      return {
-        ...state,
-        loading: false
-      };
-
-    case ADD_WALLETS_FAILURE:
-      return {
-        ...state,
-        loading: false,
-        error: action.payload.error,
-        items: []
-      };
-
     default:
       // ALWAYS have a default case in a reducer
       return state;

@@ -1,6 +1,7 @@
 import React from "react";
 import clsx from "clsx";
 import { AppBar, Toolbar, Typography } from "@material-ui/core";
+import UserProfile from "../UserProfile";
 import { makeStyles } from "@material-ui/core/styles";
 
 function Header(props) {
@@ -16,13 +17,15 @@ function Header(props) {
   }));
   const classes = useStyles();
 
+  const dummyProfile = { nickname: "testsyp@superdomain.com" };
+
   return (
     <AppBar position="static">
       <Toolbar className={clsx(classes.header)}>
         <Typography variant="h3" color="inherit">
           Personal Wallet!
         </Typography>
-        <button onClick={props.auth.logout}>Log out</button>
+        <UserProfile auth={props.auth} profile={dummyProfile} />
       </Toolbar>
     </AppBar>
   );

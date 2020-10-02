@@ -2,68 +2,54 @@ import axios from "axios";
 import { GetRequest } from "../shared/serviceUtils";
 
 export function loadWaletsBalance(auth) {
-  return dispatch => {
+  return (dispatch) => {
     dispatch(loadWaletsBalanceBegin());
     return GetRequest("/api/balance", auth)
-      .then(response => {
+      .then((response) => {
         return response.data;
       })
-      .then(responseData => {
+      .then((responseData) => {
         dispatch(loadWaletsBalanceSuccess(responseData));
         return responseData;
       })
-      .catch(error => dispatch(loadWaletsBalanceFailure(error)));
+      .catch((error) => dispatch(loadWaletsBalanceFailure(error)));
   };
 }
 
 export function loadBalanceSummary(auth) {
-  return dispatch => {
+  return (dispatch) => {
     dispatch(loadBalanceSummaryBegin());
     return GetRequest("api/balanceSummary", auth)
-      .then(response => {
+      .then((response) => {
         return response.data;
       })
-      .then(responseData => {
+      .then((responseData) => {
         dispatch(loadBalanceSummarySuccess(responseData));
         return responseData;
       })
-      .catch(error => dispatch(loadBalanceSummaryFailure(error)));
+      .catch((error) => dispatch(loadBalanceSummaryFailure(error)));
   };
 }
 
 export function saveWallet(wallet) {
-  return dispatch => {
+  return (dispatch) => {
     dispatch(saveWalletBegin());
     return axios
-      .put(process.env.REACT_APP_API_PREFIX + `api/balance/${wallet.id}`, wallet)
-      .then(response => {
+      .put(
+        process.env.REACT_APP_API_PREFIX + `api/balance/${wallet.id}`,
+        wallet
+      )
+      .then((response) => {
         return response.data;
       })
-      .then(responseData => {
+      .then((responseData) => {
         dispatch(saveWalletSuccess(responseData));
         return responseData;
       })
       .then(() => {
-        dispatch(loadWaletsBalance())
+        dispatch(loadWaletsBalance());
       })
-      .catch(error => dispatch(saveWalletFailure(error)));
-  };
-}
-
-//TODO::Move to wallets actions
-export function addWallet(wallet) {
-  return dispatch => {
-    dispatch(addWalletBegin());
-    return axios
-      .post(process.env.REACT_APP_API_PREFIX + "api/wallets", wallet)
-      .then(response => {
-        dispatch(addWalletSuccess());
-        return response.data;
-      })
-      .then(() => {
-        dispatch(loadWaletsBalance())
-      })
-      .catch(error => dispatch(addWalletFailure(error)));
+      .catch((error) => dispatch(saveWalletFailure(error)));
   };
 }
 
@@ -83,65 +69,44 @@ export const LOAD_CURRENCY_BEGIN = "LOAD_CURRENCY_BEGIN";
 export const LOAD_CURRENCY_SUCCESS = "LOAD_CURRENCY_SUCCESS";
 export const LOAD_CURRENCY_FAILURE = "LOAD_CURRENCY_FAILURE";
 
-export const ADD_WALLETS_BEGIN = "ADD_WALLETS_BEGIN";
-export const ADD_WALLETS_SUCCESS = "ADD_WALLETS_SUCCESS";
-export const ADD_WALLETS_FAILURE = "ADD_WALLETS_FAILURE";
-
 export const loadWaletsBalanceBegin = () => ({
-  type: LOAD_WALETS_BALANCE_BEGIN
+  type: LOAD_WALETS_BALANCE_BEGIN,
 });
 
-export const loadWaletsBalanceSuccess = balance => ({
+export const loadWaletsBalanceSuccess = (balance) => ({
   type: LOAD_WALETS_BALANCE_SUCCESS,
-  payload: { balance }
+  payload: { balance },
 });
 
-export const loadWaletsBalanceFailure = error => ({
+export const loadWaletsBalanceFailure = (error) => ({
   type: LOAD_WALETS_BALANCE_FAILURE,
-  payload: { error }
+  payload: { error },
 });
-
 
 export const loadBalanceSummaryBegin = () => ({
-  type: LOAD_BALANCE_SUMMARY_BEGIN
+  type: LOAD_BALANCE_SUMMARY_BEGIN,
 });
 
-export const loadBalanceSummarySuccess = balanceSummary => ({
+export const loadBalanceSummarySuccess = (balanceSummary) => ({
   type: LOAD_BALANCE_SUMMARY_SUCCESS,
-  payload: { balanceSummary }
+  payload: { balanceSummary },
 });
 
-export const loadBalanceSummaryFailure = error => ({
+export const loadBalanceSummaryFailure = (error) => ({
   type: LOAD_BALANCE_SUMMARY_FAILURE,
-  payload: { error }
+  payload: { error },
 });
-
 
 export const saveWalletBegin = () => ({
-  type: SAVE_WALLET_BEGIN
+  type: SAVE_WALLET_BEGIN,
 });
 
-export const saveWalletSuccess = saveResult => ({
+export const saveWalletSuccess = (saveResult) => ({
   type: SAVE_WALLET_SUCCESS,
-  payload: { saveResult }
+  payload: { saveResult },
 });
 
-export const saveWalletFailure = error => ({
+export const saveWalletFailure = (error) => ({
   type: SAVE_WALLET_FAILURE,
-  payload: { error }
-});
-
-
-export const addWalletBegin = () => ({
-  type: ADD_WALLETS_BEGIN
-});
-
-export const addWalletSuccess = addResult => ({
-  type: ADD_WALLETS_SUCCESS,
-  payload: { addResult }
-});
-
-export const addWalletFailure = error => ({
-  type: ADD_WALLETS_FAILURE,
-  payload: { error }
+  payload: { error },
 });

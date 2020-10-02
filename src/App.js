@@ -1,8 +1,8 @@
 import React from "react";
 import { Route } from "react-router-dom";
-import BalancePage from "./components/balance/BalancePage.js";
-import CurrencyPage from "./components/currency/CurrencyPage.js";
-import OperationCategoryPage from "./components/operationCategory/OperationCategoryPage.js";
+import BalancePage from "./components/balance/BalancePage";
+import CurrencyPage from "./components/currency/CurrencyPage";
+import OperationCategoryPage from "./components/operationCategory/OperationCategoryPage";
 import Callback from "./auth/Callback";
 import { Footer, Header } from "./components/layouts";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
