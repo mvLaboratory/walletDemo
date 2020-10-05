@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Route } from "react-router-dom";
 import BalancePage from "./components/balance/BalancePage";
 import CurrencyPage from "./components/currency/CurrencyPage";
@@ -34,7 +34,7 @@ function App(props) {
     currency: { id: 2, component: <CurrencyPage /> },
   };
   const defaultPage = appPages.balance;
-  const [activeTabId, setActiveTabId] = React.useState(defaultPage.id);
+  const [activeTabId, setActiveTabId] = useState(defaultPage.id);
 
   const getPageComponent = () => {
     const pagesNames = Object.keys(appPages);
@@ -45,7 +45,9 @@ function App(props) {
     return (
       <div className={"App " + themeStyle}>
         <Header auth={auth} />
-        <div className="BodyContainer">{getPageComponent()}</div>
+        <div className={"BodyContainer " + themeStyle}>
+          {getPageComponent()}
+        </div>
         <Footer activeTabId={activeTabId} setActiveTabId={setActiveTabId} />
       </div>
     );

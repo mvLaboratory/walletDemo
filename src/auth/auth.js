@@ -1,5 +1,5 @@
-import auth0 from 'auth0-js'
-import { useHistory } from 'react-router-dom';
+import auth0 from "auth0-js";
+import { useHistory } from "react-router-dom";
 
 export default class Auth {
   constructor() {
@@ -9,25 +9,25 @@ export default class Auth {
     this.userProfile = null;
     this.clientId = process.env.REACT_APP_AUTH0_CLIENTID;
     this.auth0 = new auth0.WebAuth({
-        domain: process.env.REACT_APP_AUTH0_DOMAIN,
-        clientID: process.env.REACT_APP_AUTH0_CLIENTID,
-        redirectUri: this.host + process.env.REACT_APP_AUTH0_CALLBACK,
-        audience: process.env.REACT_APP_AUTH0_AUDIENCE,
-        responseType: "token id_token",
-        scope: "openid profile email"
+      domain: process.env.REACT_APP_AUTH0_DOMAIN,
+      clientID: process.env.REACT_APP_AUTH0_CLIENTID,
+      redirectUri: this.host + process.env.REACT_APP_AUTH0_CALLBACK,
+      audience: process.env.REACT_APP_AUTH0_AUDIENCE,
+      responseType: "token id_token",
+      scope: "openid profile email",
     });
   }
 
   login = () => {
     this.auth0.authorize();
-  }
+  };
 
   handleAuthentication = () => {
     this.auth0.parseHash((err, authResult) => {
       if (authResult && authResult.accessToken && authResult.idToken) {
         this.setSession(authResult);
         this.history.push("/");
-      }else if (err) {
+      } else if (err) {
         this.history.push("/");
         alert(`Error: ${err.error}. Check the console for further details.`);
         console.log(err);
@@ -35,7 +35,7 @@ export default class Auth {
     });
   };
 
-  setSession = authResult => {
+  setSession = (authResult) => {
     const expiresAt = JSON.stringify(
       authResult.expiresIn * 1000 + new Date().getTime()
     );
@@ -44,14 +44,14 @@ export default class Auth {
     localStorage.setItem("id_token", authResult.idToken);
     localStorage.setItem("expires_at", expiresAt);
   };
-    
+
   isAuthenticated() {
     const expiresAt = JSON.parse(localStorage.getItem("expires_at"));
     return new Date().getTime() < expiresAt;
   }
 
   isCallbackPage() {
-    return  new RegExp('login/callback').test(this.history.location.pathname);
+    return new RegExp("login/callback").test(this.history.location.pathname);
   }
 
   logout = () => {
@@ -61,21 +61,24 @@ export default class Auth {
     this.userProfile = null;
     this.auth0.logout({
       clientID: this.clientId,
-      returnTo: this.host
+      returnTo: this.host,
     });
   };
 
-  getAccessToken = () => {
+  getAccessToken = (allowEmpty = false) => {
     const accessToken = localStorage.getItem("access_token");
-    if (!accessToken) {
+    if (!accessToken && !allowEmpty) {
       throw new Error("No access token found.");
     }
     return accessToken;
   };
 
-  getProfile = cb => {
+  getProfile = (cb) => {
     if (this.userProfile) return cb(this.userProfile);
-    this.auth0.client.userInfo(this.getAccessToken(), (err, profile) => {
+    const token = this.getAccessToken(true);
+    if (!token) return;
+
+    this.auth0.client.userInfo(token, (err, profile) => {
       if (profile) this.userProfile = profile;
       cb(profile, err);
     });

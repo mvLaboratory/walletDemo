@@ -57,7 +57,6 @@ function UserProfile({ auth, profile }) {
 
     prevOpen.current = open;
   }, [open]);
-
   return (
     <div>
       <IconButton
@@ -92,7 +91,7 @@ function UserProfile({ auth, profile }) {
                   onKeyDown={handleListKeyDown}
                 >
                   <Typography className={clsx(classes.typography)}>
-                    {profile.nickname}
+                    {profile.name}
                   </Typography>
                   <MenuItem onClick={handleMenuItemClick}>Logout</MenuItem>
                 </MenuList>

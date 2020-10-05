@@ -29,31 +29,6 @@ body {
   flex: 1 0 auto;
 }
 
-/* header {
-  height: var(--header-height);
+.BodyContainer.dark {
+  background-color: #424242;
 }
-
-.MuiBottomNavigation-root {
-  height: var(--footer-height);
-}
-
-.BodyContainer {
-  height: var(--body-height);
-}
-
-.MuiTableRow-hover {
-  cursor: pointer;
-}
-
-.BodyContainer .MuiGrid-container {
-  height: var(--bodycontent-height);
-}
-
-.BodyContainer .MuiPaper-root {
-  height: var(--bodycontent-height);
-}
-
-.MuiTableHead-root .MuiTableCell-head {
-  font-weight: 700;
-  padding: 0%;
-} */

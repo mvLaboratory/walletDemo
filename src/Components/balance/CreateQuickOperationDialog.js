@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
 import { Paper } from "@material-ui/core";
@@ -48,6 +48,7 @@ function CreateQuickOperationDialog({
   const classes = useStyles();
 
   const [summ, setSumm] = useState("0.00");
+
   const [operationType, setOperationType] = useState(2);
   const operationCategoriesListFiltered = operationCategoriesList.filter(
     (x) => x.operationType === operationType
@@ -60,8 +61,6 @@ function CreateQuickOperationDialog({
   const [operationCategory, setOperationCategory] = useState(
     defaultOperationCategory
   );
-  if (operationCategory !== defaultOperationCategory)
-    setOperationCategory(defaultOperationCategory);
 
   const defaultWallet =
     (walletsList && walletsList[0] && walletsList[0].id) || 1;
@@ -70,6 +69,18 @@ function CreateQuickOperationDialog({
   let defaultCurrecny =
     (currencyList && currencyList[0] && currencyList[0].id) || 1;
   const [currency, setCurrency] = useState(defaultCurrecny);
+
+  useEffect(() => {
+    setWallet(defaultWallet);
+  }, [defaultWallet]);
+
+  useEffect(() => {
+    setCurrency(defaultCurrecny);
+  }, [defaultCurrecny]);
+
+  useEffect(() => {
+    setOperationCategory(defaultOperationCategory);
+  }, [defaultOperationCategory]);
 
   const selectOperationType = (value) => {
     let avaialbleCategories = operationCategoriesList.filter(

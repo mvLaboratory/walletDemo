@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import clsx from "clsx";
 import { AppBar, Toolbar, Typography } from "@material-ui/core";
 import UserProfile from "../UserProfile";
 import { makeStyles } from "@material-ui/core/styles";
 
-function Header(props) {
+function Header({ auth }) {
   const useStyles = makeStyles((theme) => ({
     header: {
       backgroundColor: theme.palette.secondary.main,
@@ -17,7 +17,12 @@ function Header(props) {
   }));
   const classes = useStyles();
 
-  const dummyProfile = { nickname: "testsyp@superdomain.com" };
+  const [userProfile, setUserProfile] = useState({ name: "" });
+  useEffect(() => {
+    auth.getProfile((profile, error) => {
+      setUserProfile(profile);
+    });
+  }, [auth, userProfile.name]);
 
   return (
     <AppBar position="static">
@@ -25,7 +30,7 @@ function Header(props) {
         <Typography variant="h3" color="inherit">
           Personal Wallet!
         </Typography>
-        <UserProfile auth={props.auth} profile={dummyProfile} />
+        <UserProfile auth={auth} profile={userProfile} />
       </Toolbar>
     </AppBar>
   );
