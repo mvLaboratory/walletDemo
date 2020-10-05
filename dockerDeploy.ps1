@@ -5,7 +5,6 @@
 #docker tag wallet-fe:latest walletcr.azurecr.io/wallet-fe:0.0.9
 #docker push $loginServer/wallet-fe:0.0.9
 
-
 az login
 $imagename = 'walletfeimage'
 $resourceGroup = 'walletDevelop'
