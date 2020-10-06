@@ -1,6 +1,7 @@
 import React from "react";
 import { Grid } from "@material-ui/core";
 import OperationCategoryList from "./OperationCategoryList";
+import ComponentUnderConstruction from "../atoms/ComponentUnderConstruction";
 
 export default function OperationCategoryPage({ auth }) {
   return (
@@ -9,7 +10,7 @@ export default function OperationCategoryPage({ auth }) {
         <OperationCategoryList auth={auth} />
       </Grid>
       <Grid item sm>
-        <h1>diagrams here</h1>
+        <ComponentUnderConstruction />
       </Grid>
     </Grid>
   );

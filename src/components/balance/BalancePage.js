@@ -11,6 +11,7 @@ import { loadCurrency } from "../../actions/CurrencyActions";
 import { loadWallets, addWallet } from "../../actions/WalletsActions";
 import { loadOperationCategories } from "../../actions/OperationCategoriesActions";
 import { Grid } from "@material-ui/core";
+import LoadingComponent from "../atoms/LoadingComponent";
 
 //TODO::rename
 class BalancePage extends React.Component {
@@ -139,9 +140,7 @@ class BalancePage extends React.Component {
         </Grid>
         <Grid item sm>
           {operationSavingInProgres ? (
-            <div>
-              <h1>Loading...</h1>
-            </div>
+            <LoadingComponent />
           ) : (
             <CreateQuickOperationDialog
               styles={styles}

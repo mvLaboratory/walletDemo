@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import LoadingComponent from "../components/atoms/LoadingComponent";
 
 class Callback extends Component {
   componentDidMount = () => {
@@ -10,7 +11,7 @@ class Callback extends Component {
     }
   };
   render() {
-    return <h1>Loading...</h1>;
+    return <LoadingComponent />;
   }
 }
 
