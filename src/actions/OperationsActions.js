@@ -3,7 +3,7 @@ import { GetRequest, PostRequest } from "../shared/serviceUtils";
 export function loadOperations(auth) {
   return dispatch => {
     dispatch(loadOperationsBegin());
-    return GetRequest("/api/operations", auth)
+    return GetRequest("/api/operations/List", auth, { "Content-Type": "application/json; charset=utf-8" }, {limit: 25, offset: 0})
       .then(response => {
         return response.data;
       })

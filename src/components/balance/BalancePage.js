@@ -1,12 +1,13 @@
 import React from "react";
 import { connect } from "react-redux";
 import WalletsList from "./balanceTable/WalletsList";
+import OperationsList from "../operations/OperationsList";
 import CreateQuickOperationDialog from "./CreateQuickOperationDialog";
 import {
   loadWaletsBalance,
   loadBalanceSummary,
 } from "../../actions/BalanceActions.js";
-import { saveOperation } from "../../actions/OperationsActions";
+import { saveOperation, loadOperations } from "../../actions/OperationsActions";
 import { loadCurrency } from "../../actions/CurrencyActions";
 import { loadWallets, addWallet } from "../../actions/WalletsActions";
 import { loadOperationCategories } from "../../actions/OperationCategoriesActions";
@@ -30,14 +31,14 @@ class BalancePage extends React.Component {
 
   componentDidUpdate(oldProps) {
     const {
-      balance,
+      //balance,
       operationSavingInProgres,
       walletSaveInProgress,
       auth,
     } = this.props;
-    if (!this.state.activeWallet && balance && balance.length > 0) {
-      this.handleWalletSelect(balance[0].id);
-    }
+    //if (!this.state.activeWallet && balance && balance.length > 0) {
+    //  this.handleWalletSelect(balance[0].id);
+    //}
 
     if (oldProps.operationSavingInProgres && !operationSavingInProgres) {
       this.props.dispatch(loadWaletsBalance(auth));
@@ -51,9 +52,16 @@ class BalancePage extends React.Component {
 
   handleWalletSelect = (walletId) => {
     const { balance } = this.props;
-    const selectedWallet = balance.find((x) => x.id === walletId);
-    const walletCopy = JSON.parse(JSON.stringify(selectedWallet));
-    this.setState({ activeWallet: walletCopy });
+    if (walletId > 0) {
+      const selectedWallet = balance.find((x) => x.id === walletId);
+      const walletCopy = JSON.parse(JSON.stringify(selectedWallet));
+      this.setState({ activeWallet: walletCopy });
+
+      //this.props.dispatch(loadOperations(this.props.auth));
+    }
+    else {
+      this.setState({ activeWallet: {} });
+    }
   };
 
   handleActiveWalletBalanceChange = (currencyId, walletBalance) => {
@@ -71,7 +79,7 @@ class BalancePage extends React.Component {
         value: walletBalance,
       });
     }
-    this.setState({ activeWallet: activeWallet });
+    //this.setState({ activeWallet: activeWallet });
   };
 
   saveOperationHandler = (
@@ -101,6 +109,35 @@ class BalancePage extends React.Component {
     this.props.dispatch(addWallet(wallet, this.props.auth));
   };
 
+  renderRightPanel = (styles) => {
+    const { activeWallet } = this.state;
+
+    return activeWallet && activeWallet.id
+      ? (<OperationsList auth={this.props.auth}/>)
+      : this.renderQuickOperationDialog(styles)
+  }
+
+  renderQuickOperationDialog = (styles) => {
+    const {
+      currency,
+      wallets,
+      operationCategoriesList,
+      operationSavingInProgres,
+    } = this.props;
+
+    return operationSavingInProgres ? (
+      <LoadingComponent />
+    ) : (
+      <CreateQuickOperationDialog
+        styles={styles}
+        operationCategoriesList={operationCategoriesList}
+        currencyList={currency}
+        walletsList={wallets}
+        saveHandler={this.saveOperationHandler}
+      />
+    )
+  }
+
   render() {
     const styles = {
       Paper: {
@@ -118,10 +155,7 @@ class BalancePage extends React.Component {
     const {
       balance,
       balanceSummary,
-      currency,
-      wallets,
-      operationCategoriesList,
-      operationSavingInProgres,
+      currency
     } = this.props;
     const { activeWallet } = this.state;
 
@@ -139,17 +173,7 @@ class BalancePage extends React.Component {
           />
         </Grid>
         <Grid item sm>
-          {operationSavingInProgres ? (
-            <LoadingComponent />
-          ) : (
-            <CreateQuickOperationDialog
-              styles={styles}
-              operationCategoriesList={operationCategoriesList}
-              currencyList={currency}
-              walletsList={wallets}
-              saveHandler={this.saveOperationHandler}
-            />
-          )}
+          {this.renderRightPanel(styles)}
         </Grid>
       </Grid>
     );
@@ -163,11 +187,13 @@ const mapStateToProps = function (state) {
     currency: state.CurrencyReducer.currency,
     wallets: state.WalletsReducer.wallets,
     operationCategoriesList: state.OperationCategoryReducer.operationCategories,
+    operations: state.OperationsReducer.operations,
 
     operationSavingInProgres: state.OperationsReducer.operationSavingLoading,
     walletSaveInProgress: state.WalletsReducer.walletSaveInProgress,
 
     loading: state.BalanceReducer.loading,
+    operationsLoading: state.OperationsReducer.loading,
     error: state.BalanceReducer.error,
   };
 };

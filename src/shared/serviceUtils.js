@@ -1,9 +1,11 @@
 import axios from "axios";
 
-export const GetRequest = (endpoint, auth) => {
-    return axios.get(process.env.REACT_APP_API_PREFIX + endpoint, 
+export const GetRequest = (endpoint, auth, extraHeaders, filterBody) => {
+    return axios.get(process.env.REACT_APP_API_PREFIX + endpoint,
         {
-            headers: {"Authorization": `Bearer ${auth.getAccessToken()}`}
+            headers: {"Authorization": `Bearer ${auth.getAccessToken()}`, ...extraHeaders},
+            params: filterBody,
+            
         })
 }
 

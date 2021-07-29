@@ -38,7 +38,6 @@ export default function OperationsReducer(state = initialState, action) {
         items: []
       };
 
-
     case SAVE_OPERATION_BEGIN:
       return {
         ...state,
