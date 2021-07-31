@@ -11,9 +11,7 @@ function WalletsTableRow ({ wallet, currencyList, setSelected, isSelected})  {
 
   wallet = wallet || {};
   currencyList = currencyList || [];
-  //selectedWalletId = selectedWalletId || 0;
   const [isHover, setHover] = useState(false);
-  //const [isSelected, setSelected] = useState(false);
 
   const useStyles = makeStyles((theme) => ({
     tableSummary: {
@@ -24,8 +22,8 @@ function WalletsTableRow ({ wallet, currencyList, setSelected, isSelected})  {
     operationDetailsIcon: {
       display: "inline-flex",
       float: "right",
-      width: "15px",
-      height: "15px",
+      width: "20px",
+      height: "20px",
       opacity: "60%"
     },
     selected: {

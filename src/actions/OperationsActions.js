@@ -1,9 +1,9 @@
 import { GetRequest, PostRequest } from "../shared/serviceUtils";
 
-export function loadOperations(auth) {
+export function loadOperations(auth, filters) {
   return dispatch => {
     dispatch(loadOperationsBegin());
-    return GetRequest("/api/operations/List", auth, { "Content-Type": "application/json; charset=utf-8" }, {limit: 25, offset: 0})
+    return GetRequest("/api/operations/List", auth, { "Content-Type": "application/json; charset=utf-8" }, {limit: 25, offset: 0, sortColumn: "date", sortDirection: 2, filters: filters})
       .then(response => {
         return response.data;
       })

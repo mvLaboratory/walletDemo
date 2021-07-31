@@ -1,11 +1,14 @@
 import axios from "axios";
+import qs from "qs";
 
 export const GetRequest = (endpoint, auth, extraHeaders, filterBody) => {
     return axios.get(process.env.REACT_APP_API_PREFIX + endpoint,
         {
             headers: {"Authorization": `Bearer ${auth.getAccessToken()}`, ...extraHeaders},
             params: filterBody,
-            
+            paramsSerializer: params => {
+                return qs.stringify(params, { allowDots: true })
+              }
         })
 }
 

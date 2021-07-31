@@ -7,7 +7,7 @@ import {
   loadWaletsBalance,
   loadBalanceSummary,
 } from "../../actions/BalanceActions.js";
-import { saveOperation, loadOperations } from "../../actions/OperationsActions";
+import { saveOperation } from "../../actions/OperationsActions";
 import { loadCurrency } from "../../actions/CurrencyActions";
 import { loadWallets, addWallet } from "../../actions/WalletsActions";
 import { loadOperationCategories } from "../../actions/OperationCategoriesActions";
@@ -56,11 +56,20 @@ class BalancePage extends React.Component {
       const selectedWallet = balance.find((x) => x.id === walletId);
       const walletCopy = JSON.parse(JSON.stringify(selectedWallet));
       this.setState({ activeWallet: walletCopy });
-
-      //this.props.dispatch(loadOperations(this.props.auth));
     }
     else {
       this.setState({ activeWallet: {} });
+    }
+  };
+
+  handleObjectSelect = (objectId, objList, stateSetter) => {
+    if (objectId > 0) {
+      const selectedObject = objList.find((obj) => obj.id === objectId);
+      const objCopy = JSON.parse(JSON.stringify(selectedObject));
+      stateSetter(objCopy);
+    }
+    else {
+      stateSetter({});
     }
   };
 
@@ -110,10 +119,20 @@ class BalancePage extends React.Component {
   };
 
   renderRightPanel = (styles) => {
+    const {
+      currency,
+      wallets,
+      operationCategoriesList,
+    } = this.props;
     const { activeWallet } = this.state;
+    const appData = {
+      currency: currency,
+      wallets: wallets,
+      operationCategoriesList: operationCategoriesList
+    }
 
     return activeWallet && activeWallet.id
-      ? (<OperationsList auth={this.props.auth}/>)
+      ? (<OperationsList auth={this.props.auth} wallet={activeWallet} appData={appData} />)
       : this.renderQuickOperationDialog(styles)
   }
 
