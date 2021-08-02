@@ -8,6 +8,7 @@ import {
 import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined';
 import RemoveOutlinedIcon from '@material-ui/icons/RemoveOutlined';
 import AddIcon from '@material-ui/icons/Add';
+import { formatDateString } from "../../shared/utils";
 
 function OperationTableRow ({ operation, setSelected, selectedObjId})  {
   operation = operation || {};
@@ -76,8 +77,11 @@ function OperationTableRow ({ operation, setSelected, selectedObjId})  {
       <TableCell align="center">
         { operation.description }
       </TableCell>
+      <TableCell align="center">
+        { operation.currency.name }
+      </TableCell>
       <TableCell align="left">
-        { (operation && operation.date && operation.date.slice(0, 19).replace('T', ' ')) || ""  }
+        { (formatDateString((operation && operation.date && operation.date) || "" )) }
       </TableCell>
     </TableRow>
   );

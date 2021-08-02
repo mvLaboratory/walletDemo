@@ -14,3 +14,7 @@ export const getCurrencyInfo = (currencyId, currencyList) => {
   var currencyObj = currencyList.find(x => x.id === currencyId) || defaultCurrency             
     return currencyObj;
 }
+
+export const formatDateString = (dateString) => {
+  return dateString ? dateString.slice(0, 19).replace('T', ' ') : "";
+}

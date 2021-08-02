@@ -84,6 +84,10 @@ class BalancePage extends React.Component {
     //this.setState({ activeWallet: activeWallet });
   };
 
+  handleBackToOperationsList = () => {
+    this.setState({ activeOperation: {} });
+  }
+
   saveOperationHandler = (
     operationType,
     operationCategory,
@@ -126,10 +130,10 @@ class BalancePage extends React.Component {
 
     return activeWallet && activeWallet.id && !(activeOperation && activeOperation.id)
       ? (<OperationsList auth={this.props.auth} wallet={activeWallet} appData={appData} balanceOperationSelectHandler={this.handleOperationSelect}/>)
-      : this.renderQuickOperationDialog(styles)
+      : this.renderQuickOperationDialog(styles, activeOperation)
   }
 
-  renderQuickOperationDialog = (styles) => {
+  renderQuickOperationDialog = (styles, activeOperation) => {
     const {
       currency,
       wallets,
@@ -144,6 +148,8 @@ class BalancePage extends React.Component {
         operationCategoriesList={operationCategoriesList}
         currencyList={currency}
         walletsList={wallets}
+        activeOperation={activeOperation}
+        handleBackToOperationsList={this.handleBackToOperationsList}
         saveHandler={this.saveOperationHandler}
       />
     )
