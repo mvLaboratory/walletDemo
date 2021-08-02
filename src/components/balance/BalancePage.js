@@ -52,26 +52,19 @@ class BalancePage extends React.Component {
 
   handleWalletSelect = (walletId) => {
     const { balance } = this.props;
+    let _activeWallet = {};
     if (walletId > 0) {
       const selectedWallet = balance.find((x) => x.id === walletId);
       const walletCopy = JSON.parse(JSON.stringify(selectedWallet));
-      this.setState({ activeWallet: walletCopy });
+      _activeWallet = walletCopy;
     }
-    else {
-      this.setState({ activeWallet: {} });
-    }
+    this.setState({ activeWallet: _activeWallet });
+    this.setState({ activeOperation: {} });
   };
 
-  handleObjectSelect = (objectId, objList, stateSetter) => {
-    if (objectId > 0) {
-      const selectedObject = objList.find((obj) => obj.id === objectId);
-      const objCopy = JSON.parse(JSON.stringify(selectedObject));
-      stateSetter(objCopy);
-    }
-    else {
-      stateSetter({});
-    }
-  };
+  handleOperationSelect = (selectedOperation) => {
+    this.setState({ activeOperation: selectedOperation && selectedOperation.id ? selectedOperation : {} });
+  }
 
   handleActiveWalletBalanceChange = (currencyId, walletBalance) => {
     const { activeWallet } = this.state;
@@ -124,15 +117,15 @@ class BalancePage extends React.Component {
       wallets,
       operationCategoriesList,
     } = this.props;
-    const { activeWallet } = this.state;
+    const { activeWallet, activeOperation } = this.state;
     const appData = {
       currency: currency,
       wallets: wallets,
       operationCategoriesList: operationCategoriesList
     }
 
-    return activeWallet && activeWallet.id
-      ? (<OperationsList auth={this.props.auth} wallet={activeWallet} appData={appData} />)
+    return activeWallet && activeWallet.id && !(activeOperation && activeOperation.id)
+      ? (<OperationsList auth={this.props.auth} wallet={activeWallet} appData={appData} balanceOperationSelectHandler={this.handleOperationSelect}/>)
       : this.renderQuickOperationDialog(styles)
   }
 
@@ -143,7 +136,6 @@ class BalancePage extends React.Component {
       operationCategoriesList,
       operationSavingInProgres,
     } = this.props;
-
     return operationSavingInProgres ? (
       <LoadingComponent />
     ) : (

@@ -27,7 +27,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function OperationCategoryList({auth, wallet}) {
+export default function OperationCategoryList({auth, wallet, balanceOperationSelectHandler}) {
   const classes = useStyles();
   const dispatch = useDispatch();
 
@@ -44,16 +44,16 @@ export default function OperationCategoryList({auth, wallet}) {
 
   const [activeOperation, setActiveOperation] = useState({});
 
-  //TODO:: move to utils
   const handleOperationSelect = (operationId) => {
+    let _activeOperation = {};
     if (operationId > 0) {
       const selectedOperation = operationsList.find((op) => op.id === operationId);
       const opCopy = JSON.parse(JSON.stringify(selectedOperation));
-      setActiveOperation(opCopy);
+      _activeOperation = opCopy;
     }
-    else {
-      setActiveOperation({});
-    }
+
+    setActiveOperation(_activeOperation);
+    balanceOperationSelectHandler(_activeOperation);
   };
 
   return (
