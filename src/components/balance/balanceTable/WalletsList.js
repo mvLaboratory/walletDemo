@@ -56,7 +56,7 @@ class WalletsList extends React.Component {
               ></BalanceTableHeader>
               <TableBody className={classes.tableBody}>
                 {wallets.map((wallet) => (
-                  <WalletsTableRow wallet={wallet} currencyList={currencyList} setSelected={selectWalletHandler} isSelected={selectedWalletId === wallet.id} />
+                  <WalletsTableRow key={wallet.id} wallet={wallet} currencyList={currencyList} setSelected={selectWalletHandler} isSelected={selectedWalletId === wallet.id} />
                 ))}
                 <BalanceTableSummary
                   currencyList={currencyList}

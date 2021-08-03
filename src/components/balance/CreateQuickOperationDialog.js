@@ -61,6 +61,8 @@ function CreateQuickOperationDialog({
   const classes = useStyles();
 
   const editMode = activeOperation && activeOperation.id ? true : false;
+  const id = editMode ? activeOperation.id : 0;
+  const date = editMode ? activeOperation.date : 0;
   const [summ, setSumm] = useState(editMode ? activeOperation.sum : "0.00");
 
   const [operationType, setOperationType] = useState(editMode ? activeOperation.operationType : 2);
@@ -160,7 +162,7 @@ function CreateQuickOperationDialog({
               <ArrowBackIcon /> 
           </IconButton>
         : null }
-        { editMode ? `Operation #${activeOperation.id} from ${formatDateString(activeOperation.date)}` : "New Operation"}
+        { editMode ? `Operation #${id} from ${formatDateString(date)}` : "New Operation"}
       </h1>
       <div className={clsx(classes.inline)}>
         <div>{renderSummInput()}</div>
@@ -197,7 +199,7 @@ function CreateQuickOperationDialog({
         size="large"
         startIcon={<SaveIcon />}
         onClick={() =>
-          saveHandler(operationType, operationCategory, wallet, currency, summ)
+          saveHandler(id, date, operationType, operationCategory, wallet, currency, summ)
         }
       >
         Save

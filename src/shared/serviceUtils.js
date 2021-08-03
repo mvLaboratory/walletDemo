@@ -18,3 +18,10 @@ export const PostRequest = (endpoint, data, auth) => {
             headers: {"Authorization": `Bearer ${auth.getAccessToken()}`, "Content-Type": "application/json; charset=utf-8" },
         })
 }
+
+export const PutRequest = (endpoint, data, auth) => {
+    return axios.put(process.env.REACT_APP_API_PREFIX + endpoint, data,
+        { 
+            headers: {"Authorization": `Bearer ${auth.getAccessToken()}`, "Content-Type": "application/json; charset=utf-8" },
+        })
+}

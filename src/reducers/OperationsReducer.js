@@ -5,6 +5,7 @@ import {
 
   SAVE_OPERATION_BEGIN,
   SAVE_OPERATION_SUCCESS,
+  SAVE_OPERATION_FINISHED,
   SAVE_OPERATION_FAILURE
 } from "../actions/OperationsActions";
 
@@ -42,6 +43,7 @@ export default function OperationsReducer(state = initialState, action) {
       return {
         ...state,
         operationSavingLoading: true,
+        savedOperation: {},
         error: null
       };
 
@@ -49,14 +51,24 @@ export default function OperationsReducer(state = initialState, action) {
       return {
         ...state,
         operationSavingLoading: false,
-        operationSavingResult: true
+        operationSavingResult: true,
+        savedOperation: action.payload.operationData,
       };
+
+      case SAVE_OPERATION_FINISHED:
+        return {
+          ...state,
+          operationSavingLoading: false,
+          operationSavingResult: true,
+          savedOperation: undefined,
+        };
   
     case SAVE_OPERATION_FAILURE:
       return {
         ...state,
         operationSavingLoading: false,
         operationSavingResult: false,
+        savedOperation: {},
         error: action.payload.error
       };
 

@@ -1,4 +1,4 @@
-import { GetRequest, PostRequest } from "../shared/serviceUtils";
+import { GetRequest, PostRequest, PutRequest } from "../shared/serviceUtils";
 
 export function loadOperations(auth, filters) {
   return dispatch => {
@@ -18,15 +18,23 @@ export function loadOperations(auth, filters) {
 export function saveOperation(operation, auth) {
   return dispatch => {
     dispatch(saveOperationBegin());
-    return PostRequest("/api/operations", operation, auth)
+    return (operation.id 
+        ? PutRequest(`/api/operations/${operation.id}`, operation, auth) 
+        : PostRequest("/api/operations", operation, auth))
       .then(response => {
         return response.data;
       })
       .then(responseData => {
-        dispatch(saveOperationsSuccess(responseData));
+        dispatch(saveOperationSuccess(responseData));
         return responseData;
       })
-      .catch(error => { dispatch(saveOperationsFailure(error)) });
+      .then(responseData => {
+        dispatch(saveOperationFinished());
+        return responseData;
+      })
+      .catch(error => { 
+        dispatch(saveOperationsFailure(error)) 
+      });
   };
 }
 
@@ -36,6 +44,7 @@ export const LOAD_OPERATIONS_FAILURE = "LOAD_OPERATIONS_FAILURE";
 
 export const SAVE_OPERATION_BEGIN = "SAVE_OPERATION_BEGIN";
 export const SAVE_OPERATION_SUCCESS = "SAVE_OPERATION_SUCCESS";
+export const SAVE_OPERATION_FINISHED = "SAVE_OPERATION_FINISHED";
 export const SAVE_OPERATION_FAILURE = "SAVE_OPERATION_FAILURE";
 
 
@@ -58,9 +67,14 @@ export const saveOperationBegin = () => ({
   type: SAVE_OPERATION_BEGIN
 });
 
-export const saveOperationsSuccess = (status) => ({
+export const saveOperationSuccess = (operationData) => ({
   type: SAVE_OPERATION_SUCCESS,
-  payload: {status}
+  payload: {operationData}
+});
+
+export const saveOperationFinished = () => ({
+  type: SAVE_OPERATION_FINISHED,
+  payload: {}
 });
 
 export const saveOperationsFailure = error => ({

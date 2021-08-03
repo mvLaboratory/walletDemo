@@ -66,7 +66,7 @@ export default function OperationCategoryList({auth, wallet, balanceOperationSel
       <Table aria-label="a dense table">
         <TableBody>
           {operationsList.map((operation) => (
-            <OperationTableRow operation={operation} setSelected={handleOperationSelect} selectedObjId={activeOperation ? activeOperation.id : 0}/>
+            <OperationTableRow key={operation.id} operation={operation} setSelected={handleOperationSelect} selectedObjId={activeOperation ? activeOperation.id : 0}/>
           ))}
         </TableBody>
       </Table>
