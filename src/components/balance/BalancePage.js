@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import WalletsList from "./balanceTable/WalletsList";
+import OperationsList from "../operations/OperationsList";
 import CreateQuickOperationDialog from "./CreateQuickOperationDialog";
 import {
   loadWaletsBalance,
@@ -30,14 +31,14 @@ class BalancePage extends React.Component {
 
   componentDidUpdate(oldProps) {
     const {
-      balance,
+      //balance,
       operationSavingInProgres,
       walletSaveInProgress,
       auth,
     } = this.props;
-    if (!this.state.activeWallet && balance && balance.length > 0) {
-      this.handleWalletSelect(balance[0].id);
-    }
+    //if (!this.state.activeWallet && balance && balance.length > 0) {
+    //  this.handleWalletSelect(balance[0].id);
+    //}
 
     if (oldProps.operationSavingInProgres && !operationSavingInProgres) {
       this.props.dispatch(loadWaletsBalance(auth));
@@ -51,10 +52,20 @@ class BalancePage extends React.Component {
 
   handleWalletSelect = (walletId) => {
     const { balance } = this.props;
-    const selectedWallet = balance.find((x) => x.id === walletId);
-    const walletCopy = JSON.parse(JSON.stringify(selectedWallet));
-    this.setState({ activeWallet: walletCopy });
+    let _activeWallet = {};
+    if (walletId > 0) {
+      const selectedWallet = balance.find((x) => x.id === walletId);
+      const walletCopy = JSON.parse(JSON.stringify(selectedWallet));
+      _activeWallet = walletCopy;
+    }
+
+    this.setState({ activeWallet: _activeWallet });
+    this.setState({ activeOperation: {} });
   };
+
+  handleOperationSelect = (selectedOperation) => {
+    this.setState({ activeOperation: selectedOperation && selectedOperation.id ? selectedOperation : {} });
+  }
 
   handleActiveWalletBalanceChange = (currencyId, walletBalance) => {
     const { activeWallet } = this.state;
@@ -71,10 +82,16 @@ class BalancePage extends React.Component {
         value: walletBalance,
       });
     }
-    this.setState({ activeWallet: activeWallet });
+    //this.setState({ activeWallet: activeWallet });
   };
 
+  handleBackToOperationsList = () => {
+    this.setState({ activeOperation: {} });
+  }
+
   saveOperationHandler = (
+    id,
+    date,
     operationType,
     operationCategory,
     wallet,
@@ -83,7 +100,7 @@ class BalancePage extends React.Component {
   ) => {
     let categoriesList = this.props.operationCategoriesList;
     let operation = {
-      date: new Date().toJSON(),
+      date: id ? date : new Date().toJSON(),
       operationType: operationType,
       operationCategory: { id: operationCategory },
       wallet: { id: wallet },
@@ -93,6 +110,9 @@ class BalancePage extends React.Component {
         "quick operation",
       sum: parseFloat(summ),
     };
+    if (id)
+      operation.id = id;
+
     this.props.dispatch(saveOperation(operation, this.props.auth));
   };
 
@@ -100,6 +120,39 @@ class BalancePage extends React.Component {
     const wallet = { name: walletName, remainders: [] };
     this.props.dispatch(addWallet(wallet, this.props.auth));
   };
+
+  renderRightPanel = (styles) => {
+    const { savedOperation } = this.props;
+    const { activeWallet, activeOperation } = this.state;
+
+    const operationToShow = savedOperation && savedOperation.id ? savedOperation : activeOperation;
+
+    return activeWallet && activeWallet.id && !(activeOperation && activeOperation.id)
+      ? (<OperationsList auth={this.props.auth} wallet={activeWallet} balanceOperationSelectHandler={this.handleOperationSelect}/>)
+      : this.renderQuickOperationDialog(styles, operationToShow)
+  }
+
+  renderQuickOperationDialog = (styles, activeOperation) => {
+    const {
+      currency,
+      wallets,
+      operationCategoriesList,
+      operationSavingInProgres,
+    } = this.props;
+    return operationSavingInProgres ? (
+      <LoadingComponent />
+    ) : (
+      <CreateQuickOperationDialog
+        styles={styles}
+        operationCategoriesList={operationCategoriesList}
+        currencyList={currency}
+        walletsList={wallets}
+        activeOperation={activeOperation}
+        handleBackToOperationsList={this.handleBackToOperationsList}
+        saveHandler={this.saveOperationHandler}
+      />
+    )
+  }
 
   render() {
     const styles = {
@@ -118,10 +171,7 @@ class BalancePage extends React.Component {
     const {
       balance,
       balanceSummary,
-      currency,
-      wallets,
-      operationCategoriesList,
-      operationSavingInProgres,
+      currency
     } = this.props;
     const { activeWallet } = this.state;
 
@@ -139,17 +189,7 @@ class BalancePage extends React.Component {
           />
         </Grid>
         <Grid item sm>
-          {operationSavingInProgres ? (
-            <LoadingComponent />
-          ) : (
-            <CreateQuickOperationDialog
-              styles={styles}
-              operationCategoriesList={operationCategoriesList}
-              currencyList={currency}
-              walletsList={wallets}
-              saveHandler={this.saveOperationHandler}
-            />
-          )}
+          {this.renderRightPanel(styles)}
         </Grid>
       </Grid>
     );
@@ -163,11 +203,14 @@ const mapStateToProps = function (state) {
     currency: state.CurrencyReducer.currency,
     wallets: state.WalletsReducer.wallets,
     operationCategoriesList: state.OperationCategoryReducer.operationCategories,
+    operations: state.OperationsReducer.operations,
 
     operationSavingInProgres: state.OperationsReducer.operationSavingLoading,
+    savedOperation: state.OperationsReducer.savedOperation,
     walletSaveInProgress: state.WalletsReducer.walletSaveInProgress,
 
     loading: state.BalanceReducer.loading,
+    operationsLoading: state.OperationsReducer.loading,
     error: state.BalanceReducer.error,
   };
 };

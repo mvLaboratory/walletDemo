@@ -1,14 +1,13 @@
 import React from "react";
 import NewWalletDialog from "../NewWalletDialog";
 import BalanceTableHeader from "./BalanceTableHeader";
+import WalletsTableRow from "./WalletsTableRow";
 import BalanceTableSummary from "./BalanceTableSummary";
 import { withStyles } from "@material-ui/styles";
 import {
   Paper,
   Table,
   TableBody,
-  TableCell,
-  TableRow,
 } from "@material-ui/core";
 
 const styles = (theme) => ({
@@ -16,7 +15,7 @@ const styles = (theme) => ({
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
-  },
+  }
 });
 
 class WalletsList extends React.Component {
@@ -34,10 +33,10 @@ class WalletsList extends React.Component {
       styles,
       classes,
       selectWalletHandler,
+      selectedWalletId,
       wallets,
       balanceSummary,
       currencyList,
-      selectedWalletId,
       addWalletHandler,
     } = this.props;
 
@@ -55,26 +54,9 @@ class WalletsList extends React.Component {
               <BalanceTableHeader
                 currencyList={currencyList}
               ></BalanceTableHeader>
-              <TableBody>
+              <TableBody className={classes.tableBody}>
                 {wallets.map((wallet) => (
-                  <TableRow
-                    key={wallet.id}
-                    hover
-                    onClick={() => {
-                      selectWalletHandler(wallet.id);
-                    }}
-                    selected={selectedWalletId === wallet.id}
-                  >
-                    <TableCell align="left">{wallet.name}</TableCell>
-                    {currencyList.map((currency) => (
-                      <TableCell
-                        key={"currencyTableRow" + currency.id}
-                        align="center"
-                      >
-                        {this.getCurrencyReminder(currency, wallet)}
-                      </TableCell>
-                    ))}
-                  </TableRow>
+                  <WalletsTableRow key={wallet.id} wallet={wallet} currencyList={currencyList} setSelected={selectWalletHandler} isSelected={selectedWalletId === wallet.id} />
                 ))}
                 <BalanceTableSummary
                   currencyList={currencyList}
